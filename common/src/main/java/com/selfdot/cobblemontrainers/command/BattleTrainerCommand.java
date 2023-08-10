@@ -13,8 +13,6 @@ import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class BattleTrainerCommand implements Command<ServerCommandSource> {
 
-    private static final Trainer TEST_TRAINER = new Trainer();
-
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(
             LiteralArgumentBuilder.<ServerCommandSource>
@@ -23,15 +21,7 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
     }
 
     @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
-        if (!ctx.getSource().isExecutedByPlayer()) {
-            ctx.getSource().sendError(Text.literal("Must be a player to battle a trainer"));
-            return -1;
-        }
-
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
-        return 1;
-    }
+    public int run(CommandContext<ServerCommandSource> ctx) { return 0; }
 
     /*
     //TODO: options for preheal, battle format
