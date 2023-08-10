@@ -1,6 +1,10 @@
 package com.selfdot.cobblemontrainers
 
 import com.mojang.brigadier.CommandDispatcher
+import com.selfdot.cobblemontrainers.command.AddTrainerCommand
+import com.selfdot.cobblemontrainers.command.BattleTrainerCommand
+import com.selfdot.cobblemontrainers.command.RemoveTrainerCommand
+import com.selfdot.cobblemontrainers.command.SetupCommand
 import dev.architectury.event.events.common.CommandRegistrationEvent
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions
@@ -24,5 +28,10 @@ object CobblemonTrainers {
         dispatcher: CommandDispatcher<ServerCommandSource>,
         registry: CommandRegistryAccess,
         selection: CommandManager.RegistrationEnvironment
-    ) { }
+    ) {
+        AddTrainerCommand().register(dispatcher)
+        BattleTrainerCommand().register(dispatcher)
+        RemoveTrainerCommand().register(dispatcher)
+        SetupCommand().register(dispatcher)
+    }
 }
