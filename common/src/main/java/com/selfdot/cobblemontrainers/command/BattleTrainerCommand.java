@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
 import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -40,7 +41,14 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
-        startBattle(source.getPlayer(), new Trainer(), BattleFormat.Companion.getGEN_9_SINGLES())
+        List<Pokemon> trainerTeam = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            Pokemon pokemon = new Pokemon();
+            pokemon.initializeMoveset(true);
+            trainerTeam.add(pokemon);
+        }
+
+        startBattle(source.getPlayer(), new Trainer("trainer", trainerTeam), BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 source.sendError(Text.literal("Failed to start battle"));
                 error.sendTo(source.getPlayer(), t -> t);
