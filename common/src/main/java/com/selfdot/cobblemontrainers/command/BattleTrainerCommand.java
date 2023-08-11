@@ -12,7 +12,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.logging.LogUtils;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import kotlin.Unit;
 import net.minecraft.server.command.ServerCommandSource;

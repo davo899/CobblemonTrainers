@@ -8,4 +8,5 @@ class CobblemonFabric : ModInitializer {
         println("CobblemonTrainers Fabric initialized");
         CobblemonTrainers.initialize();
     }
+
 }
