@@ -21,7 +21,9 @@ public class RemoveTrainerCommand implements Command<ServerCommandSource> {
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("remove")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("name", string()).executes(this)
+                    argument("name", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(this)
                 )
             )
         );

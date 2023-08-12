@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
-import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
-import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 
 public class AddTrainerCommand implements Command<ServerCommandSource> {
 

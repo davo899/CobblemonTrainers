@@ -34,7 +34,9 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("name", string()).executes(this)
+                    argument("name", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(this)
                 )
             )
         );

@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class TrainerRegistry {
 
@@ -39,6 +40,10 @@ public class TrainerRegistry {
     @Nullable
     public Trainer getTrainer(String name) {
         return trainerMap.get(name);
+    }
+
+    public Set<String> getAllTrainerNames() {
+        return trainerMap.keySet();
     }
 
     private void logFoundInvalidTrainerData(JsonElement jsonElement) {
