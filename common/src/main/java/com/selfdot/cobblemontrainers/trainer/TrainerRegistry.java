@@ -74,4 +74,17 @@ public class TrainerRegistry {
         }
     }
 
+    public void storeTrainersToFile(String filename) {
+        JsonArray jsonArray = new JsonArray();
+        trainerMap.values().forEach(trainer -> jsonArray.add(trainer.toJson()));
+        try {
+            Files.createDirectories(Paths.get(filename).getParent());
+            FileWriter writer = new FileWriter(filename);
+            gson.toJson(jsonArray, writer);
+            writer.close();
+        } catch (IOException e) {
+            CobblemonTrainersLog.LOGGER.error("Unable to store trainer data to " + filename);
+        }
+    }
+
 }

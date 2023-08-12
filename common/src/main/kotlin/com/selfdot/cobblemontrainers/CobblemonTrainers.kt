@@ -19,6 +19,7 @@ import net.minecraft.server.MinecraftServer
 object CobblemonTrainers {
     lateinit var permissions: CobblemonTrainersPermissions
     const val MODID = "cobblemontrainers"
+    const val TRAINER_DATA_FILENAME = "config/trainers/trainers.json"
     fun initialize() {
         permissions = CobblemonTrainersPermissions()
 
@@ -28,6 +29,7 @@ object CobblemonTrainers {
         CommandRegistrationEvent.EVENT.register(CobblemonTrainers::registerCommands)
 
         LifecycleEvent.SERVER_STARTING.register(CobblemonTrainers::onServerStart)
+        LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
     }
 
     fun registerCommands(
@@ -43,7 +45,12 @@ object CobblemonTrainers {
 
     fun onServerStart(server: MinecraftServer) {
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
-        TrainerRegistry.getInstance().loadTrainersFromFile("config/trainers/trainers.json")
+        TrainerRegistry.getInstance().loadTrainersFromFile(TRAINER_DATA_FILENAME)
+    }
+
+    fun onServerStop(server: MinecraftServer) {
+        CobblemonTrainersLog.LOGGER.info("Storing trainer data")
+        TrainerRegistry.getInstance().storeTrainersToFile(TRAINER_DATA_FILENAME)
     }
 
 }
