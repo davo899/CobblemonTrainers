@@ -1,15 +1,24 @@
 package com.selfdot.cobblemontrainers.screen;
 
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
 
-public interface Screen {
+public abstract class Screen {
 
-    void initialize(Inventory inventory, int rows, int cols);
+    protected int rows = 0;
+    protected int columns = 0;
 
-    void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player);
+    public void initialize(Inventory inventory, int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+        ScreenUtils.fill(inventory, Items.GLASS_PANE);
+    }
 
-    String getDisplayName();
+    public abstract void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player);
+
+    public abstract String getDisplayName();
 
 }

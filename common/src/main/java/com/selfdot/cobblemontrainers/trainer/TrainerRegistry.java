@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -44,6 +45,10 @@ public class TrainerRegistry {
 
     public Set<String> getAllTrainerNames() {
         return trainerMap.keySet();
+    }
+
+    public Collection<Trainer> getAllTrainers() {
+        return trainerMap.values();
     }
 
     private void logFoundInvalidTrainerData(JsonElement jsonElement) {
