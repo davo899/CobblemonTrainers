@@ -23,12 +23,12 @@ public class AddTrainerCommand implements Command<ServerCommandSource> {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-                .then(LiteralArgumentBuilder.<ServerCommandSource>
-                    literal("add")
-                        .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                            argument("name", string()).executes(this)
-                        )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("add")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string()).executes(this)
                 )
+            )
         );
     }
 
