@@ -45,7 +45,7 @@ public class Trainer {
 
     private static JsonObject trainerPokemonToJson(Pokemon pokemon) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(ConfigKeys.POKEMON_SPECIES, pokemon.getSpecies().getName());
+        jsonObject.addProperty(ConfigKeys.POKEMON_SPECIES, pokemon.getSpecies().getResourceIdentifier().toString());
         jsonObject.addProperty(ConfigKeys.POKEMON_LEVEL, pokemon.getLevel());
         jsonObject.addProperty(ConfigKeys.POKEMON_NATURE, pokemon.getNature().getName().toString());
         jsonObject.add(ConfigKeys.POKEMON_ABILITY, pokemon.getAbility().saveToJSON(new JsonObject()));
