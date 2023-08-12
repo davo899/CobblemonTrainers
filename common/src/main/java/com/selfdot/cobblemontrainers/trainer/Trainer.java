@@ -105,4 +105,8 @@ public class Trainer {
         return new Trainer(name, team);
     }
 
+    public void healTeam() {
+        team.forEach(Pokemon::heal);
+    }
+
 }
