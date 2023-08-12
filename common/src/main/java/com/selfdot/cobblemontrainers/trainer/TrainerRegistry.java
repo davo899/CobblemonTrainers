@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.trainer;
 import com.google.gson.*;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 
+import javax.annotation.Nullable;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -33,6 +34,11 @@ public class TrainerRegistry {
         if (!trainerMap.containsKey(trainerName)) return false;
         trainerMap.remove(trainerName);
         return true;
+    }
+
+    @Nullable
+    public Trainer getTrainer(String name) {
+        return trainerMap.get(name);
     }
 
     private void logFoundInvalidTrainerData(JsonElement jsonElement) {

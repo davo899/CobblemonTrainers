@@ -11,8 +11,10 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
+import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import kotlin.Unit;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,13 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.mojang.brigadier.arguments.StringArgumentType.string;
+
 public class BattleTrainerCommand implements Command<ServerCommandSource> {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(
-            LiteralArgumentBuilder.<ServerCommandSource>
-                literal("trainers")
-                    .then(LiteralArgumentBuilder.<ServerCommandSource>literal("battle").executes(this))
+        dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
+            literal("trainers")
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("battle")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string()).executes(this)
+                )
+            )
         );
     }
 
@@ -40,14 +48,15 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
-        List<Pokemon> trainerTeam = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Pokemon pokemon = new Pokemon();
-            pokemon.initializeMoveset(true);
-            trainerTeam.add(pokemon);
+        String name = ctx.getArgument("name", String.class);
+        Trainer trainer = TrainerRegistry.getInstance().getTrainer(name);
+
+        if (trainer == null) {
+            source.sendError(Text.literal("Trainer " + name + " does not exist"));
+            return -1;
         }
 
-        startBattle(source.getPlayer(), new Trainer("trainer", trainerTeam), BattleFormat.Companion.getGEN_9_SINGLES())
+        startBattle(source.getPlayer(), trainer, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 source.sendError(Text.literal("Failed to start battle"));
                 error.sendTo(source.getPlayer(), t -> t);
