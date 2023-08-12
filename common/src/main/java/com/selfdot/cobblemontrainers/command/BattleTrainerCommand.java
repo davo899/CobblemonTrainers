@@ -56,7 +56,6 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
-        trainer.healTeam();
         startBattle(source.getPlayer(), trainer, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 source.sendError(Text.literal("Failed to start battle"));

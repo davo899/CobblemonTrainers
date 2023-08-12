@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.util;
 public class ConfigKeys {
 
     public static final String POKEMON_SPECIES = "species";
+    public static final String POKEMON_GENDER = "gender";
     public static final String POKEMON_LEVEL = "level";
     public static final String POKEMON_NATURE = "nature";
     public static final String POKEMON_IVS = "ivs";
