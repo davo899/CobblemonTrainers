@@ -1,11 +1,14 @@
 package com.selfdot.cobblemontrainers.trainer;
 
+import com.cobblemon.mod.common.api.abilities.Abilities;
 import com.cobblemon.mod.common.api.abilities.Ability;
+import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.moves.MoveSet;
 import com.cobblemon.mod.common.api.pokemon.Natures;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.JsonObject;
+import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.ConfigKeys;
 import net.minecraft.util.Identifier;
 
@@ -60,7 +63,7 @@ public class TrainerPokemon {
             trainerPokemon.gender = Gender.valueOf(jsonObject.get(ConfigKeys.POKEMON_GENDER).getAsString());
             trainerPokemon.level = jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt();
             trainerPokemon.nature = Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString()));
-            trainerPokemon.ability = new Ability(null, false).loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsJsonObject());
+            trainerPokemon.ability = new Ability(Abilities.INSTANCE.getDUMMY(), false).loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsJsonObject());
             trainerPokemon.moveset = new MoveSet().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_MOVESET).getAsJsonObject());
             trainerPokemon.ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_IVS).getAsJsonObject());
             trainerPokemon.evs = (EVs) new EVs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_EVS).getAsJsonObject());
