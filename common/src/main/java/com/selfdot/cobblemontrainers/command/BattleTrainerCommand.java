@@ -20,8 +20,6 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;

@@ -5,13 +5,11 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
-import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
 public class RemoveTrainerCommand implements Command<ServerCommandSource> {
 
