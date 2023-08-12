@@ -61,9 +61,13 @@ public class Trainer {
         for (String member : TRAINER_POKEMON_REQUIRES) if (!jsonObject.has(member)) return null;
 
         Pokemon pokemon = new Pokemon();
-        pokemon.setSpecies(PokemonSpecies.INSTANCE.getByIdentifier(
-            new Identifier(jsonObject.get(ConfigKeys.POKEMON_SPECIES).getAsString()))
-        );
+        try {
+            pokemon.setSpecies(PokemonSpecies.INSTANCE.getByIdentifier(
+                new Identifier(jsonObject.get(ConfigKeys.POKEMON_SPECIES).getAsString()))
+            );
+        } catch (Exception e) {
+            return null;
+        }
         pokemon.setLevel(jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt());
         pokemon.setNature(Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString())));
         pokemon.getAbility().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsJsonObject());
@@ -89,7 +93,11 @@ public class Trainer {
         String name = jsonObject.get(ConfigKeys.TRAINER_NAME).getAsString();
         List<Pokemon> team = new ArrayList<>();
         jsonObject.getAsJsonArray(ConfigKeys.TRAINER_TEAM)
-            .forEach(jsonElement -> team.add(trainerPokemonFromJson(jsonElement.getAsJsonObject())));
+            .forEach(jsonElement -> {
+                Pokemon pokemon = trainerPokemonFromJson(jsonElement.getAsJsonObject());
+                if (pokemon == null) return;
+                team.add(pokemon);
+            });
 
         if (name.isEmpty() || team.isEmpty()) return null;
 
