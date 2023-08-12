@@ -65,15 +65,16 @@ public class Trainer {
             pokemon.setSpecies(PokemonSpecies.INSTANCE.getByIdentifier(
                 new Identifier(jsonObject.get(ConfigKeys.POKEMON_SPECIES).getAsString()))
             );
+            pokemon.setLevel(jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt());
+            pokemon.setNature(Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString())));
+            pokemon.getAbility().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsJsonObject());
+            pokemon.getMoveSet().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_MOVESET).getAsJsonObject());
+            pokemon.getIvs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_IVS).getAsJsonObject());
+            pokemon.getEvs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_EVS).getAsJsonObject());
+
         } catch (Exception e) {
             return null;
         }
-        pokemon.setLevel(jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt());
-        pokemon.setNature(Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString())));
-        pokemon.getAbility().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsJsonObject());
-        pokemon.getMoveSet().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_MOVESET).getAsJsonObject());
-        pokemon.getIvs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_IVS).getAsJsonObject());
-        pokemon.getEvs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_EVS).getAsJsonObject());
         return pokemon;
     }
 
