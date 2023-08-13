@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.command;
 
+import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
@@ -39,6 +40,8 @@ public class AddTrainerCommand implements Command<ServerCommandSource> {
         for (int i = 0; i < 6; i++) {
             Pokemon pokemon = new Pokemon();
             pokemon.initializeMoveset(true);
+            pokemon.checkAbility();
+            pokemon.setGender(Math.random() > 0.5 ? Gender.FEMALE : Gender.MALE);
             trainerTeam.add(TrainerPokemon.fromPokemon(pokemon));
         }
 
