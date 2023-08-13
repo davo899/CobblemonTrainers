@@ -32,6 +32,10 @@ public class TrainerRegistry {
         return true;
     }
 
+    public void addOrUpdateTrainer(Trainer trainer) {
+        trainerMap.put(trainer.getName(), trainer);
+    }
+
     public boolean removeTrainer(String trainerName) {
         if (!trainerMap.containsKey(trainerName)) return false;
         trainerMap.remove(trainerName);
@@ -71,9 +75,7 @@ public class TrainerRegistry {
                 Trainer trainer = Trainer.fromJson(trainerJson.getAsJsonObject());
                 if (trainer == null) { logFoundInvalidTrainerData(trainerJson); return; }
 
-                if (!addTrainer(trainer)) CobblemonTrainersLog.LOGGER.warn(
-                    "Trainer with name: " + trainer.getName() + " already exists, ignoring"
-                );
+                addOrUpdateTrainer(trainer);
             });
 
         } catch (FileNotFoundException e) {

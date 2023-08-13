@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers
 import com.mojang.brigadier.CommandDispatcher
 import com.selfdot.cobblemontrainers.command.AddTrainerCommand
 import com.selfdot.cobblemontrainers.command.BattleTrainerCommand
+import com.selfdot.cobblemontrainers.command.ReloadCommand
 import com.selfdot.cobblemontrainers.command.RemoveTrainerCommand
 import com.selfdot.cobblemontrainers.command.SetupCommand
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
@@ -41,6 +42,7 @@ object CobblemonTrainers {
         BattleTrainerCommand().register(dispatcher)
         RemoveTrainerCommand().register(dispatcher)
         SetupCommand().register(dispatcher)
+        ReloadCommand().register(dispatcher)
     }
 
     fun onServerStart(server: MinecraftServer) {
