@@ -3,6 +3,8 @@ package com.selfdot.cobblemontrainers.command;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
+import com.cobblemon.mod.common.api.permission.CobblemonPermission;
+import com.cobblemon.mod.common.api.permission.PermissionLevel;
 import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
@@ -13,6 +15,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import kotlin.Unit;
@@ -29,6 +32,9 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
+            .requires(src -> CobblemonTrainersPermissions.checkPermission(
+                src, new CobblemonPermission("", PermissionLevel.CHEAT_COMMANDS_AND_COMMAND_BLOCKS)
+            ))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>

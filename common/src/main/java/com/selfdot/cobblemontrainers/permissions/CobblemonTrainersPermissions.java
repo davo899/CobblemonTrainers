@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.permissions;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.permission.CobblemonPermission;
 import com.cobblemon.mod.common.api.permission.PermissionLevel;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import net.minecraft.command.CommandSource;
 
 public class CobblemonTrainersPermissions {
