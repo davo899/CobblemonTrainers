@@ -13,7 +13,7 @@ import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.List;
 
-public class TrainerTeamScreen extends ReturnableScreen {
+public class TrainerTeamScreen extends Screen {
 
     private final Trainer trainer;
 
