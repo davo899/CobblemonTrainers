@@ -7,7 +7,6 @@ import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
@@ -15,6 +14,7 @@ import java.util.List;
 
 public class TrainerTeamScreen extends Screen {
 
+    private static final int TEAM_MAX_SIZE = 6;
     private final Trainer trainer;
 
     public TrainerTeamScreen(Trainer trainer) {
@@ -29,7 +29,7 @@ public class TrainerTeamScreen extends Screen {
         inventory.setStack(columns / 2, trainerItem);
 
         List<BattlePokemon> team = trainer.getTeam();
-        for (int i = 0; i < Math.min(team.size(), 6); i++) {
+        for (int i = 0; i < Math.min(team.size(), TEAM_MAX_SIZE); i++) {
             BattlePokemon pokemon = team.get(i);
             inventory.setStack(
                 (2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3),
