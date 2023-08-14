@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.screen;
 
+import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
@@ -8,6 +9,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.text.Text;
 
 import java.util.List;
 
@@ -22,16 +24,17 @@ public class TrainerTeamScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        if (columns - 2 < 6 || rows - 2 < 1) return;
+        ItemStack trainerItem = new ItemStack(CobblemonItems.POKE_BALL.get());
+        trainerItem.setCustomName(Text.literal(trainer.getName()));
+        inventory.setStack(columns / 2, trainerItem);
 
         List<BattlePokemon> team = trainer.getTeam();
-        for (int i = 0; i < 6 && i < team.size(); i++) {
+        for (int i = 0; i < Math.min(team.size(), 6); i++) {
             BattlePokemon pokemon = team.get(i);
-            ItemStack item = PokemonUtility.pokemonToItem(pokemon.getOriginalPokemon());
-            NbtCompound slotNbt = item.getOrCreateSubNbt("slot");
-            slotNbt.putInt("slot", i);
-            item.setSubNbt("slot", slotNbt);
-            inventory.setStack(columns + 1 + i, item);
+            inventory.setStack(
+                (2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3),
+                PokemonUtility.pokemonToItem(pokemon.getOriginalPokemon())
+            );
         }
     }
 
