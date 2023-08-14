@@ -70,6 +70,10 @@ public class TrainerPokemonScreen extends Screen {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new AbilitySelectScreen(trainer, trainerPokemon)));
             return;
         }
+        if (slotIndex == evsSlot) {
+            player.openHandledScreen(new TrainerSetupHandlerFactory(new EVSelectScreen(trainer, trainerPokemon)));
+            return;
+        }
         if (slotIndex == ivsSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new IVSelectScreen(trainer, trainerPokemon)));
         }
