@@ -1,10 +1,14 @@
 package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.CobblemonItems;
+import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
 public class IVSelectScreen extends Screen {
@@ -24,29 +28,57 @@ public class IVSelectScreen extends Screen {
         itemStack.setCustomName(Text.literal("IVs"));
         inventory.setStack(columns / 2, itemStack);
 
-        itemStack = new ItemStack(CobblemonItems.HP_UP.get());
-        itemStack.setCustomName(Text.literal("HP"));
-        inventory.setStack((columns * 2) + (columns / 2) - 1, itemStack);
+        for (int i = 0; i < 3; i++) {
+            Stats stat = ScreenUtils.STATS[i];
+            itemStack = ScreenUtils.statVitaminItem(stat);
+            itemStack.setCustomName(stat.getDisplayName());
+            inventory.setStack((columns * 2) + (columns / 2) - 1 + i, itemStack);
+        }
+        for (int i = 0; i < 3; i++) {
+            Stats stat = ScreenUtils.STATS[3 + i];
+            itemStack = ScreenUtils.statVitaminItem(stat);
+            itemStack.setCustomName(stat.getDisplayName());
+            inventory.setStack((columns * 3) + (columns / 2) - 1 + i, itemStack);
+        }
+    }
 
-        itemStack = new ItemStack(CobblemonItems.PROTEIN.get());
-        itemStack.setCustomName(Text.literal("Attack"));
-        inventory.setStack((columns * 2) + (columns / 2), itemStack);
+    @Override
+    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+        super.onSlotClick(slotIndex, button, actionType, player);
 
-        itemStack = new ItemStack(CobblemonItems.IRON.get());
-        itemStack.setCustomName(Text.literal("Defense"));
-        inventory.setStack((columns * 2) + (columns / 2) + 1, itemStack);
+        switch (slotIndex - ((columns * 2) + (columns / 2) - 1)) {
+            case 0 -> {
+                player.openHandledScreen(new TrainerSetupHandlerFactory(
+                    new IVEditScreen(Stats.HP, trainer, trainerPokemon)
+                ));
+                return;
+            }
+            case 1 -> {
+                player.openHandledScreen(new TrainerSetupHandlerFactory(
+                    new IVEditScreen(Stats.ATTACK, trainer, trainerPokemon)
+                ));
+                return;
+            }
+            case 2 -> {
+                player.openHandledScreen(new TrainerSetupHandlerFactory(
+                    new IVEditScreen(Stats.DEFENCE, trainer, trainerPokemon)
+                ));
+                return;
+            }
+        }
 
-        itemStack = new ItemStack(CobblemonItems.CALCIUM.get());
-        itemStack.setCustomName(Text.literal("Special Attack"));
-        inventory.setStack((columns * 3) + (columns / 2) - 1, itemStack);
+        switch (slotIndex - ((columns * 3) + (columns / 2) - 1)) {
+            case 0 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
+                new IVEditScreen(Stats.SPECIAL_ATTACK, trainer, trainerPokemon)
+            ));
+            case 1 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
+                new IVEditScreen(Stats.SPECIAL_DEFENCE, trainer, trainerPokemon)
+            ));
+            case 2 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
+                new IVEditScreen(Stats.SPEED, trainer, trainerPokemon)
+            ));
+        }
 
-        itemStack = new ItemStack(CobblemonItems.ZINC.get());
-        itemStack.setCustomName(Text.literal("Special Defense"));
-        inventory.setStack((columns * 3) + (columns / 2), itemStack);
-
-        itemStack = new ItemStack(CobblemonItems.CARBOS.get());
-        itemStack.setCustomName(Text.literal("Speed"));
-        inventory.setStack((columns * 3) + (columns / 2) + 1, itemStack);
     }
 
     @Override
