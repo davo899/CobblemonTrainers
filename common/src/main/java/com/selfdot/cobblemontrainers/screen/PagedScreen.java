@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class PagedScreen<T> extends Screen {
 
     private final List<T> trackedList;
-    private final int pageNumber;
+    private int pageNumber;
     private int maxPerPage = 0;
     private int prevPageSlot = 0;
     private int nextPageSlot = 0;
@@ -36,7 +36,7 @@ public abstract class PagedScreen<T> extends Screen {
         nextPageItem.setCustomName(Text.literal("Next Page"));
         inventory.setStack(nextPageSlot, nextPageItem);
 
-        for (int i = 0; i < Math.min(maxPerPage * (pageNumber + 1), trackedList.size()); i++) {
+        for (int i = 0; i < Math.min(maxPerPage, trackedList.size() - (maxPerPage * pageNumber)); i++) {
             inventory.setStack(
                 (columns + 1) + (columns * (i / (columns - 2))) + (i % (columns - 2)),
                 toItem(trackedList.get((maxPerPage * pageNumber) + i))
@@ -48,11 +48,22 @@ public abstract class PagedScreen<T> extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
+        if (slotIndex == prevPageSlot && pageNumber > 0) {
+            pageNumber--;
+            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
+            return;
+        }
+        if (slotIndex == nextPageSlot && maxPerPage * (pageNumber + 1) < trackedList.size()) {
+            pageNumber++;
+            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
+            return;
+        }
+
         int x = slotIndex % columns;
         int y = slotIndex / columns;
 
         if (1 <= x && x <= columns - 2 && 1 <= y && y <= rows - 3) {
-            int index = (x - 1) + ((y - 1) * (columns - 2));
+            int index = (maxPerPage * pageNumber) + (x - 1) + ((y - 1) * (columns - 2));
             if (index < trackedList.size()) onSelected(trackedList.get(index), player);
         }
     }

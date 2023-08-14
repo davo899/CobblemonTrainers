@@ -9,8 +9,9 @@ import net.minecraft.text.Text;
 
 public class TrainerListScreen extends PagedScreen<Trainer> {
 
-    public TrainerListScreen() {
-        super(TrainerRegistry.getInstance().getAllTrainers().stream().toList(), 0);
+    public TrainerListScreen() { this(0); }
+    public TrainerListScreen(int pageNumber) {
+        super(TrainerRegistry.getInstance().getAllTrainers().stream().toList(), pageNumber);
     }
 
     @Override
