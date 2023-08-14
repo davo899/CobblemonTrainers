@@ -5,8 +5,10 @@ import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.text.Text;
 
 import java.util.stream.Collectors;
 
@@ -30,6 +32,14 @@ public class MoveSelectScreen extends PagedScreen<Move> {
         this.moveIndex = moveIndex;
         this.trainer = trainer;
         this.trainerPokemon = trainerPokemon;
+    }
+
+    @Override
+    public void initialize(Inventory inventory) {
+        super.initialize(inventory);
+        ItemStack itemStack = new ItemStack(Items.MUSIC_DISC_MELLOHI);
+        itemStack.setCustomName(Text.literal("Moves"));
+        inventory.setStack(columns / 2, itemStack);
     }
 
     @Override
