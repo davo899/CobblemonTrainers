@@ -4,13 +4,16 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
 public class TrainerPokemonScreen extends Screen {
 
+    private final Trainer trainer;
     private final TrainerPokemon trainerPokemon;
     private int movesSlot;
     private int abilitiesSlot;
@@ -20,6 +23,7 @@ public class TrainerPokemonScreen extends Screen {
 
     public TrainerPokemonScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerTeamScreen(trainer));
+        this.trainer = trainer;
         this.trainerPokemon = trainerPokemon;
     }
 
@@ -52,6 +56,15 @@ public class TrainerPokemonScreen extends Screen {
         ItemStack deleteItem = new ItemStack(Items.BARRIER);
         deleteItem.setCustomName(Text.literal("Delete Pokémon"));
         inventory.setStack(deleteSlot, deleteItem);
+    }
+
+    @Override
+    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+        super.onSlotClick(slotIndex, button, actionType, player);
+
+        if (slotIndex == movesSlot) {
+            player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
+        }
     }
 
     @Override
