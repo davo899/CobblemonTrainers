@@ -38,7 +38,10 @@ public abstract class Screen {
             itemStack.setCustomName(Text.literal("Back"));
             inventory.setStack(backButtonSlot, itemStack);
         }
+        initialize(inventory);
     }
+
+    public abstract void initialize(Inventory inventory);
 
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         if (returnsTo != null && slotIndex == backButtonSlot) {

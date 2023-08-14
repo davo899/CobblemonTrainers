@@ -23,9 +23,7 @@ public class TrainerTeamScreen extends Screen {
     }
 
     @Override
-    public void initialize(Inventory inventory, int rows, int columns) {
-        super.initialize(inventory, rows, columns);
-
+    public void initialize(Inventory inventory) {
         if (columns - 2 < 6 || rows - 2 < 1) return;
 
         List<BattlePokemon> team = trainer.getTeam();

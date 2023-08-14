@@ -17,8 +17,7 @@ public class TrainerListScreen extends Screen {
     private int maxPerPage = 0;
 
     @Override
-    public void initialize(Inventory inventory, int rows, int columns) {
-        super.initialize(inventory, rows, columns);
+    public void initialize(Inventory inventory) {
         this.maxPerPage = Math.min((rows - 2) * (columns - 2), trainerList.size());
         int i = 0;
         while (i < maxPerPage) {
