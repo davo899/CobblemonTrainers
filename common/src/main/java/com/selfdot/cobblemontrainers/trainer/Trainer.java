@@ -58,7 +58,7 @@ public class Trainer {
                 team.add(pokemon);
             });
 
-        if (name.isEmpty() || team.isEmpty()) return null;
+        if (name.isEmpty()) return null;
 
         return new Trainer(name, team);
     }
