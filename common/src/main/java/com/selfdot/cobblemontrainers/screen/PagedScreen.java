@@ -1,8 +1,10 @@
 package com.selfdot.cobblemontrainers.screen;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -42,6 +44,21 @@ public abstract class PagedScreen<T> extends Screen {
         }
     }
 
+    @Override
+    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
+        super.onSlotClick(slotIndex, button, actionType, player);
+
+        int x = slotIndex % columns;
+        int y = slotIndex / columns;
+
+        if (1 <= x && x <= columns - 2 && 1 <= y && y <= rows - 3) {
+            int index = (x - 1) + ((y - 1) * (columns - 2));
+            if (index < trackedList.size()) onSelected(trackedList.get(index), player);
+        }
+    }
+
     protected abstract ItemStack toItem(T t);
+
+    protected abstract void onSelected(T t, PlayerEntity player);
 
 }
