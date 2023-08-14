@@ -17,10 +17,13 @@ public abstract class PagedScreen<T> extends Screen {
     private int prevPageSlot = 0;
     private int nextPageSlot = 0;
 
-    public PagedScreen(List<T> trackedList, int pageNumber) {
+    public PagedScreen(Screen returnsTo, List<T> trackedList, int pageNumber) {
+        super(returnsTo);
         this.trackedList = trackedList;
         this.pageNumber = pageNumber;
     }
+
+    public PagedScreen(List<T> trackedList, int pageNumber) { this(null, trackedList, pageNumber); }
 
     @Override
     public void initialize(Inventory inventory) {

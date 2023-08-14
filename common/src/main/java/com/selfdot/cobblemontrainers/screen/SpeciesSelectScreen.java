@@ -26,7 +26,7 @@ public class SpeciesSelectScreen extends PagedScreen<Species> {
     }
 
     public SpeciesSelectScreen(Trainer trainer) {
-        super(SPECIES_LIST, 0);
+        super(new TrainerTeamScreen(trainer), SPECIES_LIST, 0);
         this.trainer = trainer;
     }
 

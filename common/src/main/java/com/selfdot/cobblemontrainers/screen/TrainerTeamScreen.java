@@ -3,7 +3,6 @@ package com.selfdot.cobblemontrainers.screen;
 import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -31,7 +30,7 @@ public class TrainerTeamScreen extends Screen {
         trainerItem.setCustomName(Text.literal(trainer.getName()));
         inventory.setStack(columns / 2, trainerItem);
 
-        List<BattlePokemon> team = trainer.getTeam();
+        List<BattlePokemon> team = trainer.getBattleTeam();
         for (int i = 0; i < TEAM_MAX_SIZE; i++) {
             if (i < team.size()) {
                 BattlePokemon pokemon = team.get(i);
@@ -58,8 +57,21 @@ public class TrainerTeamScreen extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
-        if (slotIndex == newPokemonSlot && trainer.getTeam().size() < TEAM_MAX_SIZE) {
+        if (slotIndex == newPokemonSlot && trainer.getBattleTeam().size() < TEAM_MAX_SIZE) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new SpeciesSelectScreen(trainer)));
+            return;
+        }
+
+        int x = slotIndex % columns;
+        int y = slotIndex / columns;
+
+        if ((columns / 2) - 1 <= x && x <= (columns / 2) + 1 && 2 <= y && y <= 3) {
+            int index = ((y - 2) * 3) + (x - (columns / 2) + 1);
+            if (index < trainer.getTeam().size()) {
+                player.openHandledScreen(new TrainerSetupHandlerFactory(
+                    new TrainerPokemonScreen(trainer, trainer.getTeam().get(index))
+                ));
+            }
         }
     }
 

@@ -33,7 +33,11 @@ public class Trainer {
         team.add(TrainerPokemon.fromPokemon(pokemon));
     }
 
-    public List<BattlePokemon> getTeam() {
+    public List<TrainerPokemon> getTeam() {
+        return team;
+    }
+
+    public List<BattlePokemon> getBattleTeam() {
         return team.stream()
             .map(TrainerPokemon::toPokemon)
             .map(pokemon -> new BattlePokemon(pokemon, pokemon))

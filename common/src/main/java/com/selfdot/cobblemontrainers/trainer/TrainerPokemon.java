@@ -113,4 +113,8 @@ public class TrainerPokemon {
         return trainerPokemon;
     }
 
+    public String getName() {
+        return species.getTranslatedName().getString();
+    }
+
 }

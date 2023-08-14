@@ -1,7 +1,6 @@
 package com.selfdot.cobblemontrainers.command;
 
 import com.cobblemon.mod.common.Cobblemon;
-import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.permission.CobblemonPermission;
 import com.cobblemon.mod.common.api.permission.PermissionLevel;
@@ -9,7 +8,6 @@ import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
 import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
-import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -62,7 +60,7 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
-        if (trainer.getTeam().isEmpty()) {
+        if (trainer.getBattleTeam().isEmpty()) {
             source.sendError(Text.literal("Trainer " + name + " has no Pokémon"));
             return -1;
         }
@@ -87,7 +85,7 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             )
         );
         BattleActor trainerActor = new TrainerBattleActor(
-            trainer.getName(), UUID.randomUUID(), trainer.getTeam(), new RandomBattleAI()
+            trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new RandomBattleAI()
         );
 
         ErroredBattleStart errors = new ErroredBattleStart();
