@@ -41,6 +41,12 @@ public class TrainerTeamScreen extends Screen {
                 inventory.setStack((2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3), itemStack);
             }
         }
+
+        if (team.size() < TEAM_MAX_SIZE) {
+            ItemStack newPokemonItem = new ItemStack(CobblemonItems.POKE_BALL.get());
+            newPokemonItem.setCustomName(Text.literal("New Pokémon"));
+            inventory.setStack((2 * columns) + (columns / 2) - 2, newPokemonItem);
+        }
     }
 
     @Override
