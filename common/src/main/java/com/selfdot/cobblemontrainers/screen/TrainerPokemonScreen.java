@@ -64,18 +64,14 @@ public class TrainerPokemonScreen extends Screen {
 
         if (slotIndex == movesSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
-            return;
-        }
-        if (slotIndex == abilitiesSlot) {
+        } else if (slotIndex == abilitiesSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new AbilitySelectScreen(trainer, trainerPokemon)));
-            return;
-        }
-        if (slotIndex == evsSlot) {
+        } else if (slotIndex == evsSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new EVSelectScreen(trainer, trainerPokemon)));
-            return;
-        }
-        if (slotIndex == ivsSlot) {
+        } else if (slotIndex == ivsSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new IVSelectScreen(trainer, trainerPokemon)));
+        } else if (slotIndex == deleteSlot) {
+            player.openHandledScreen(new TrainerSetupHandlerFactory(new ConfirmDeletePokemonScreen(trainer, trainerPokemon)));
         }
     }
 
