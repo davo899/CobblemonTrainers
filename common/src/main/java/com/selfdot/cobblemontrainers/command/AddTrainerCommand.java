@@ -44,16 +44,7 @@ public class AddTrainerCommand implements Command<ServerCommandSource> {
     public int run(CommandContext<ServerCommandSource> ctx) {
         String name = ctx.getArgument("name", String.class);
 
-        List<TrainerPokemon> trainerTeam = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            Pokemon pokemon = new Pokemon();
-            pokemon.initializeMoveset(true);
-            pokemon.checkAbility();
-            pokemon.setGender(Math.random() > 0.5 ? Gender.FEMALE : Gender.MALE);
-            trainerTeam.add(TrainerPokemon.fromPokemon(pokemon));
-        }
-
-        if (!TrainerRegistry.getInstance().addTrainer(new Trainer(name, trainerTeam))) {
+        if (!TrainerRegistry.getInstance().addTrainer(new Trainer(name, new ArrayList<>()))) {
             ctx.getSource().sendError(Text.literal("Trainer " + name + " already exists"));
             return -1;
         }
