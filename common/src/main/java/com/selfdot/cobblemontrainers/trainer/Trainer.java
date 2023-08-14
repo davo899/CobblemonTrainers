@@ -1,6 +1,9 @@
 package com.selfdot.cobblemontrainers.trainer;
 
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
+import com.cobblemon.mod.common.pokemon.Gender;
+import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,6 +22,15 @@ public class Trainer {
     public Trainer(String name, List<TrainerPokemon> team) {
         this.name = name;
         this.team = team;
+    }
+
+    public void addSpecies(Species species) {
+        Pokemon pokemon = new Pokemon();
+        pokemon.setSpecies(species);
+        pokemon.initializeMoveset(true);
+        pokemon.checkAbility();
+        pokemon.setGender(Math.random() > 0.5 ? Gender.FEMALE : Gender.MALE);
+        team.add(TrainerPokemon.fromPokemon(pokemon));
     }
 
     public List<BattlePokemon> getTeam() {

@@ -7,6 +7,7 @@ import dev.architectury.event.events.common.CommandRegistrationEvent
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions
+import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import net.minecraft.command.CommandRegistryAccess
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
@@ -45,6 +46,7 @@ object CobblemonTrainers {
     private fun onServerStart(server: MinecraftServer) {
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
         TrainerRegistry.getInstance().loadTrainersFromFile(TRAINER_DATA_FILENAME)
+        SpeciesSelectScreen.loadSpecies()
     }
 
     private fun onServerStop(server: MinecraftServer) {

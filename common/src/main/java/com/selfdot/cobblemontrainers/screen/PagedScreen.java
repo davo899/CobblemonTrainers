@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class PagedScreen<T> extends Screen {
 
     private final List<T> trackedList;
-    private int pageNumber;
+    protected int pageNumber;
     private int maxPerPage = 0;
     private int prevPageSlot = 0;
     private int nextPageSlot = 0;

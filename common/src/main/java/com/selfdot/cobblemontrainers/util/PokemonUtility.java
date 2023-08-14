@@ -11,7 +11,7 @@ import net.minecraft.util.Formatting;
 
 public class PokemonUtility {
 
-    public static ItemStack pokemonToItem(Pokemon pokemon) {
+    public static ItemStack pokemonToInfoItem(Pokemon pokemon) {
         String moveOne = pokemon.getMoveSet().getMoves().size() >= 1 ? pokemon.getMoveSet().get(0).getDisplayName().getString() : "Empty";
         String moveTwo = pokemon.getMoveSet().getMoves().size() >= 2 ? pokemon.getMoveSet().get(1).getDisplayName().getString() : "Empty";
         String moveThree = pokemon.getMoveSet().getMoves().size() >= 3 ? pokemon.getMoveSet().get(2).getDisplayName().getString() : "Empty";
@@ -47,6 +47,18 @@ public class PokemonUtility {
                 Text.literal(" ").append(Text.literal(moveFour).formatted(Formatting.WHITE)),
                 Text.literal("Form: ").formatted(Formatting.GOLD).append(pokemon.getForm().getName())
             })
+            .setCustomName(
+                pokemon.getShiny() ?
+                    pokemon.getDisplayName().formatted(Formatting.GRAY).append(Text.literal(" ★").formatted(Formatting.GOLD)) :
+                    pokemon.getDisplayName().formatted(Formatting.GRAY)
+            )
+            .build();
+        return itemstack;
+    }
+
+    public static ItemStack pokemonToItem(Pokemon pokemon) {
+        ItemStack itemstack = new ItemBuilder(PokemonItem.from(pokemon, 1))
+            .hideAdditional()
             .setCustomName(
                 pokemon.getShiny() ?
                     pokemon.getDisplayName().formatted(Formatting.GRAY).append(Text.literal(" ★").formatted(Formatting.GOLD)) :
