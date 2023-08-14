@@ -51,6 +51,6 @@ public class IVSelectScreen extends Screen {
 
     @Override
     public String getDisplayName() {
-        return null;
+        return "IVs";
     }
 }
