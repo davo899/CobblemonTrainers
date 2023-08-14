@@ -1,8 +1,6 @@
 package com.selfdot.cobblemontrainers.screen;
 
-import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
-import com.cobblemon.mod.common.client.gui.PokemonGuiUtilsKt;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.entity.player.PlayerEntity;
