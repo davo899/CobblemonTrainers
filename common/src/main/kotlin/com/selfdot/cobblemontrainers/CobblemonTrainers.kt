@@ -1,11 +1,7 @@
 package com.selfdot.cobblemontrainers
 
 import com.mojang.brigadier.CommandDispatcher
-import com.selfdot.cobblemontrainers.command.AddTrainerCommand
-import com.selfdot.cobblemontrainers.command.BattleTrainerCommand
-import com.selfdot.cobblemontrainers.command.ReloadCommand
-import com.selfdot.cobblemontrainers.command.RemoveTrainerCommand
-import com.selfdot.cobblemontrainers.command.SetupCommand
+import com.selfdot.cobblemontrainers.command.*
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
 import dev.architectury.event.events.common.CommandRegistrationEvent
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
@@ -33,7 +29,7 @@ object CobblemonTrainers {
         LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
     }
 
-    fun registerCommands(
+    private fun registerCommands(
         dispatcher: CommandDispatcher<ServerCommandSource>,
         registry: CommandRegistryAccess,
         selection: CommandManager.RegistrationEnvironment
@@ -41,16 +37,17 @@ object CobblemonTrainers {
         AddTrainerCommand().register(dispatcher)
         BattleTrainerCommand().register(dispatcher)
         RemoveTrainerCommand().register(dispatcher)
+        RenameTrainerCommand().register(dispatcher)
         SetupCommand().register(dispatcher)
         ReloadCommand().register(dispatcher)
     }
 
-    fun onServerStart(server: MinecraftServer) {
+    private fun onServerStart(server: MinecraftServer) {
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
         TrainerRegistry.getInstance().loadTrainersFromFile(TRAINER_DATA_FILENAME)
     }
 
-    fun onServerStop(server: MinecraftServer) {
+    private fun onServerStop(server: MinecraftServer) {
         CobblemonTrainersLog.LOGGER.info("Storing trainer data")
         TrainerRegistry.getInstance().storeTrainersToFile(TRAINER_DATA_FILENAME)
     }

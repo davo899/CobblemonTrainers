@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class Trainer {
 
-    private final String name;
+    private String name;
     private final List<TrainerPokemon> team;
 
     public Trainer(String name, List<TrainerPokemon> team) {
@@ -30,6 +30,10 @@ public class Trainer {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public JsonElement toJson() {
