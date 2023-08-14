@@ -29,7 +29,7 @@ public class LevelEditScreen extends Screen {
     private int setMaxSlot;
 
     public LevelEditScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
-        super(new EVSelectScreen(trainer, trainerPokemon));
+        super(new TrainerPokemonScreen(trainer, trainerPokemon));
         this.trainerPokemon = trainerPokemon;
     }
 
