@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.screen;
 
+import com.cobblemon.mod.common.CobblemonItems;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +24,7 @@ public class TrainerListScreen extends Screen {
         this.maxPerPage = Math.min((rows - 2) * (columns - 2), trainerList.size());
         int i = 0;
         while (i < maxPerPage) {
-            ItemStack itemStack = new ItemStack(Items.WRITABLE_BOOK);
+            ItemStack itemStack = new ItemStack(CobblemonItems.POKE_BALL.get());
             itemStack.setCustomName(Text.literal(trainerList.get(i).getName()));
 
             // This formula will fill the non-edge slots of the inventory from a list of items,
