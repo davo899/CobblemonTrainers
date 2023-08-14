@@ -4,10 +4,9 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -29,18 +28,19 @@ public class TrainerTeamScreen extends Screen {
         inventory.setStack(columns / 2, trainerItem);
 
         List<BattlePokemon> team = trainer.getTeam();
-        for (int i = 0; i < Math.min(team.size(), TEAM_MAX_SIZE); i++) {
-            BattlePokemon pokemon = team.get(i);
-            inventory.setStack(
-                (2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3),
-                PokemonUtility.pokemonToItem(pokemon.getOriginalPokemon())
-            );
+        for (int i = 0; i < TEAM_MAX_SIZE; i++) {
+            if (i < team.size()) {
+                BattlePokemon pokemon = team.get(i);
+                inventory.setStack(
+                    (2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3),
+                    PokemonUtility.pokemonToItem(pokemon.getOriginalPokemon())
+                );
+            } else {
+                ItemStack itemStack = new ItemStack(Items.BEDROCK);
+                itemStack.setCustomName(Text.literal("Empty"));
+                inventory.setStack((2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3), itemStack);
+            }
         }
-    }
-
-    @Override
-    public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
-        super.onSlotClick(slotIndex, button, actionType, player);
     }
 
     @Override
