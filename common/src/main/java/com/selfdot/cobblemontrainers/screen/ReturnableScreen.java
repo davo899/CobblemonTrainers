@@ -10,6 +10,7 @@ import net.minecraft.text.Text;
 public abstract class ReturnableScreen extends Screen {
 
     private final Screen returnTo;
+    private int backButtonSlot = 0;
 
     public ReturnableScreen(Screen returnTo) {
         this.returnTo = returnTo;
@@ -18,14 +19,15 @@ public abstract class ReturnableScreen extends Screen {
     @Override
     public void initialize(Inventory inventory, int rows, int columns) {
         super.initialize(inventory, rows, columns);
+        backButtonSlot = ((rows - 2) * columns) + (columns / 2);
         ItemStack itemStack = new ItemStack(Items.BARRIER);
         itemStack.setCustomName(Text.literal("Back"));
-        inventory.setStack((rows - 1) * columns, itemStack);
+        inventory.setStack(backButtonSlot, itemStack);
     }
 
     @Override
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
-        if (slotIndex == (rows - 1) * columns) {
+        if (slotIndex == backButtonSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(returnTo));
         }
     }
