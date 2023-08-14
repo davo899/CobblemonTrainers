@@ -62,6 +62,11 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
+        if (trainer.getTeam().isEmpty()) {
+            source.sendError(Text.literal("Trainer " + name + " has no Pokémon"));
+            return -1;
+        }
+
         startBattle(source.getPlayer(), trainer, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 source.sendError(Text.literal("Failed to start battle"));
