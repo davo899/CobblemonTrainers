@@ -32,7 +32,9 @@ public class RenameTrainerCommand implements Command<ServerCommandSource> {
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("rename")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("oldName", string()).then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("oldName", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                         argument("newName", string()).executes(this)
                     )
                 )
