@@ -18,10 +18,12 @@ public class Trainer {
 
     private String name;
     private final List<TrainerPokemon> team;
+    private int moneyReward;
 
-    public Trainer(String name, List<TrainerPokemon> team) {
+    public Trainer(String name, List<TrainerPokemon> team, int moneyReward) {
         this.name = name;
         this.team = team;
+        this.moneyReward = moneyReward;
     }
 
     public void addSpecies(Species species) {
@@ -58,6 +60,7 @@ public class Trainer {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(ConfigKeys.TRAINER_NAME, name);
         jsonObject.add(ConfigKeys.TRAINER_TEAM, teamArray);
+        jsonObject.addProperty(ConfigKeys.TRAINER_MONEY_REWARD, moneyReward);
         return jsonObject;
     }
 
@@ -65,18 +68,34 @@ public class Trainer {
     public static Trainer fromJson(JsonObject jsonObject) {
         if (!jsonObject.has(ConfigKeys.TRAINER_NAME) || !jsonObject.has(ConfigKeys.TRAINER_TEAM)) return null;
 
-        String name = jsonObject.get(ConfigKeys.TRAINER_NAME).getAsString();
-        List<TrainerPokemon> team = new ArrayList<>();
-        jsonObject.getAsJsonArray(ConfigKeys.TRAINER_TEAM)
-            .forEach(jsonElement -> {
-                TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
-                if (pokemon == null) return;
-                team.add(pokemon);
-            });
+        try {
+            String name = jsonObject.get(ConfigKeys.TRAINER_NAME).getAsString();
+            List<TrainerPokemon> team = new ArrayList<>();
+            jsonObject.getAsJsonArray(ConfigKeys.TRAINER_TEAM)
+                .forEach(jsonElement -> {
+                    TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
+                    if (pokemon == null) return;
+                    team.add(pokemon);
+                });
 
-        if (name.isEmpty()) return null;
+            if (name.isEmpty()) return null;
 
-        return new Trainer(name, team);
+            int moneyReward = jsonObject.has(ConfigKeys.TRAINER_MONEY_REWARD) ?
+                jsonObject.get(ConfigKeys.TRAINER_MONEY_REWARD).getAsInt() : 0;
+            return new Trainer(name, team, moneyReward);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public int getMoneyReward() {
+        return moneyReward;
+    }
+
+    public void setMoneyReward(int moneyReward) {
+        this.moneyReward = moneyReward;
     }
 
 }

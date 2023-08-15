@@ -15,6 +15,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
+import com.selfdot.cobblemontrainers.trainer.TrainerBattleRewarder;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import kotlin.Unit;
 import net.minecraft.server.command.ServerCommandSource;
@@ -67,8 +68,12 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
 
         startBattle(source.getPlayer(), trainer, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
-                source.sendError(Text.literal("Failed to start battle"));
                 error.sendTo(source.getPlayer(), t -> t);
+                return Unit.INSTANCE;
+            })
+            .ifSuccessful(battle -> {
+                int moneyReward = trainer.getMoneyReward();
+                if (moneyReward > 0) TrainerBattleRewarder.getInstance().addBattleReward(battle, moneyReward);
                 return Unit.INSTANCE;
             });
         return 1;
