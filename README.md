@@ -1,5 +1,5 @@
 # Cobblemon Trainers
-Adds a trainer battle system to Cobblemon. Intended to be used with an interactable NPC mod.\
+Adds a trainer battle system to Cobblemon. Intended to be used with an interactable NPC mod.
 
 /trainers add <name> - Creates a new trainer with an empty team\
 /trainers setup - Opens GUI to configure trainers' teams\
