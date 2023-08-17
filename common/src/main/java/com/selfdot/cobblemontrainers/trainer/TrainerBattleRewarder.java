@@ -4,6 +4,9 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.ResultConsumer;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import kotlin.Unit;
@@ -18,7 +21,6 @@ public class TrainerBattleRewarder {
 
     private static final TrainerBattleRewarder INSTANCE = new TrainerBattleRewarder();
     public static TrainerBattleRewarder getInstance() { return INSTANCE; }
-    private CommandDispatcher<ServerCommandSource> dispatcher;
     private MinecraftServer server;
     private final Map<PokemonBattle, Integer> trainerBattleRewards = new HashMap<>();
 
@@ -35,11 +37,13 @@ public class TrainerBattleRewarder {
                                 trainerBattleRewards.get(battle);
 
                             try {
-                                dispatcher.execute(rewardCommand, server.getCommandSource());
+                                server.getCommandManager().getDispatcher().execute(
+                                    rewardCommand, server.getCommandSource()
+                                );
 
-                            } catch (CommandSyntaxException e) {
+                            } catch (Exception e) {
                                 CobblemonTrainersLog.LOGGER.error("Could not run: " + rewardCommand);
-                                e.printStackTrace();
+                                CobblemonTrainersLog.LOGGER.error(e.getMessage());
                             }
                         }
                     });
@@ -52,10 +56,6 @@ public class TrainerBattleRewarder {
 
     public void addBattleReward(PokemonBattle battle, int reward) {
         trainerBattleRewards.put(battle, reward);
-    }
-
-    public void setDispatcher(CommandDispatcher<ServerCommandSource> dispatcher) {
-        this.dispatcher = dispatcher;
     }
 
     public void setServer(MinecraftServer server) {

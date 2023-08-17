@@ -43,7 +43,6 @@ object CobblemonTrainers {
         SetMoneyRewardCommand().register(dispatcher)
         SetupCommand().register(dispatcher)
         ReloadCommand().register(dispatcher)
-        TrainerBattleRewarder.getInstance().setDispatcher(dispatcher)
     }
 
     private fun onServerStart(server: MinecraftServer) {
