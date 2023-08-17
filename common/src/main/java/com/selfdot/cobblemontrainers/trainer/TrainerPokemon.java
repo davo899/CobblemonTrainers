@@ -13,10 +13,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.ConfigKeys;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
 public class TrainerPokemon {
 
@@ -39,6 +41,7 @@ public class TrainerPokemon {
     private MoveSet moveset;
     private IVs ivs;
     private EVs evs;
+    private FormData formData;
 
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
@@ -52,6 +55,7 @@ public class TrainerPokemon {
         jsonObject.add(ConfigKeys.POKEMON_MOVESET, movesetJson);
         jsonObject.add(ConfigKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
         jsonObject.add(ConfigKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
+        jsonObject.addProperty(ConfigKeys.POKEMON_FORM_ID, formData.formOnlyShowdownId());
         return jsonObject;
     }
 
@@ -67,6 +71,7 @@ public class TrainerPokemon {
             );
             trainerPokemon.gender = Gender.valueOf(jsonObject.get(ConfigKeys.POKEMON_GENDER).getAsString());
             trainerPokemon.level = jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt();
+            if (trainerPokemon.level <= 0) return null;
             trainerPokemon.nature = Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString()));
             trainerPokemon.ability = new Ability(Abilities.INSTANCE.getOrException(
                 jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsString()
@@ -79,6 +84,16 @@ public class TrainerPokemon {
                 trainerPokemon.moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
             }
             if (trainerPokemon.moveset.getMoves().isEmpty()) return null;
+
+            if (jsonObject.has(ConfigKeys.POKEMON_FORM_ID)) {
+                Optional<FormData> formOpt = trainerPokemon.species.getForms().stream().filter(form ->
+                    form.formOnlyShowdownId().equals(jsonObject.get(ConfigKeys.POKEMON_FORM_ID).getAsString())
+                ).findFirst();
+                if (formOpt.isEmpty()) return null;
+                trainerPokemon.formData = formOpt.get();
+            } else {
+                trainerPokemon.formData = trainerPokemon.species.getStandardForm();
+            }
 
         } catch (Exception e) {
             return null;
@@ -97,6 +112,7 @@ public class TrainerPokemon {
         pokemon.getMoveSet().copyFrom(moveset);
         pokemon.setIvs(ivs);
         pokemon.setEvs(evs);
+        pokemon.setForm(formData);
         return pokemon;
     }
 
@@ -110,15 +126,12 @@ public class TrainerPokemon {
         trainerPokemon.moveset = pokemon.getMoveSet();
         trainerPokemon.ivs = pokemon.getIvs();
         trainerPokemon.evs = pokemon.getEvs();
+        trainerPokemon.formData = pokemon.getForm();
         return trainerPokemon;
     }
 
     public String getName() {
         return species.getTranslatedName().getString();
-    }
-
-    public Ability getAbility() {
-        return ability;
     }
 
     public MoveSet getMoveset() {
@@ -137,18 +150,6 @@ public class TrainerPokemon {
         this.ability = ability;
     }
 
-    public void setMoveset(MoveSet moveset) {
-        this.moveset = moveset;
-    }
-
-    public void setIvs(IVs ivs) {
-        this.ivs = ivs;
-    }
-
-    public void setEvs(EVs evs) {
-        this.evs = evs;
-    }
-
     public int getLevel() {
         return level;
     }
@@ -156,4 +157,13 @@ public class TrainerPokemon {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setFormData(FormData formData) {
+        this.formData = formData;
+    }
+
 }
