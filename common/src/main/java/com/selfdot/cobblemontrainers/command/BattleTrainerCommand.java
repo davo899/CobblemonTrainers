@@ -38,8 +38,8 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
                 literal("battle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("name", string())
-                        .suggests(new TrainerNameSuggestionProvider())
-                        .executes(this)
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .executes(this)
                 )
             )
         );

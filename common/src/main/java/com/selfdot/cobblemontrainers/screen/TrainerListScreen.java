@@ -7,11 +7,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TrainerListScreen extends PagedScreen<Trainer> {
 
-    public TrainerListScreen() { this(0); }
-    public TrainerListScreen(int pageNumber) {
-        super(TrainerRegistry.getInstance().getAllTrainers().stream().toList(), pageNumber);
+    public TrainerListScreen(String trainerGroup) {
+        super(
+            new TrainerGroupScreen(),
+            TrainerRegistry.getInstance().getAllTrainers().stream()
+                .filter(trainer -> trainer.getGroup().equals(trainerGroup))
+                .collect(Collectors.toList()),
+            0
+        );
     }
 
     @Override

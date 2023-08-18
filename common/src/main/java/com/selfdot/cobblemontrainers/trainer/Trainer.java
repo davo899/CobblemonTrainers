@@ -7,7 +7,7 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.util.ConfigKeys;
+import com.selfdot.cobblemontrainers.util.DataKeys;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -17,13 +17,15 @@ import java.util.stream.Collectors;
 public class Trainer {
 
     private String name;
+    private String group;
     private final List<TrainerPokemon> team;
     private int moneyReward;
 
-    public Trainer(String name, List<TrainerPokemon> team, int moneyReward) {
+    public Trainer(String name, List<TrainerPokemon> team, int moneyReward, String group) {
         this.name = name;
         this.team = team;
         this.moneyReward = moneyReward;
+        this.group = group;
     }
 
     public void addSpecies(Species species) {
@@ -58,20 +60,21 @@ public class Trainer {
         JsonArray teamArray = new JsonArray(team.size());
         team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(ConfigKeys.TRAINER_NAME, name);
-        jsonObject.add(ConfigKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(ConfigKeys.TRAINER_MONEY_REWARD, moneyReward);
+        jsonObject.addProperty(DataKeys.TRAINER_NAME, name);
+        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
+        jsonObject.addProperty(DataKeys.TRAINER_MONEY_REWARD, moneyReward);
+        jsonObject.addProperty(DataKeys.TRAINER_GROUP, group);
         return jsonObject;
     }
 
     @Nullable
     public static Trainer fromJson(JsonObject jsonObject) {
-        if (!jsonObject.has(ConfigKeys.TRAINER_NAME) || !jsonObject.has(ConfigKeys.TRAINER_TEAM)) return null;
+        if (!jsonObject.has(DataKeys.TRAINER_NAME) || !jsonObject.has(DataKeys.TRAINER_TEAM)) return null;
 
         try {
-            String name = jsonObject.get(ConfigKeys.TRAINER_NAME).getAsString();
+            String name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
             List<TrainerPokemon> team = new ArrayList<>();
-            jsonObject.getAsJsonArray(ConfigKeys.TRAINER_TEAM)
+            jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
                 .forEach(jsonElement -> {
                     TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
                     if (pokemon == null) return;
@@ -80,9 +83,17 @@ public class Trainer {
 
             if (name.isEmpty()) return null;
 
-            int moneyReward = jsonObject.has(ConfigKeys.TRAINER_MONEY_REWARD) ?
-                jsonObject.get(ConfigKeys.TRAINER_MONEY_REWARD).getAsInt() : 0;
-            return new Trainer(name, team, moneyReward);
+            int moneyReward = jsonObject.has(DataKeys.TRAINER_MONEY_REWARD) ?
+                jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt() : 0;
+
+            String group;
+            if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
+                group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
+            } else {
+                group = DataKeys.UNGROUPED;
+            }
+
+            return new Trainer(name, team, moneyReward, group);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,6 +107,14 @@ public class Trainer {
 
     public void setMoneyReward(int moneyReward) {
         this.moneyReward = moneyReward;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
 }

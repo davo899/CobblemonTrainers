@@ -2,8 +2,6 @@ package com.selfdot.cobblemontrainers.trainer;
 
 import com.cobblemon.mod.common.api.abilities.Abilities;
 import com.cobblemon.mod.common.api.abilities.Ability;
-import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
-import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveSet;
 import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.api.pokemon.Natures;
@@ -11,8 +9,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
-import com.selfdot.cobblemontrainers.util.ConfigKeys;
+import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.util.Identifier;
 
 import javax.annotation.Nullable;
@@ -21,14 +18,14 @@ import java.util.List;
 public class TrainerPokemon {
 
     private static final List<String> REQUIRED_MEMBERS = List.of(
-        ConfigKeys.POKEMON_SPECIES,
-        ConfigKeys.POKEMON_GENDER,
-        ConfigKeys.POKEMON_LEVEL,
-        ConfigKeys.POKEMON_NATURE,
-        ConfigKeys.POKEMON_ABILITY,
-        ConfigKeys.POKEMON_MOVESET,
-        ConfigKeys.POKEMON_IVS,
-        ConfigKeys.POKEMON_EVS
+        DataKeys.POKEMON_SPECIES,
+        DataKeys.POKEMON_GENDER,
+        DataKeys.POKEMON_LEVEL,
+        DataKeys.POKEMON_NATURE,
+        DataKeys.POKEMON_ABILITY,
+        DataKeys.POKEMON_MOVESET,
+        DataKeys.POKEMON_IVS,
+        DataKeys.POKEMON_EVS
     );
 
     private Species species;
@@ -42,16 +39,16 @@ public class TrainerPokemon {
 
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(ConfigKeys.POKEMON_SPECIES, species.getResourceIdentifier().toString());
-        jsonObject.addProperty(ConfigKeys.POKEMON_GENDER, gender.name());
-        jsonObject.addProperty(ConfigKeys.POKEMON_LEVEL, level);
-        jsonObject.addProperty(ConfigKeys.POKEMON_NATURE, nature.getName().toString());
-        jsonObject.addProperty(ConfigKeys.POKEMON_ABILITY, ability.getName());
+        jsonObject.addProperty(DataKeys.POKEMON_SPECIES, species.getResourceIdentifier().toString());
+        jsonObject.addProperty(DataKeys.POKEMON_GENDER, gender.name());
+        jsonObject.addProperty(DataKeys.POKEMON_LEVEL, level);
+        jsonObject.addProperty(DataKeys.POKEMON_NATURE, nature.getName().toString());
+        jsonObject.addProperty(DataKeys.POKEMON_ABILITY, ability.getName());
         JsonArray movesetJson = new JsonArray();
         moveset.forEach(move -> movesetJson.add(move.getName()));
-        jsonObject.add(ConfigKeys.POKEMON_MOVESET, movesetJson);
-        jsonObject.add(ConfigKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
-        jsonObject.add(ConfigKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
+        jsonObject.add(DataKeys.POKEMON_MOVESET, movesetJson);
+        jsonObject.add(DataKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
+        jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
         return jsonObject;
     }
 
@@ -63,18 +60,18 @@ public class TrainerPokemon {
         TrainerPokemon trainerPokemon = new TrainerPokemon();
         try {
             trainerPokemon.species = PokemonSpecies.INSTANCE.getByIdentifier(
-                new Identifier(jsonObject.get(ConfigKeys.POKEMON_SPECIES).getAsString())
+                new Identifier(jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString())
             );
-            trainerPokemon.gender = Gender.valueOf(jsonObject.get(ConfigKeys.POKEMON_GENDER).getAsString());
-            trainerPokemon.level = jsonObject.get(ConfigKeys.POKEMON_LEVEL).getAsInt();
-            trainerPokemon.nature = Natures.INSTANCE.getNature(new Identifier(jsonObject.get(ConfigKeys.POKEMON_NATURE).getAsString()));
+            trainerPokemon.gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
+            trainerPokemon.level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
+            trainerPokemon.nature = Natures.INSTANCE.getNature(new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString()));
             trainerPokemon.ability = new Ability(Abilities.INSTANCE.getOrException(
-                jsonObject.get(ConfigKeys.POKEMON_ABILITY).getAsString()
+                jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
             ), false);
-            trainerPokemon.ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_IVS).getAsJsonObject());
-            trainerPokemon.evs = (EVs) new EVs().loadFromJSON(jsonObject.get(ConfigKeys.POKEMON_EVS).getAsJsonObject());
+            trainerPokemon.ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_IVS).getAsJsonObject());
+            trainerPokemon.evs = (EVs) new EVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_EVS).getAsJsonObject());
             trainerPokemon.moveset = new MoveSet();
-            JsonArray movesetJson = jsonObject.get(ConfigKeys.POKEMON_MOVESET).getAsJsonArray();
+            JsonArray movesetJson = jsonObject.get(DataKeys.POKEMON_MOVESET).getAsJsonArray();
             for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
                 trainerPokemon.moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
             }

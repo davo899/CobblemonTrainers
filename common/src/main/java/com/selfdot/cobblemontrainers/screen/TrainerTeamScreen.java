@@ -20,7 +20,7 @@ public class TrainerTeamScreen extends Screen {
     private int newPokemonSlot = 0;
 
     public TrainerTeamScreen(Trainer trainer) {
-        super(new TrainerListScreen());
+        super(new TrainerListScreen(trainer.getGroup()));
         this.trainer = trainer;
     }
 

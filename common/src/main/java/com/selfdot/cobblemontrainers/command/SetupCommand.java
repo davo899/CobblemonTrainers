@@ -7,6 +7,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
+import com.selfdot.cobblemontrainers.screen.TrainerGroupScreen;
 import com.selfdot.cobblemontrainers.screen.TrainerListScreen;
 import com.selfdot.cobblemontrainers.screen.TrainerSetupHandlerFactory;
 import net.minecraft.server.command.ServerCommandSource;
@@ -37,7 +38,7 @@ public class SetupCommand implements Command<ServerCommandSource> {
             return -1;
         }
 
-        TrainerSetupHandlerFactory setupHandler = new TrainerSetupHandlerFactory(new TrainerListScreen());
+        TrainerSetupHandlerFactory setupHandler = new TrainerSetupHandlerFactory(new TrainerGroupScreen());
         source.getPlayer().openHandledScreen(setupHandler);
         return 1;
     }
