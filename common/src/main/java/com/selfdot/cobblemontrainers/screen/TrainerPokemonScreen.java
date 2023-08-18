@@ -21,7 +21,6 @@ public class TrainerPokemonScreen extends Screen {
     private int ivsSlot;
     private int deleteSlot;
     private int levelSlot;
-    private int formsSlot;
 
     public TrainerPokemonScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerTeamScreen(trainer));
@@ -40,7 +39,6 @@ public class TrainerPokemonScreen extends Screen {
         deleteSlot = ivsSlot + 1;
 
         levelSlot = evsSlot + columns;
-        formsSlot = abilitiesSlot + columns;
 
         ItemStack movesItem = new ItemStack(Items.MUSIC_DISC_5);
         movesItem.setCustomName(Text.literal("Moves"));
@@ -65,10 +63,6 @@ public class TrainerPokemonScreen extends Screen {
         ItemStack levelItem = new ItemStack(CobblemonItems.WISE_GLASSES.get());
         levelItem.setCustomName(Text.literal("Level"));
         inventory.setStack(levelSlot, levelItem);
-
-        ItemStack formItem = new ItemStack(CobblemonItems.ULTRA_BALL.get());
-        formItem.setCustomName(Text.literal("Forms"));
-        inventory.setStack(formsSlot, formItem);
     }
 
     @Override
@@ -87,8 +81,6 @@ public class TrainerPokemonScreen extends Screen {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new ConfirmDeletePokemonScreen(trainer, trainerPokemon)));
         } else if (slotIndex == levelSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new LevelEditScreen(trainer, trainerPokemon)));
-        } else if (slotIndex == formsSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new FormSelectScreen(trainer, trainerPokemon)));
         }
     }
 
