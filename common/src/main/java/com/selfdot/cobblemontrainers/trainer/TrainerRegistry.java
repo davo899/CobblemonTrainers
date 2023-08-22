@@ -1,6 +1,7 @@
 package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.*;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 
 import javax.annotation.Nullable;
@@ -70,10 +71,13 @@ public class TrainerRegistry {
             }
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             jsonArray.forEach(trainerJson -> {
-                if (!trainerJson.isJsonObject()) { logFoundInvalidTrainerData(trainerJson); return; }
+                if (!trainerJson.isJsonObject()) {
+                    CobblemonTrainers.INSTANCE.disable("Trainer json is not a json object");
+                    return;
+                }
 
                 Trainer trainer = Trainer.fromJson(trainerJson.getAsJsonObject());
-                if (trainer == null) { logFoundInvalidTrainerData(trainerJson); return; }
+                if (trainer == null) return;
 
                 addOrUpdateTrainer(trainer);
             });

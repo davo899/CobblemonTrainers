@@ -26,7 +26,7 @@ import java.util.UUID;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
-public class BattleTrainerCommand implements Command<ServerCommandSource> {
+public class BattleTrainerCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -39,14 +39,13 @@ public class BattleTrainerCommand implements Command<ServerCommandSource> {
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("name", string())
                     .suggests(new TrainerNameSuggestionProvider())
-                    .executes(this)
+                    .executes(this::execute)
                 )
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         ServerCommandSource source = ctx.getSource();
         if (!source.isExecutedByPlayer() || source.getPlayer() == null) {
             source.sendError(Text.literal("Must be a player to battle trainers"));

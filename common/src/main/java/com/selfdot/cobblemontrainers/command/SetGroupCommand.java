@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
-public class SetGroupCommand implements Command<ServerCommandSource> {
+public class SetGroupCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -31,15 +31,14 @@ public class SetGroupCommand implements Command<ServerCommandSource> {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                         argument("group", string())
                         .suggests(new TrainerGroupSuggestionProvider())
-                        .executes(this)
+                        .executes(this::execute)
                     )
                 )
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         String trainerName = ctx.getArgument("trainer", String.class);
         String group = ctx.getArgument("group", String.class);
 

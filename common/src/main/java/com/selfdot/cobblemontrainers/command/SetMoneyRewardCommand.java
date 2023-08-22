@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 
-public class SetMoneyRewardCommand implements Command<ServerCommandSource> {
+public class SetMoneyRewardCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -33,15 +33,14 @@ public class SetMoneyRewardCommand implements Command<ServerCommandSource> {
                     .suggests(new TrainerNameSuggestionProvider())
                     .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
                         argument("amount", integer())
-                        .executes(this)
+                        .executes(this::execute)
                     )
                 )
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         String name = ctx.getArgument("name", String.class);
         Integer moneyReward = ctx.getArgument("amount", Integer.class);
 

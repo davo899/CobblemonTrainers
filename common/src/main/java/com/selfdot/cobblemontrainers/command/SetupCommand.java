@@ -15,7 +15,7 @@ import net.minecraft.text.Text;
 
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 
-public class SetupCommand implements Command<ServerCommandSource> {
+public class SetupCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -25,13 +25,12 @@ public class SetupCommand implements Command<ServerCommandSource> {
             ))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setup")
-                    .executes(this)
+                    .executes(this::execute)
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         ServerCommandSource source = ctx.getSource();
         if (!source.isExecutedByPlayer() || source.getPlayer() == null) {
             source.sendError(Text.literal("Must be a player to open setup GUI"));

@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 
 import javax.annotation.Nullable;
@@ -69,7 +70,14 @@ public class Trainer {
 
     @Nullable
     public static Trainer fromJson(JsonObject jsonObject) {
-        if (!jsonObject.has(DataKeys.TRAINER_NAME) || !jsonObject.has(DataKeys.TRAINER_TEAM)) return null;
+        if (!jsonObject.has(DataKeys.TRAINER_NAME)) {
+            CobblemonTrainers.INSTANCE.disable("Trainer missing name field");
+            return null;
+        }
+        if (!jsonObject.has(DataKeys.TRAINER_TEAM)) {
+            CobblemonTrainers.INSTANCE.disable("Trainer missing team field");
+            return null;
+        }
 
         try {
             String name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
@@ -77,11 +85,17 @@ public class Trainer {
             jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
                 .forEach(jsonElement -> {
                     TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
-                    if (pokemon == null) return;
+                    if (pokemon == null) {
+                        CobblemonTrainers.INSTANCE.disable("Invalid trainer pokemon");
+                        return;
+                    }
                     team.add(pokemon);
                 });
 
-            if (name.isEmpty()) return null;
+            if (name.isEmpty()) {
+                CobblemonTrainers.INSTANCE.disable("Trainer name is an empty string");
+                return null;
+            }
 
             int moneyReward = jsonObject.has(DataKeys.TRAINER_MONEY_REWARD) ?
                 jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt() : 0;
@@ -96,6 +110,7 @@ public class Trainer {
             return new Trainer(name, team, moneyReward, group);
 
         } catch (Exception e) {
+            CobblemonTrainers.INSTANCE.disable("Exception when loading trainer");
             e.printStackTrace();
             return null;
         }

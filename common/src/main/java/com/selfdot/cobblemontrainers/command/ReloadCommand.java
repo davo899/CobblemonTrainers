@@ -12,7 +12,7 @@ import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-public class ReloadCommand implements Command<ServerCommandSource> {
+public class ReloadCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -21,13 +21,12 @@ public class ReloadCommand implements Command<ServerCommandSource> {
                 src, new CobblemonPermission("", PermissionLevel.CHEAT_COMMANDS_AND_COMMAND_BLOCKS)
             ))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("reload").executes(this)
+                literal("reload").executes(this::execute)
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> context) {
+    protected int run(CommandContext<ServerCommandSource> context) {
         TrainerRegistry.getInstance().loadTrainersFromFile(CobblemonTrainers.TRAINER_DATA_FILENAME);
         context.getSource().sendMessage(Text.literal("Reloaded trainer file"));
         return 1;

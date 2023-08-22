@@ -1,34 +1,38 @@
 package com.selfdot.cobblemontrainers
 
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import com.mojang.brigadier.context.CommandContext
 import com.selfdot.cobblemontrainers.command.*
-import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
-import dev.architectury.event.events.common.CommandRegistrationEvent
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleRewarder
+import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
+import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
+import dev.architectury.event.events.common.CommandRegistrationEvent
+import dev.architectury.event.events.common.LifecycleEvent
 import net.minecraft.command.CommandRegistryAccess
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
-import dev.architectury.event.events.common.LifecycleEvent
-import net.minecraft.server.MinecraftServer
+import net.minecraft.text.Text
 
 object CobblemonTrainers {
     lateinit var permissions: CobblemonTrainersPermissions
     const val MODID = "cobblemontrainers"
     const val TRAINER_DATA_FILENAME = "config/trainers/trainers.json"
+    var disabled = false
     fun initialize() {
         permissions = CobblemonTrainersPermissions()
 
         // Load official Cobblemon's config.
         CobblemonConfig()
 
-        CommandRegistrationEvent.EVENT.register(CobblemonTrainers::registerCommands)
-
         LifecycleEvent.SERVER_STARTING.register(CobblemonTrainers::onServerStart)
         LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
+
+        CommandRegistrationEvent.EVENT.register(CobblemonTrainers::registerCommands)
     }
 
     private fun registerCommands(
@@ -47,15 +51,23 @@ object CobblemonTrainers {
     }
 
     private fun onServerStart(server: MinecraftServer) {
+        SpeciesSelectScreen.loadSpecies()
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
         TrainerRegistry.getInstance().loadTrainersFromFile(TRAINER_DATA_FILENAME)
-        SpeciesSelectScreen.loadSpecies()
         TrainerBattleRewarder.getInstance().setServer(server);
     }
 
     private fun onServerStop(server: MinecraftServer) {
-        CobblemonTrainersLog.LOGGER.info("Storing trainer data")
-        TrainerRegistry.getInstance().storeTrainersToFile(TRAINER_DATA_FILENAME)
+        if (!disabled) {
+            CobblemonTrainersLog.LOGGER.info("Storing trainer data")
+            TrainerRegistry.getInstance().storeTrainersToFile(TRAINER_DATA_FILENAME)
+        }
+    }
+
+    fun disable(message: String) {
+        if (!disabled) CobblemonTrainersLog.LOGGER.error("CobblemonTrainers mod disabled:")
+        CobblemonTrainersLog.LOGGER.error(message)
+        disabled = true
     }
 
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
-public class RenameTrainerCommand implements Command<ServerCommandSource> {
+public class RenameTrainerCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -35,15 +35,14 @@ public class RenameTrainerCommand implements Command<ServerCommandSource> {
                     argument("oldName", string())
                     .suggests(new TrainerNameSuggestionProvider())
                     .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("newName", string()).executes(this)
+                        argument("newName", string()).executes(this::execute)
                     )
                 )
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         String oldName = ctx.getArgument("oldName", String.class);
         String newName = ctx.getArgument("newName", String.class);
 

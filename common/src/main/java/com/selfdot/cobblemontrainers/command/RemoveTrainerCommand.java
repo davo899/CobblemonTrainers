@@ -14,7 +14,7 @@ import net.minecraft.text.Text;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
-public class RemoveTrainerCommand implements Command<ServerCommandSource> {
+public class RemoveTrainerCommand extends TrainerCommand {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
@@ -27,14 +27,13 @@ public class RemoveTrainerCommand implements Command<ServerCommandSource> {
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("name", string())
                         .suggests(new TrainerNameSuggestionProvider())
-                        .executes(this)
+                        .executes(this::execute)
                 )
             )
         );
     }
 
-    @Override
-    public int run(CommandContext<ServerCommandSource> ctx) {
+    protected int run(CommandContext<ServerCommandSource> ctx) {
         String name = ctx.getArgument("name", String.class);
 
         if (!TrainerRegistry.getInstance().removeTrainer(name)) {
