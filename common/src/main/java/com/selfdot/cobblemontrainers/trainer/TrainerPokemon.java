@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.util.Identifier;
 
@@ -55,7 +56,10 @@ public class TrainerPokemon {
     @SuppressWarnings("DataFlowIssue")
     @Nullable
     public static TrainerPokemon fromJson(JsonObject jsonObject) {
-        for (String member : REQUIRED_MEMBERS) if (!jsonObject.has(member)) return null;
+        for (String member : REQUIRED_MEMBERS) if (!jsonObject.has(member)) {
+            CobblemonTrainersLog.LOGGER.error("Trainer pokemon missing field: " + member);
+            return null;
+        }
 
         TrainerPokemon trainerPokemon = new TrainerPokemon();
         try {
@@ -64,7 +68,9 @@ public class TrainerPokemon {
             );
             trainerPokemon.gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
             trainerPokemon.level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
-            trainerPokemon.nature = Natures.INSTANCE.getNature(new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString()));
+            trainerPokemon.nature = Natures.INSTANCE.getNature(
+                new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString())
+            );
             trainerPokemon.ability = new Ability(Abilities.INSTANCE.getOrException(
                 jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
             ), false);
@@ -75,9 +81,14 @@ public class TrainerPokemon {
             for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
                 trainerPokemon.moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
             }
-            if (trainerPokemon.moveset.getMoves().isEmpty()) return null;
+            if (trainerPokemon.moveset.getMoves().isEmpty()) {
+                CobblemonTrainersLog.LOGGER.error("Trainer pokemon has no moves");
+                return null;
+            }
 
         } catch (Exception e) {
+            CobblemonTrainersLog.LOGGER.error("Exception when loading trainer pokemon:");
+            CobblemonTrainersLog.LOGGER.error(e.getMessage());
             return null;
         }
         return trainerPokemon;
