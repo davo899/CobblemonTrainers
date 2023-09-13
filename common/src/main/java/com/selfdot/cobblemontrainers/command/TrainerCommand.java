@@ -10,7 +10,7 @@ public abstract class TrainerCommand {
     protected int execute(CommandContext<ServerCommandSource> ctx) {
         if (CobblemonTrainers.INSTANCE.getDisabled()) {
             ctx.getSource().sendError(Text.literal(
-                "CobblemonTrainers has been disabled due to an error, tell davo899 to fix!"
+                "CobblemonTrainers has been disabled due to an error, please report this to staff."
             ));
             return -1;
         } else {
