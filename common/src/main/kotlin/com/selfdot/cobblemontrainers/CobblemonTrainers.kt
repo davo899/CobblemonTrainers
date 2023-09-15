@@ -1,8 +1,6 @@
 package com.selfdot.cobblemontrainers
 
 import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.builder.LiteralArgumentBuilder
-import com.mojang.brigadier.context.CommandContext
 import com.selfdot.cobblemontrainers.command.*
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions
@@ -16,7 +14,6 @@ import net.minecraft.command.CommandRegistryAccess
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.text.Text
 
 object CobblemonTrainers {
     lateinit var permissions: CobblemonTrainersPermissions
@@ -44,7 +41,7 @@ object CobblemonTrainers {
         BattleTrainerCommand().register(dispatcher)
         RemoveTrainerCommand().register(dispatcher)
         RenameTrainerCommand().register(dispatcher)
-        SetMoneyRewardCommand().register(dispatcher)
+        SetWinCommandCommand().register(dispatcher)
         SetupCommand().register(dispatcher)
         ReloadCommand().register(dispatcher)
         SetGroupCommand().register(dispatcher)

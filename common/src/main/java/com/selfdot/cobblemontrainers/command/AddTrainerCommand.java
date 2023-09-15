@@ -39,7 +39,7 @@ public class AddTrainerCommand extends TrainerCommand {
         String name = ctx.getArgument("name", String.class);
 
         if (!TrainerRegistry.getInstance().addTrainer(new Trainer(
-            name, new ArrayList<>(), 0, DataKeys.UNGROUPED
+            name, new ArrayList<>(), DataKeys.UNGROUPED, ""
         ))) {
             ctx.getSource().sendError(Text.literal("Trainer " + name + " already exists"));
             return -1;

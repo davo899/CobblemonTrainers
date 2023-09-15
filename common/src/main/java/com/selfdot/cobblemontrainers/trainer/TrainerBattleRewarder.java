@@ -9,6 +9,7 @@ import com.mojang.brigadier.ResultConsumer;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
+import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
@@ -22,7 +23,7 @@ public class TrainerBattleRewarder {
     private static final TrainerBattleRewarder INSTANCE = new TrainerBattleRewarder();
     public static TrainerBattleRewarder getInstance() { return INSTANCE; }
     private MinecraftServer server;
-    private final Map<PokemonBattle, Integer> trainerBattleRewards = new HashMap<>();
+    private final Map<PokemonBattle, String> trainerBattleRewards = new HashMap<>();
 
     private TrainerBattleRewarder() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, battleVictoryEvent -> {
@@ -32,9 +33,9 @@ public class TrainerBattleRewarder {
                     battleActor.getPlayerUUIDs().forEach(uuid -> {
                         ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
                         if (player != null) {
-                            String rewardCommand = "eco give " +
-                                player.getName().getString() + " " +
-                                trainerBattleRewards.get(battle);
+                            String rewardCommand = trainerBattleRewards.get(battle).replace(
+                                DataKeys.PLAYER_TOKEN, player.getName().getString()
+                            );
 
                             try {
                                 server.getCommandManager().getDispatcher().execute(
@@ -54,8 +55,8 @@ public class TrainerBattleRewarder {
         });
     }
 
-    public void addBattleReward(PokemonBattle battle, int reward) {
-        trainerBattleRewards.put(battle, reward);
+    public void addBattleReward(PokemonBattle battle, String rewardCommand) {
+        if (rewardCommand != null && !rewardCommand.isEmpty()) trainerBattleRewards.put(battle, rewardCommand);
     }
 
     public void setServer(MinecraftServer server) {

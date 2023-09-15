@@ -20,13 +20,13 @@ public class Trainer {
     private String name;
     private String group;
     private final List<TrainerPokemon> team;
-    private int moneyReward;
+    private String winCommand;
 
-    public Trainer(String name, List<TrainerPokemon> team, int moneyReward, String group) {
+    public Trainer(String name, List<TrainerPokemon> team, String group, String winCommand) {
         this.name = name;
         this.team = team;
-        this.moneyReward = moneyReward;
         this.group = group;
+        this.winCommand = winCommand;
     }
 
     public void addSpecies(Species species) {
@@ -63,7 +63,7 @@ public class Trainer {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty(DataKeys.TRAINER_NAME, name);
         jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(DataKeys.TRAINER_MONEY_REWARD, moneyReward);
+        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
         jsonObject.addProperty(DataKeys.TRAINER_GROUP, group);
         return jsonObject;
     }
@@ -97,8 +97,16 @@ public class Trainer {
                 return null;
             }
 
-            int moneyReward = jsonObject.has(DataKeys.TRAINER_MONEY_REWARD) ?
-                jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt() : 0;
+            String winCommand;
+            if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
+                winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+            } else {
+                if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
+                    winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
+                } else {
+                    winCommand = "";
+                }
+            }
 
             String group;
             if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
@@ -107,7 +115,7 @@ public class Trainer {
                 group = DataKeys.UNGROUPED;
             }
 
-            return new Trainer(name, team, moneyReward, group);
+            return new Trainer(name, team, group, winCommand);
 
         } catch (Exception e) {
             CobblemonTrainers.INSTANCE.disable("Exception when loading trainer");
@@ -116,12 +124,12 @@ public class Trainer {
         }
     }
 
-    public int getMoneyReward() {
-        return moneyReward;
+    public String getWinCommand() {
+        return winCommand;
     }
 
-    public void setMoneyReward(int moneyReward) {
-        this.moneyReward = moneyReward;
+    public void setWinCommand(String winCommand) {
+        this.winCommand = winCommand;
     }
 
     public String getGroup() {

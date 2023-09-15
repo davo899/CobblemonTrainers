@@ -71,8 +71,7 @@ public class BattleTrainerCommand extends TrainerCommand {
                 return Unit.INSTANCE;
             })
             .ifSuccessful(battle -> {
-                int moneyReward = trainer.getMoneyReward();
-                if (moneyReward > 0) TrainerBattleRewarder.getInstance().addBattleReward(battle, moneyReward);
+                TrainerBattleRewarder.getInstance().addBattleReward(battle, trainer.getWinCommand());
                 return Unit.INSTANCE;
             });
         return 1;
