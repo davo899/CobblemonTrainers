@@ -45,6 +45,7 @@ object CobblemonTrainers {
         SetupCommand().register(dispatcher)
         ReloadCommand().register(dispatcher)
         SetGroupCommand().register(dispatcher)
+        MakeBattleCommand().register(dispatcher)
     }
 
     private fun onServerStart(server: MinecraftServer) {

@@ -9,5 +9,6 @@ Adds a trainer battle system to Cobblemon. Intended to be used with an interacta
 /trainers remove \<name\> - Deletes a trainer\
 /trainers rename \<oldName\> \<newName\> - Renames a trainer (trainer names appear in the battle log)\
 /trainers reload - Reloads the trainer data file (invalid teams can be setup by directly editing the trainer data file "config/trainers/trainers.json", be warned Cobblemon may react in weird ways)
+/trainers makebattle \<playerName\> \<trainerName\> - Starts a battle between a player and a trainer
 
 Single quotes can be used to include spaces in the trainer name: /trainers add 'Ash Ketchum'
