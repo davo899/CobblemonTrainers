@@ -25,7 +25,7 @@ versionRange="[1.20.1]"
 [[dependencies.cobblemontrainers]]
 modId="forge" #mandatory
 mandatory=true #mandatory
-versionRange="[47.2.0,)" #mandatory
+versionRange="[47,)" #mandatory
 
 [[dependencies.cobblemontrainers]]
 modId="architectury"
