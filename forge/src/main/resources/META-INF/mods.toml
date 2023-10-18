@@ -1,5 +1,5 @@
 modLoader="kotlinforforge" #mandatory
-loaderVersion="[3,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[4.3,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license="Apache 2.0 with Commons Clause"
 issueTrackerURL="https://github.com/davo899/CobblemonTrainers/issues"
 
@@ -20,14 +20,14 @@ description="Adds a trainer battle system to Cobblemon"
 [[dependencies.cobblemontrainers]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.2]"
+versionRange="[1.20.1]"
 
 [[dependencies.cobblemontrainers]]
 modId="forge" #mandatory
 mandatory=true #mandatory
-versionRange="[40,)" #mandatory
+versionRange="[47.2.0,)" #mandatory
 
 [[dependencies.cobblemontrainers]]
 modId="architectury"
 mandatory=true
-versionRange="[6.5.69,)"
+versionRange="[9.1.12,)"

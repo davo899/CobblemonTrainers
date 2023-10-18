@@ -14,19 +14,11 @@ public class TrainerSetupScreenHandler extends GenericContainerScreenHandler {
     }
 
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
-        return null;
-    }
-
-    @Override
     public boolean canInsertIntoSlot(Slot slot) {
         return false;
     }
 
     @Override
     protected void dropInventory(PlayerEntity player, Inventory inventory) { }
-
-    @Override
-    public void close(PlayerEntity player) { }
 
 }

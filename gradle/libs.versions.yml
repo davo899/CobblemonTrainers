@@ -1,7 +1,7 @@
 versions:
 
   # jetbains
-  kotlin: 1.7.10
+  kotlin: 1.9.0
   coroutines: 1.6.1
   annotations: 23.0.0
   serialization: 1.3.2
@@ -10,18 +10,18 @@ versions:
   shadow: 7.1.2
 
   # fabric/remap
-  loom: 0.12.0-SNAPSHOT
-  fabric-loader: 0.14.9
-  fabric-api: 0.75.1+1.19.2
-  fabric-kotlin: 1.8.2+kotlin.1.7.10
+  loom: 1.3.357
+  fabric-loader: 0.14.23
+  fabric-api: 0.90.0+1.20.1
+  fabric-kotlin: 1.10.9+kotlin.1.9.0
   architectury-plugin: 3.4-SNAPSHOT
 
   # forge
-  forge: 1.19.2-43.2.4
+  forge: 1.20.1-47.2.0
   kotlinForForge: 3.8.0
 
   # common
-  architectury: 6.5.69
+  architectury: 9.1.12
 
   # test
   junit: 5.9.0

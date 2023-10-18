@@ -29,7 +29,7 @@ public class TrainerListScreen extends PagedScreen<Trainer> {
 
     @Override
     protected ItemStack toItem(Trainer trainer) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.POKE_BALL.get());
+        ItemStack itemStack = new ItemStack(CobblemonItems.POKE_BALL);
         itemStack.setCustomName(Text.literal(trainer.getName()));
         return itemStack;
     }

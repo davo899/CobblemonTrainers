@@ -1,7 +1,6 @@
 package com.selfdot.cobblemontrainers.util;
 
 import com.cobblemon.mod.common.CobblemonItems;
-import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -24,13 +23,13 @@ public class ScreenUtils {
 
     public static ItemStack statVitaminItem(Stats stat) {
         return new ItemStack(switch (stat) {
-            case HP -> CobblemonItems.HP_UP.get();
-            case ATTACK -> CobblemonItems.PROTEIN.get();
-            case DEFENCE -> CobblemonItems.IRON.get();
-            case SPECIAL_ATTACK -> CobblemonItems.CALCIUM.get();
-            case SPECIAL_DEFENCE -> CobblemonItems.ZINC.get();
-            case SPEED -> CobblemonItems.CARBOS.get();
-            default -> CobblemonItems.CHARCOAL.get();
+            case HP -> CobblemonItems.HP_UP;
+            case ATTACK -> CobblemonItems.PROTEIN;
+            case DEFENCE -> CobblemonItems.IRON;
+            case SPECIAL_ATTACK -> CobblemonItems.CALCIUM;
+            case SPECIAL_DEFENCE -> CobblemonItems.ZINC;
+            case SPEED -> CobblemonItems.CARBOS;
+            default -> CobblemonItems.CHARCOAL;
         });
     }
 

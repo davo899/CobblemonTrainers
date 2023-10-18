@@ -9,6 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
+import kotlin.Unit;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class Trainer {
     public List<BattlePokemon> getBattleTeam() {
         return team.stream()
             .map(TrainerPokemon::toPokemon)
-            .map(pokemon -> new BattlePokemon(pokemon, pokemon))
+            .map(pokemon -> new BattlePokemon(pokemon, pokemon, (pokemonEntity -> Unit.INSTANCE)))
             .collect(Collectors.toList());
     }
 

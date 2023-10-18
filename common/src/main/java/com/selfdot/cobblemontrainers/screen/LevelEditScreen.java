@@ -35,7 +35,7 @@ public class LevelEditScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.WISE_GLASSES.get());
+        ItemStack itemStack = new ItemStack(CobblemonItems.WISE_GLASSES);
         itemStack.setCustomName(Text.literal("Level"));
         inventory.setStack(columns / 2, itemStack);
 
@@ -56,7 +56,7 @@ public class LevelEditScreen extends Screen {
         itemStack = new ItemStack(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("-" + EDIT_LOW));
         inventory.setStack(decreaseLowSlot, itemStack);
-        infoItem = new ItemStack(CobblemonItems.WISE_GLASSES.get());
+        infoItem = new ItemStack(CobblemonItems.WISE_GLASSES);
         updateInfoItem();
         inventory.setStack(infoSlot, infoItem);
         itemStack = new ItemStack(Items.GREEN_DYE);

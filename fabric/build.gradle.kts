@@ -40,10 +40,11 @@ dependencies {
         isTransitive = false
     }
 
-    modImplementation ("curse.maven:cobblemon-687131:4468330") {
+    modImplementation ("curse.maven:cobblemon-687131:4797468") {
         isTransitive = false;
     }
 
+    modImplementation(libs.fabricLoader)
     modApi(libs.fabricApi)
     modApi(libs.fabricKotlin)
     modApi(libs.architecturyFabric)

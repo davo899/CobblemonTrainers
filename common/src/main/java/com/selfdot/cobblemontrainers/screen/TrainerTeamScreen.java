@@ -26,7 +26,7 @@ public class TrainerTeamScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack trainerItem = new ItemStack(CobblemonItems.POKE_BALL.get());
+        ItemStack trainerItem = new ItemStack(CobblemonItems.POKE_BALL);
         trainerItem.setCustomName(Text.literal(trainer.getName()));
         inventory.setStack(columns / 2, trainerItem);
 
@@ -47,7 +47,7 @@ public class TrainerTeamScreen extends Screen {
 
         if (team.size() < TEAM_MAX_SIZE) {
             newPokemonSlot = (2 * columns) + (columns / 2) - 2;
-            ItemStack newPokemonItem = new ItemStack(CobblemonItems.POKE_BALL.get());
+            ItemStack newPokemonItem = new ItemStack(CobblemonItems.POKE_BALL);
             newPokemonItem.setCustomName(Text.literal("New Pokémon"));
             inventory.setStack(newPokemonSlot, newPokemonItem);
         }

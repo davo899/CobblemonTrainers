@@ -44,15 +44,15 @@ public class TrainerPokemonScreen extends Screen {
         movesItem.setCustomName(Text.literal("Moves"));
         inventory.setStack(movesSlot, movesItem);
 
-        ItemStack abilitiesItem = new ItemStack(CobblemonItems.CLOVER_SWEET.get());
+        ItemStack abilitiesItem = new ItemStack(CobblemonItems.CLOVER_SWEET);
         abilitiesItem.setCustomName(Text.literal("Abilities"));
         inventory.setStack(abilitiesSlot, abilitiesItem);
 
-        ItemStack evsItem = new ItemStack(CobblemonItems.FLOWER_SWEET.get());
+        ItemStack evsItem = new ItemStack(CobblemonItems.FLOWER_SWEET);
         evsItem.setCustomName(Text.literal("EVs"));
         inventory.setStack(evsSlot, evsItem);
 
-        ItemStack ivsItem = new ItemStack(CobblemonItems.STAR_SWEET.get());
+        ItemStack ivsItem = new ItemStack(CobblemonItems.STAR_SWEET);
         ivsItem.setCustomName(Text.literal("IVs"));
         inventory.setStack(ivsSlot, ivsItem);
 
@@ -60,7 +60,7 @@ public class TrainerPokemonScreen extends Screen {
         deleteItem.setCustomName(Text.literal("Delete Pokémon"));
         inventory.setStack(deleteSlot, deleteItem);
 
-        ItemStack levelItem = new ItemStack(CobblemonItems.WISE_GLASSES.get());
+        ItemStack levelItem = new ItemStack(CobblemonItems.WISE_GLASSES);
         levelItem.setCustomName(Text.literal("Level"));
         inventory.setStack(levelSlot, levelItem);
     }
