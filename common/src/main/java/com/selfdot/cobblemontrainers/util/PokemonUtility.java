@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
 import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
+import com.cobblemon.mod.common.client.net.battle.BattleMusicHandler;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
@@ -94,11 +95,15 @@ public class PokemonUtility {
 
         ErroredBattleStart errors = new ErroredBattleStart();
 
-        if (playerActor.getPokemonList().size() < battleFormat.getBattleType().getSlotsPerActor()) {
+        int playerTeamSize = (int) playerActor.getPokemonList().stream()
+            .filter(battlePokemon -> !battlePokemon.getEffectedPokemon().isFainted())
+            .count();
+
+        if (playerTeamSize < battleFormat.getBattleType().getSlotsPerActor()) {
             errors.getParticipantErrors().get(playerActor).add(BattleStartError.Companion.insufficientPokemon(
                 player,
                 battleFormat.getBattleType().getSlotsPerActor(),
-                playerActor.getPokemonList().size()
+                playerTeamSize
             ));
         }
 
@@ -107,11 +112,12 @@ public class PokemonUtility {
         }
 
         if (errors.isEmpty()) {
-            return new SuccessfulBattleStart(Cobblemon.INSTANCE.getBattleRegistry().startBattle(
+            return Cobblemon.INSTANCE.getBattleRegistry().startBattle(
                 BattleFormat.Companion.getGEN_9_SINGLES(),
                 new BattleSide(playerActor),
-                new BattleSide(trainerActor)
-            ));
+                new BattleSide(trainerActor),
+                false
+            );
         }
         return errors;
     }

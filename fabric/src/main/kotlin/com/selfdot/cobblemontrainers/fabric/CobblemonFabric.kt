@@ -5,8 +5,8 @@ import net.fabricmc.api.ModInitializer
 
 class CobblemonFabric : ModInitializer {
     override fun onInitialize() {
-        println("CobblemonTrainers Fabric initialized");
         CobblemonTrainers.initialize();
+        println("CobblemonTrainers Fabric initialized");
     }
 
 }

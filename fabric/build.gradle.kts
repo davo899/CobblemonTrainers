@@ -21,12 +21,7 @@ sourceSets {
 repositories {
     mavenLocal()
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven {
-        url = uri("https://cursemaven.com")
-        content {
-            includeGroup("curse.maven")
-        }
-    }
+    maven("https://maven.impactdev.net/repository/development/")
 }
 
 dependencies {
@@ -40,25 +35,14 @@ dependencies {
         isTransitive = false
     }
 
-    modImplementation ("curse.maven:cobblemon-687131:4797468") {
-        isTransitive = false;
-    }
+    // Cobblemon
+    modImplementation("com.cobblemon:fabric:${rootProject.property("cobblemon_version")}")
 
     modImplementation(libs.fabricLoader)
     modApi(libs.fabricApi)
     modApi(libs.fabricKotlin)
     modApi(libs.architecturyFabric)
     modApi(libs.fabricPermissionsApi)
-    listOf(
-        libs.stdlib,
-        libs.reflect,
-        libs.jetbrainsAnnotations,
-        libs.serializationCore,
-        libs.serializationJson,
-    ).forEach {
-        bundle(it)
-        runtimeOnly(it)
-    }
 }
 
 tasks {

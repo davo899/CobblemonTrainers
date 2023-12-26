@@ -45,17 +45,9 @@ dependencies {
     }
     testImplementation(project(":common", configuration = "namedElements"))
 
-    modImplementation ("curse.maven:cobblemon-687131:4797451") {
+    modImplementation ("curse.maven:cobblemon-687131:4977476") {
         exclude(group = "net.minecraftforge")
     }
-
-
-    listOf(
-        libs.stdlib,
-        libs.serializationCore,
-        libs.serializationJson,
-        libs.reflect
-    ).forEach(::forgeRuntimeLibrary)
 }
 
 tasks {
