@@ -10,6 +10,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
+import com.selfdot.cobblemontrainers.util.CommandUtils;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
@@ -21,9 +22,7 @@ public class SetWinCommandCommand extends TrainerCommand {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-            .requires(src -> CobblemonTrainersPermissions.checkPermission(
-                src, new CobblemonPermission("", PermissionLevel.CHEAT_COMMANDS_AND_COMMAND_BLOCKS)
-            ))
+            .requires(source -> CommandUtils.hasPermission(source, "selfdot.op.trainers"))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setwincommand")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>

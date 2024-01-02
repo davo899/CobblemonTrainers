@@ -10,6 +10,7 @@ import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
 import com.selfdot.cobblemontrainers.screen.TrainerGroupScreen;
 import com.selfdot.cobblemontrainers.screen.TrainerListScreen;
 import com.selfdot.cobblemontrainers.screen.TrainerSetupHandlerFactory;
+import com.selfdot.cobblemontrainers.util.CommandUtils;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
@@ -20,9 +21,7 @@ public class SetupCommand extends TrainerCommand {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-            .requires(src -> CobblemonTrainersPermissions.checkPermission(
-                src, new CobblemonPermission("", PermissionLevel.CHEAT_COMMANDS_AND_COMMAND_BLOCKS)
-            ))
+            .requires(source -> CommandUtils.hasPermission(source, "selfdot.op.trainers"))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setup")
                     .executes(this::execute)

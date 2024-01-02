@@ -17,6 +17,7 @@ import com.selfdot.cobblemontrainers.permissions.CobblemonTrainersPermissions;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleRewarder;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
+import com.selfdot.cobblemontrainers.util.CommandUtils;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import kotlin.Unit;
 import net.minecraft.server.command.ServerCommandSource;
@@ -32,9 +33,7 @@ public class BattleTrainerCommand extends TrainerCommand {
     public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-            .requires(src -> CobblemonTrainersPermissions.checkPermission(
-                src, new CobblemonPermission("", PermissionLevel.CHEAT_COMMANDS_AND_COMMAND_BLOCKS)
-            ))
+            .requires(source -> CommandUtils.hasPermission(source, "selfdot.op.trainers"))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
