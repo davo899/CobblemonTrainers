@@ -46,6 +46,7 @@ public class Trainer {
     public List<BattlePokemon> getBattleTeam() {
         return team.stream()
             .map(TrainerPokemon::toPokemon)
+            .peek(Pokemon::heal)
             .map(pokemon -> new BattlePokemon(pokemon, pokemon, (pokemonEntity -> Unit.INSTANCE)))
             .collect(Collectors.toList());
     }

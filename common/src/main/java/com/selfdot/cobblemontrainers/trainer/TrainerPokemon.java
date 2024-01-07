@@ -103,12 +103,8 @@ public class TrainerPokemon {
         pokemon.setNature(nature);
         pokemon.setAbility(ability);
         pokemon.getMoveSet().copyFrom(moveset);
-        ivs.spliterator().forEachRemaining((entry) -> {
-            pokemon.setIV(entry.getKey(), entry.getValue());
-        });
-        evs.spliterator().forEachRemaining((entry) -> {
-            pokemon.setEV(entry.getKey(), entry.getValue());
-        });
+        ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
+        evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
         return pokemon;
     }
 
