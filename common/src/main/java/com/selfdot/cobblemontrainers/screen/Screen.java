@@ -51,4 +51,8 @@ public abstract class Screen {
 
     public abstract String getDisplayName();
 
+    protected int slotIndex(int x, int y) {
+        return x + (y * columns);
+    }
+
 }

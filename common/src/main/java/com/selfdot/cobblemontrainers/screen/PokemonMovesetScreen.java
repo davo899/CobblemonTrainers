@@ -17,7 +17,7 @@ public class PokemonMovesetScreen extends Screen {
 
     private final Trainer trainer;
     private final TrainerPokemon trainerPokemon;
-    private int[] moveSlots = {0, 0, 0, 0};
+    private final int[] moveSlots = {0, 0, 0, 0};
 
     public PokemonMovesetScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerPokemonScreen(trainer, trainerPokemon));
@@ -37,14 +37,15 @@ public class PokemonMovesetScreen extends Screen {
         moveSlots[3] = moveSlots[0] + 4;
 
         for (int i = 0; i < 4; i++) {
-            ItemStack moveItem = new ItemStack(Items.BARRIER);
-            moveItem.setCustomName(Text.literal("Empty"));
-            inventory.setStack(moveSlots[i], moveItem);
-        }
-        List<Move> moves = trainerPokemon.getMoveset().getMoves();
-        for (int i = 0; i < moves.size(); i++) {
-            ItemStack moveItem = new ItemStack(Items.MUSIC_DISC_5);
-            moveItem.setCustomName(moves.get(i).getDisplayName());
+            Move move = trainerPokemon.getMoveset().get(i);
+            ItemStack moveItem;
+            if (move == null) {
+                moveItem = new ItemStack(Items.BARRIER);
+                moveItem.setCustomName(Text.literal("Empty"));
+            } else {
+                moveItem = new ItemStack(Items.MUSIC_DISC_5);
+                moveItem.setCustomName(move.getDisplayName());
+            }
             inventory.setStack(moveSlots[i], moveItem);
         }
     }
