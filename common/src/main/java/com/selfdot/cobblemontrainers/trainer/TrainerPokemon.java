@@ -125,10 +125,6 @@ public class TrainerPokemon {
         return species.getTranslatedName().getString();
     }
 
-    public Ability getAbility() {
-        return ability;
-    }
-
     public MoveSet getMoveset() {
         return moveset;
     }
@@ -143,18 +139,6 @@ public class TrainerPokemon {
 
     public void setAbility(Ability ability) {
         this.ability = ability;
-    }
-
-    public void setMoveset(MoveSet moveset) {
-        this.moveset = moveset;
-    }
-
-    public void setIvs(IVs ivs) {
-        this.ivs = ivs;
-    }
-
-    public void setEvs(EVs evs) {
-        this.evs = evs;
     }
 
     public int getLevel() {
