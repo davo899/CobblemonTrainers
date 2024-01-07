@@ -16,6 +16,8 @@ public abstract class PagedScreen<T> extends Screen {
     private int maxPerPage = 0;
     private int prevPageSlot = 0;
     private int nextPageSlot = 0;
+    private int prevPrevPageSlot = 0;
+    private int nextNextPageSlot = 0;
 
     public PagedScreen(Screen returnsTo, List<T> trackedList, int pageNumber) {
         super(returnsTo);
@@ -28,16 +30,15 @@ public abstract class PagedScreen<T> extends Screen {
     @Override
     public void initialize(Inventory inventory) {
         maxPerPage = (rows - 3) * (columns - 2);
-        prevPageSlot = ((rows - 2) * columns) + 1;
-        nextPageSlot = ((rows - 2) * columns) + (columns - 2);
+        prevPageSlot = slotIndex(2, 4);
+        nextPageSlot = slotIndex(6, 4);
+        prevPrevPageSlot = slotIndex(1, 4);
+        nextNextPageSlot = slotIndex(7, 4);
 
-        ItemStack prevPageItem = new ItemStack(Items.SPECTRAL_ARROW);
-        prevPageItem.setCustomName(Text.literal("Previous Page"));
-        inventory.setStack(prevPageSlot, prevPageItem);
-
-        ItemStack nextPageItem = new ItemStack(Items.SPECTRAL_ARROW);
-        nextPageItem.setCustomName(Text.literal("Next Page"));
-        inventory.setStack(nextPageSlot, nextPageItem);
+        setSlot(inventory, prevPageSlot, Items.ARROW, "Previous Page");
+        setSlot(inventory, nextPageSlot, Items.ARROW, "Next Page");
+        setSlot(inventory, prevPrevPageSlot, Items.SPECTRAL_ARROW, "Previous Previous Page");
+        setSlot(inventory, nextNextPageSlot, Items.SPECTRAL_ARROW, "Next Next Page");
 
         for (int i = 0; i < Math.min(maxPerPage, trackedList.size() - (maxPerPage * pageNumber)); i++) {
             inventory.setStack(
@@ -51,27 +52,27 @@ public abstract class PagedScreen<T> extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
+        if (slotIndex == prevPageSlot) changePage(-1, player);
+        else if (slotIndex == nextPageSlot) changePage(1, player);
+        else if (slotIndex == prevPrevPageSlot) changePage(-2, player);
+        else if (slotIndex == nextNextPageSlot) changePage(2, player);
+        else {
+            int x = slotIndex % columns;
+            int y = slotIndex / columns;
+
+            if (1 <= x && x <= columns - 2 && 1 <= y && y <= rows - 3) {
+                int index = (maxPerPage * pageNumber) + (x - 1) + ((y - 1) * (columns - 2));
+                if (index < trackedList.size()) onSelected(trackedList.get(index), player);
+            }
+        }
+    }
+
+    private void changePage(int n, PlayerEntity player) {
         int pages = (trackedList.size() / maxPerPage) + 1;
-        if (slotIndex == prevPageSlot) {
-            pageNumber--;
-            while (pageNumber < 0) pageNumber += pages;
-            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
-            return;
-        }
-        if (slotIndex == nextPageSlot) {
-            pageNumber++;
-            while (pageNumber >= pages) pageNumber -= pages;
-            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
-            return;
-        }
-
-        int x = slotIndex % columns;
-        int y = slotIndex / columns;
-
-        if (1 <= x && x <= columns - 2 && 1 <= y && y <= rows - 3) {
-            int index = (maxPerPage * pageNumber) + (x - 1) + ((y - 1) * (columns - 2));
-            if (index < trackedList.size()) onSelected(trackedList.get(index), player);
-        }
+        pageNumber += n;
+        while (pageNumber < 0) pageNumber += pages;
+        while (pageNumber >= pages) pageNumber -= pages;
+        player.openHandledScreen(new TrainerSetupHandlerFactory(this));
     }
 
     protected abstract ItemStack toItem(T t);
