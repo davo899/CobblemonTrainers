@@ -12,3 +12,4 @@ Adds a trainer battle system to Cobblemon. Intended to be used with an interacta
 /trainers makebattle \<playerName\> \<trainerName\> - Starts a battle between a player and a trainer
 
 Single quotes can be used to include spaces in the trainer name: /trainers add 'Ash Ketchum'
+All commands require operator permissions.
