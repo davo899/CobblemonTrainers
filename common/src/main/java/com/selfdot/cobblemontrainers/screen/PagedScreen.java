@@ -51,13 +51,16 @@ public abstract class PagedScreen<T> extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
-        if (slotIndex == prevPageSlot && pageNumber > 0) {
+        int pages = (trackedList.size() / maxPerPage) + 1;
+        if (slotIndex == prevPageSlot) {
             pageNumber--;
+            while (pageNumber < 0) pageNumber += pages;
             player.openHandledScreen(new TrainerSetupHandlerFactory(this));
             return;
         }
-        if (slotIndex == nextPageSlot && maxPerPage * (pageNumber + 1) < trackedList.size()) {
+        if (slotIndex == nextPageSlot) {
             pageNumber++;
+            while (pageNumber >= pages) pageNumber -= pages;
             player.openHandledScreen(new TrainerSetupHandlerFactory(this));
             return;
         }
