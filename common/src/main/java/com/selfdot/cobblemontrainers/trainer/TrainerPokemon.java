@@ -148,4 +148,13 @@ public class TrainerPokemon {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    public Nature getNature() {
+        return nature;
+    }
+
+    public void setNature(Nature nature) {
+        this.nature = nature;
+    }
+
 }

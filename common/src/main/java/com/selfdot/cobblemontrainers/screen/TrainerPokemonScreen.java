@@ -21,6 +21,7 @@ public class TrainerPokemonScreen extends Screen {
     private int ivsSlot;
     private int deleteSlot;
     private int levelSlot;
+    private int natureSlot;
 
     public TrainerPokemonScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerTeamScreen(trainer));
@@ -39,30 +40,15 @@ public class TrainerPokemonScreen extends Screen {
         deleteSlot = ivsSlot + 1;
 
         levelSlot = evsSlot + columns;
+        natureSlot = levelSlot + 1;
 
-        ItemStack movesItem = new ItemStack(Items.MUSIC_DISC_5);
-        movesItem.setCustomName(Text.literal("Moves"));
-        inventory.setStack(movesSlot, movesItem);
-
-        ItemStack abilitiesItem = new ItemStack(CobblemonItems.CLOVER_SWEET);
-        abilitiesItem.setCustomName(Text.literal("Abilities"));
-        inventory.setStack(abilitiesSlot, abilitiesItem);
-
-        ItemStack evsItem = new ItemStack(CobblemonItems.FLOWER_SWEET);
-        evsItem.setCustomName(Text.literal("EVs"));
-        inventory.setStack(evsSlot, evsItem);
-
-        ItemStack ivsItem = new ItemStack(CobblemonItems.STAR_SWEET);
-        ivsItem.setCustomName(Text.literal("IVs"));
-        inventory.setStack(ivsSlot, ivsItem);
-
-        ItemStack deleteItem = new ItemStack(Items.BARRIER);
-        deleteItem.setCustomName(Text.literal("Delete Pokémon"));
-        inventory.setStack(deleteSlot, deleteItem);
-
-        ItemStack levelItem = new ItemStack(CobblemonItems.WISE_GLASSES);
-        levelItem.setCustomName(Text.literal("Level"));
-        inventory.setStack(levelSlot, levelItem);
+        setSlot(inventory, movesSlot, Items.MUSIC_DISC_5, "Moves");
+        setSlot(inventory, abilitiesSlot, CobblemonItems.CLOVER_SWEET, "Abilities");
+        setSlot(inventory, evsSlot, CobblemonItems.FLOWER_SWEET, "EVs");
+        setSlot(inventory, ivsSlot, CobblemonItems.STAR_SWEET, "IVs");
+        setSlot(inventory, deleteSlot, Items.BARRIER, "Delete Pokémon");
+        setSlot(inventory, levelSlot, CobblemonItems.WISE_GLASSES, "Level");
+        setSlot(inventory, natureSlot, Items.CYAN_DYE, "Nature");
     }
 
     @Override
@@ -81,6 +67,8 @@ public class TrainerPokemonScreen extends Screen {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new ConfirmDeletePokemonScreen(trainer, trainerPokemon)));
         } else if (slotIndex == levelSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new LevelEditScreen(trainer, trainerPokemon)));
+        } else if (slotIndex == natureSlot) {
+            player.openHandledScreen(new TrainerSetupHandlerFactory(new NatureSelectScreen(trainer, trainerPokemon)));
         }
     }
 
