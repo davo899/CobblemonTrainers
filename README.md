@@ -11,4 +11,5 @@ Adds a trainer battle system to Cobblemon. Intended to be used with an interacta
 /trainers reload - Reloads the trainer data file (invalid teams can be setup by directly editing the trainer data file "config/trainers/trainers.json", be warned Cobblemon may react in weird ways)\
 /trainers makebattle \<playerName\> \<trainerName\> - Starts a battle between a player and a trainer
 
-Single quotes can be used to include spaces in the trainer name: /trainers add 'Ash Ketchum'
+Single quotes can be used to include spaces in the trainer name: /trainers add 'Ash Ketchum'\
+All commands require operator permissions.
