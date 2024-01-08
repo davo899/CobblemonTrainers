@@ -8,6 +8,7 @@ import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleRewarder
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
+import com.selfdot.cobblemontrainers.util.DisableableMod
 import dev.architectury.event.events.common.CommandRegistrationEvent
 import dev.architectury.event.events.common.LifecycleEvent
 import net.minecraft.command.CommandRegistryAccess
@@ -15,7 +16,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 
-object CobblemonTrainers {
+object CobblemonTrainers: DisableableMod() {
     lateinit var permissions: CobblemonTrainersPermissions
     const val MODID = "cobblemontrainers"
     const val TRAINER_DATA_FILENAME = "config/trainers/trainers.json"
@@ -32,20 +33,16 @@ object CobblemonTrainers {
         CommandRegistrationEvent.EVENT.register(CobblemonTrainers::registerCommands)
     }
 
+    override fun onInitialize() {
+        initialize()
+    }
+
     private fun registerCommands(
         dispatcher: CommandDispatcher<ServerCommandSource>,
         registry: CommandRegistryAccess,
         selection: CommandManager.RegistrationEnvironment
     ) {
-        AddTrainerCommand().register(dispatcher)
-        BattleTrainerCommand().register(dispatcher)
-        RemoveTrainerCommand().register(dispatcher)
-        RenameTrainerCommand().register(dispatcher)
-        SetWinCommandCommand().register(dispatcher)
-        SetupCommand().register(dispatcher)
-        ReloadCommand().register(dispatcher)
-        SetGroupCommand().register(dispatcher)
-        MakeBattleCommand().register(dispatcher)
+        TrainerCommandTree().register(dispatcher, this)
     }
 
     private fun onServerStart(server: MinecraftServer) {

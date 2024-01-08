@@ -1,23 +1,25 @@
 package com.selfdot.cobblemontrainers.command;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.trainer.Trainer;
+import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-public abstract class TrainerCommand {
+public abstract class TrainerCommand extends TwoLayerCommand {
 
-    protected int execute(CommandContext<ServerCommandSource> ctx) {
-        if (CobblemonTrainers.INSTANCE.getDisabled()) {
-            ctx.getSource().sendError(Text.literal(
-                "CobblemonTrainers has been disabled due to an error, please report this to staff."
-            ));
+    protected Trainer trainer;
+
+    @Override
+    protected int runSuperCommand(CommandContext<ServerCommandSource> context) {
+        String trainerName = StringArgumentType.getString(context, "trainer");
+        trainer = TrainerRegistry.getInstance().getTrainer(trainerName);
+        if (trainer == null) {
+            context.getSource().sendError(Text.literal("Trainer " + trainerName + " does not exist"));
             return -1;
-        } else {
-            return run(ctx);
         }
+        return SINGLE_SUCCESS;
     }
-
-    protected abstract int run(CommandContext<ServerCommandSource> ctx);
 
 }
