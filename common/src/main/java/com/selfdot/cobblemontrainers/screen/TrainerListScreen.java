@@ -1,6 +1,7 @@
 package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.CobblemonItems;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +16,7 @@ public class TrainerListScreen extends PagedScreen<Trainer> {
     public TrainerListScreen(String trainerGroup) {
         super(
             new TrainerGroupScreen(),
-            TrainerRegistry.getInstance().getAllTrainers().stream()
+            CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getAllTrainers().stream()
                 .filter(trainer -> trainer.getGroup().equals(trainerGroup))
                 .collect(Collectors.toList()),
             0

@@ -3,6 +3,8 @@ package com.selfdot.cobblemontrainers.trainer;
 import com.google.gson.*;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
+import com.selfdot.cobblemontrainers.util.DisableableMod;
+import com.selfdot.cobblemontrainers.util.JsonFile;
 
 import javax.annotation.Nullable;
 import java.io.FileNotFoundException;
@@ -16,16 +18,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class TrainerRegistry {
-
-    private TrainerRegistry() { }
-    private static final TrainerRegistry INSTANCE = new TrainerRegistry();
-
-    public static TrainerRegistry getInstance() { return INSTANCE; }
+public class TrainerRegistry extends JsonFile {
 
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private final Map<String, Trainer> trainerMap = new HashMap<>();
+
+    public TrainerRegistry(DisableableMod mod) {
+        super(mod);
+    }
 
     public boolean addTrainer(Trainer trainer) {
         if (trainerMap.containsKey(trainer.getName())) return false;
@@ -56,57 +57,35 @@ public class TrainerRegistry {
         return trainerMap.values();
     }
 
-    private void logFoundInvalidTrainerData(JsonElement jsonElement) {
-        CobblemonTrainersLog.LOGGER.warn(
-            "Encountered an invalid trainer in trainer data file, skipping: " + jsonElement.toString()
-        );
-    }
-
-    public void loadTrainersFromFile(String filename) {
-        try {
-            JsonElement jsonElement = JsonParser.parseReader(new FileReader(filename));
-            if (!jsonElement.isJsonArray()) {
-                CobblemonTrainersLog.LOGGER.error("Invalid trainer data file");
-                return;
-            }
-            JsonArray jsonArray = jsonElement.getAsJsonArray();
-            jsonArray.forEach(trainerJson -> {
-                if (!trainerJson.isJsonObject()) {
-                    CobblemonTrainers.INSTANCE.disable("Trainer json is not a json object");
-                    return;
-                }
-
-                Trainer trainer = Trainer.fromJson(trainerJson.getAsJsonObject());
-                if (trainer == null) return;
-
-                addOrUpdateTrainer(trainer);
-            });
-
-        } catch (FileNotFoundException e) {
-            CobblemonTrainersLog.LOGGER.warn("Trainer data file not found, attempting to generate");
-            try {
-                Files.createDirectories(Paths.get(filename).getParent());
-                FileWriter writer = new FileWriter(filename);
-                gson.toJson(new JsonArray(), writer);
-                writer.close();
-
-            } catch (IOException ex) {
-                CobblemonTrainersLog.LOGGER.error("Unable to generate trainer data file");
-            }
-        }
-    }
-
-    public void storeTrainersToFile(String filename) {
+    @Override
+    protected JsonElement toJson() {
         JsonArray jsonArray = new JsonArray();
         trainerMap.values().forEach(trainer -> jsonArray.add(trainer.toJson()));
-        try {
-            Files.createDirectories(Paths.get(filename).getParent());
-            FileWriter writer = new FileWriter(filename);
-            gson.toJson(jsonArray, writer);
-            writer.close();
-        } catch (IOException e) {
-            CobblemonTrainersLog.LOGGER.error("Unable to store trainer data to " + filename);
-        }
+        return jsonArray;
+    }
+
+    @Override
+    protected String filename() {
+        return "config/trainers/trainers.json";
+    }
+
+    @Override
+    protected void setDefaults() {
+        trainerMap.clear();
+    }
+
+    @Override
+    protected void loadFromJson(JsonElement jsonElement) {
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+        jsonArray.forEach(trainerJson -> {
+            if (!trainerJson.isJsonObject()) {
+                CobblemonTrainers.INSTANCE.disable();
+                return;
+            }
+            Trainer trainer = Trainer.fromJson(trainerJson.getAsJsonObject());
+            if (trainer == null) return;
+            addOrUpdateTrainer(trainer);
+        });
     }
 
 }

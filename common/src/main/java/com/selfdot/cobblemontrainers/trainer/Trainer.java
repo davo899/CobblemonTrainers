@@ -73,11 +73,11 @@ public class Trainer {
     @Nullable
     public static Trainer fromJson(JsonObject jsonObject) {
         if (!jsonObject.has(DataKeys.TRAINER_NAME)) {
-            CobblemonTrainers.INSTANCE.disable("Trainer missing name field");
+            CobblemonTrainers.INSTANCE.disable();
             return null;
         }
         if (!jsonObject.has(DataKeys.TRAINER_TEAM)) {
-            CobblemonTrainers.INSTANCE.disable("Trainer missing team field");
+            CobblemonTrainers.INSTANCE.disable();
             return null;
         }
 
@@ -88,14 +88,14 @@ public class Trainer {
                 .forEach(jsonElement -> {
                     TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
                     if (pokemon == null) {
-                        CobblemonTrainers.INSTANCE.disable("Invalid trainer pokemon");
+                        CobblemonTrainers.INSTANCE.disable();
                         return;
                     }
                     team.add(pokemon);
                 });
 
             if (name.isEmpty()) {
-                CobblemonTrainers.INSTANCE.disable("Trainer name is an empty string");
+                CobblemonTrainers.INSTANCE.disable();
                 return null;
             }
 
@@ -120,7 +120,7 @@ public class Trainer {
             return new Trainer(name, team, group, winCommand);
 
         } catch (Exception e) {
-            CobblemonTrainers.INSTANCE.disable("Exception when loading trainer");
+            CobblemonTrainers.INSTANCE.disable();
             e.printStackTrace();
             return null;
         }

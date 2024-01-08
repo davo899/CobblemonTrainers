@@ -19,8 +19,7 @@ import net.minecraft.server.command.ServerCommandSource
 object CobblemonTrainers: DisableableMod() {
     lateinit var permissions: CobblemonTrainersPermissions
     const val MODID = "cobblemontrainers"
-    const val TRAINER_DATA_FILENAME = "config/trainers/trainers.json"
-    var disabled = false
+    val TRAINER_REGISTRY = TrainerRegistry(this)
     fun initialize() {
         permissions = CobblemonTrainersPermissions()
 
@@ -48,21 +47,15 @@ object CobblemonTrainers: DisableableMod() {
     private fun onServerStart(server: MinecraftServer) {
         SpeciesSelectScreen.loadSpecies()
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
-        TrainerRegistry.getInstance().loadTrainersFromFile(TRAINER_DATA_FILENAME)
+        TRAINER_REGISTRY.load()
         TrainerBattleRewarder.getInstance().setServer(server);
     }
 
     private fun onServerStop(server: MinecraftServer) {
-        if (!disabled) {
+        if (!isDisabled) {
             CobblemonTrainersLog.LOGGER.info("Storing trainer data")
-            TrainerRegistry.getInstance().storeTrainersToFile(TRAINER_DATA_FILENAME)
+            TRAINER_REGISTRY.save()
         }
-    }
-
-    fun disable(message: String) {
-        if (!disabled) CobblemonTrainersLog.LOGGER.error("CobblemonTrainers mod disabled:")
-        CobblemonTrainersLog.LOGGER.error(message)
-        disabled = true
     }
 
 }
