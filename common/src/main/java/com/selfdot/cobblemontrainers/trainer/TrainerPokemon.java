@@ -62,33 +62,26 @@ public class TrainerPokemon {
         }
 
         TrainerPokemon trainerPokemon = new TrainerPokemon();
-        try {
-            trainerPokemon.species = PokemonSpecies.INSTANCE.getByIdentifier(
-                new Identifier(jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString())
-            );
-            trainerPokemon.gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
-            trainerPokemon.level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
-            trainerPokemon.nature = Natures.INSTANCE.getNature(
-                new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString())
-            );
-            trainerPokemon.ability = new Ability(Abilities.INSTANCE.getOrException(
-                jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
-            ), false);
-            trainerPokemon.ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_IVS).getAsJsonObject());
-            trainerPokemon.evs = (EVs) new EVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_EVS).getAsJsonObject());
-            trainerPokemon.moveset = new MoveSet();
-            JsonArray movesetJson = jsonObject.get(DataKeys.POKEMON_MOVESET).getAsJsonArray();
-            for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
-                trainerPokemon.moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
-            }
-            if (trainerPokemon.moveset.getMoves().isEmpty()) {
-                CobblemonTrainersLog.LOGGER.error("Trainer pokemon has no moves");
-                return null;
-            }
-
-        } catch (Exception e) {
-            CobblemonTrainersLog.LOGGER.error("Exception when loading trainer pokemon:");
-            CobblemonTrainersLog.LOGGER.error(e.getMessage());
+        trainerPokemon.species = PokemonSpecies.INSTANCE.getByIdentifier(
+            new Identifier(jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString())
+        );
+        trainerPokemon.gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
+        trainerPokemon.level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
+        trainerPokemon.nature = Natures.INSTANCE.getNature(
+            new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString())
+        );
+        trainerPokemon.ability = new Ability(Abilities.INSTANCE.getOrException(
+            jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
+        ), false);
+        trainerPokemon.ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_IVS).getAsJsonObject());
+        trainerPokemon.evs = (EVs) new EVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_EVS).getAsJsonObject());
+        trainerPokemon.moveset = new MoveSet();
+        JsonArray movesetJson = jsonObject.get(DataKeys.POKEMON_MOVESET).getAsJsonArray();
+        for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
+            trainerPokemon.moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
+        }
+        if (trainerPokemon.moveset.getMoves().isEmpty()) {
+            CobblemonTrainersLog.LOGGER.error("Trainer pokemon has no moves");
             return null;
         }
         return trainerPokemon;

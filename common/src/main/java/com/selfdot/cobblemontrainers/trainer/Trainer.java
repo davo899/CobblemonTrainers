@@ -29,38 +29,32 @@ public class Trainer {
 
     public Trainer(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        try {
-            name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
-            team = new ArrayList<>();
-            jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
-                .forEach(pokemonJson -> {
-                    TrainerPokemon pokemon = TrainerPokemon.fromJson(pokemonJson.getAsJsonObject());
-                    if (pokemon == null) CobblemonTrainers.INSTANCE.disable();
-                    team.add(pokemon);
-                });
+        name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
+        team = new ArrayList<>();
+        jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
+            .forEach(pokemonJson -> {
+                TrainerPokemon pokemon = TrainerPokemon.fromJson(pokemonJson.getAsJsonObject());
+                if (pokemon == null) CobblemonTrainers.INSTANCE.disable();
+                team.add(pokemon);
+            });
 
-            if (name.isEmpty()) CobblemonTrainers.INSTANCE.disable();
+        if (name.isEmpty()) CobblemonTrainers.INSTANCE.disable();
 
-            if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
-                winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
+            winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+        } else {
+            if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
+                winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
             } else {
-                if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
-                    winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
-                } else {
-                    winCommand = "";
-                }
+                winCommand = "";
             }
+        }
 
-            if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
-                group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
-            }
-            if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
-                lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
-            }
-
-        } catch (Exception e) {
-            CobblemonTrainers.INSTANCE.disable();
-            e.printStackTrace();
+        if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
+            group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
+        }
+        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
+            lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
         }
     }
 
