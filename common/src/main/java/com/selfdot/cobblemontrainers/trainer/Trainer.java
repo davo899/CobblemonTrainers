@@ -11,7 +11,6 @@ import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,15 +18,62 @@ import java.util.stream.Collectors;
 public class Trainer {
 
     private String name;
-    private String group;
-    private final List<TrainerPokemon> team;
-    private String winCommand;
+    private String group = DataKeys.UNGROUPED;
+    private List<TrainerPokemon> team = new ArrayList<>();
+    private String winCommand = "";
+    private String lossCommand = "";
 
-    public Trainer(String name, List<TrainerPokemon> team, String group, String winCommand) {
+    public Trainer(String name) {
         this.name = name;
-        this.team = team;
-        this.group = group;
-        this.winCommand = winCommand;
+    }
+
+    public Trainer(JsonElement jsonElement) {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        try {
+            name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
+            team = new ArrayList<>();
+            jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
+                .forEach(pokemonJson -> {
+                    TrainerPokemon pokemon = TrainerPokemon.fromJson(pokemonJson.getAsJsonObject());
+                    if (pokemon == null) CobblemonTrainers.INSTANCE.disable();
+                    team.add(pokemon);
+                });
+
+            if (name.isEmpty()) CobblemonTrainers.INSTANCE.disable();
+
+            if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
+                winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+            } else {
+                if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
+                    winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
+                } else {
+                    winCommand = "";
+                }
+            }
+
+            if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
+                group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
+            }
+            if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
+                lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
+            }
+
+        } catch (Exception e) {
+            CobblemonTrainers.INSTANCE.disable();
+            e.printStackTrace();
+        }
+    }
+
+    public JsonElement toJson() {
+        JsonArray teamArray = new JsonArray(team.size());
+        team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty(DataKeys.TRAINER_NAME, name);
+        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
+        jsonObject.addProperty(DataKeys.TRAINER_GROUP, group);
+        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
+        jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
+        return jsonObject;
     }
 
     public void addSpecies(Species species) {
@@ -59,73 +105,6 @@ public class Trainer {
         this.name = name;
     }
 
-    public JsonElement toJson() {
-        JsonArray teamArray = new JsonArray(team.size());
-        team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(DataKeys.TRAINER_NAME, name);
-        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
-        jsonObject.addProperty(DataKeys.TRAINER_GROUP, group);
-        return jsonObject;
-    }
-
-    @Nullable
-    public static Trainer fromJson(JsonObject jsonObject) {
-        if (!jsonObject.has(DataKeys.TRAINER_NAME)) {
-            CobblemonTrainers.INSTANCE.disable();
-            return null;
-        }
-        if (!jsonObject.has(DataKeys.TRAINER_TEAM)) {
-            CobblemonTrainers.INSTANCE.disable();
-            return null;
-        }
-
-        try {
-            String name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
-            List<TrainerPokemon> team = new ArrayList<>();
-            jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
-                .forEach(jsonElement -> {
-                    TrainerPokemon pokemon = TrainerPokemon.fromJson(jsonElement.getAsJsonObject());
-                    if (pokemon == null) {
-                        CobblemonTrainers.INSTANCE.disable();
-                        return;
-                    }
-                    team.add(pokemon);
-                });
-
-            if (name.isEmpty()) {
-                CobblemonTrainers.INSTANCE.disable();
-                return null;
-            }
-
-            String winCommand;
-            if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
-                winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
-            } else {
-                if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
-                    winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
-                } else {
-                    winCommand = "";
-                }
-            }
-
-            String group;
-            if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
-                group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
-            } else {
-                group = DataKeys.UNGROUPED;
-            }
-
-            return new Trainer(name, team, group, winCommand);
-
-        } catch (Exception e) {
-            CobblemonTrainers.INSTANCE.disable();
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public String getWinCommand() {
         return winCommand;
     }
@@ -140,6 +119,14 @@ public class Trainer {
 
     public void setGroup(String group) {
         this.group = group;
+    }
+
+    public String getLossCommand() {
+        return lossCommand;
+    }
+
+    public void setLossCommand(String lossCommand) {
+        this.lossCommand = lossCommand;
     }
 
 }

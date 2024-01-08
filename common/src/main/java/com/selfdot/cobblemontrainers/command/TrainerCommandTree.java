@@ -97,6 +97,17 @@ public class TrainerCommandTree {
                     )
                 )
             )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setlosscommand")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("lossCommand", string())
+                        .executes(new SetLossCommandCommand())
+                    )
+                )
+            )
         );
     }
 

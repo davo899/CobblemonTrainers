@@ -1,0 +1,117 @@
+[
+  {
+    "name": "a",
+    "team": [],
+    "winCommand": "",
+    "group": "Ungrouped"
+  },
+  {
+    "name": "b",
+    "team": [
+      {
+        "species": "cobblemon:bulbasaur",
+        "gender": "FEMALE",
+        "level": 100,
+        "nature": "cobblemon:lonely",
+        "ability": "overgrow",
+        "moveset": [
+          "tackle",
+          "growl"
+        ],
+        "ivs": {
+          "hp": 25,
+          "attack": 20,
+          "defence": 15,
+          "special_attack": 12,
+          "special_defence": 12,
+          "speed": 1
+        },
+        "evs": {}
+      }
+    ],
+    "winCommand": "",
+    "group": "Ungrouped"
+  },
+  {
+    "name": "Ash",
+    "team": [
+      {
+        "species": "cobblemon:charmander",
+        "gender": "MALE",
+        "level": 1,
+        "nature": "cobblemon:adamant",
+        "ability": "blaze",
+        "moveset": [
+          "scratch"
+        ],
+        "ivs": {
+          "hp": 13,
+          "attack": 6,
+          "defence": 26,
+          "special_attack": 5,
+          "special_defence": 16,
+          "speed": 12
+        },
+        "evs": {}
+      }
+    ],
+    "winCommand": "eco give %player% 0",
+    "group": "Ungrouped"
+  },
+  {
+    "name": "ash",
+    "team": [
+      {
+        "species": "cobblemon:caterpie",
+        "gender": "MALE",
+        "level": 1,
+        "nature": "cobblemon:docile",
+        "ability": "shielddust",
+        "moveset": [
+          "tackle",
+          "stringshot"
+        ],
+        "ivs": {
+          "hp": 23,
+          "attack": 3,
+          "defence": 26,
+          "special_attack": 16,
+          "special_defence": 28,
+          "speed": 11
+        },
+        "evs": {}
+      }
+    ],
+    "winCommand": "tell %player% gg",
+    "group": "Ungrouped"
+  },
+  {
+    "name": "hello",
+    "team": [
+      {
+        "species": "cobblemon:blastoise",
+        "gender": "MALE",
+        "level": 1,
+        "nature": "cobblemon:timid",
+        "ability": "torrent",
+        "moveset": [
+          "withdraw",
+          "watergun",
+          "tailwhip",
+          "tackle"
+        ],
+        "ivs": {
+          "hp": 28,
+          "attack": 4,
+          "defence": 21,
+          "special_attack": 23,
+          "special_defence": 4,
+          "speed": 9
+        },
+        "evs": {}
+      }
+    ],
+    "winCommand": "",
+    "group": "Ungrouped"
+  }
+]

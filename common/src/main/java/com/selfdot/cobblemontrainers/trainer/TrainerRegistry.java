@@ -1,26 +1,16 @@
 package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.*;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.DisableableMod;
 import com.selfdot.cobblemontrainers.util.JsonFile;
 
 import javax.annotation.Nullable;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class TrainerRegistry extends JsonFile {
-
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private final Map<String, Trainer> trainerMap = new HashMap<>();
 
@@ -77,15 +67,7 @@ public class TrainerRegistry extends JsonFile {
     @Override
     protected void loadFromJson(JsonElement jsonElement) {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
-        jsonArray.forEach(trainerJson -> {
-            if (!trainerJson.isJsonObject()) {
-                CobblemonTrainers.INSTANCE.disable();
-                return;
-            }
-            Trainer trainer = Trainer.fromJson(trainerJson.getAsJsonObject());
-            if (trainer == null) return;
-            addOrUpdateTrainer(trainer);
-        });
+        jsonArray.forEach(trainerJson -> addOrUpdateTrainer(new Trainer(trainerJson)));
     }
 
 }

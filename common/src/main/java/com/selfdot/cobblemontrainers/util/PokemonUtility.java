@@ -12,6 +12,8 @@ import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
+import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
+import kotlin.Unit;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
@@ -79,7 +81,7 @@ public class PokemonUtility {
         return itemstack;
     }
 
-    public static BattleStartResult startBattle(
+    private static BattleStartResult startBattle(
         ServerPlayerEntity player,
         Trainer trainer,
         BattleFormat battleFormat
@@ -120,6 +122,19 @@ public class PokemonUtility {
             );
         }
         return errors;
+    }
+
+    public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer) {
+        PokemonUtility.startBattle(player, trainer, BattleFormat.Companion.getGEN_9_SINGLES())
+            .ifErrored(error -> {
+                error.sendTo(player, t -> t);
+                return Unit.INSTANCE;
+            })
+            .ifSuccessful(battle -> {
+                TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer.getWinCommand());
+                TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
+                return Unit.INSTANCE;
+            });
     }
 
 }
