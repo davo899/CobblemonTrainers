@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
 
@@ -30,16 +29,10 @@ public class Trainer {
     public Trainer(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
+        if (name.isEmpty()) throw new IllegalStateException("Trainer name cannot be empty");
         team = new ArrayList<>();
         jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
-            .forEach(pokemonJson -> {
-                TrainerPokemon pokemon = TrainerPokemon.fromJson(pokemonJson.getAsJsonObject());
-                if (pokemon == null) CobblemonTrainers.INSTANCE.disable();
-                team.add(pokemon);
-            });
-
-        if (name.isEmpty()) CobblemonTrainers.INSTANCE.disable();
-
+            .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
         if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
             winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
         } else {
@@ -49,7 +42,6 @@ public class Trainer {
                 winCommand = "";
             }
         }
-
         if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
             group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
         }
