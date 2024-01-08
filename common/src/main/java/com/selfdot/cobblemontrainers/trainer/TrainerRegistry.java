@@ -1,7 +1,7 @@
 package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.*;
-import com.selfdot.cobblemontrainers.util.DisableableMod;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.JsonFile;
 
 import javax.annotation.Nullable;
@@ -14,23 +14,26 @@ public class TrainerRegistry extends JsonFile {
 
     private final Map<String, Trainer> trainerMap = new HashMap<>();
 
-    public TrainerRegistry(DisableableMod mod) {
+    public TrainerRegistry(CobblemonTrainers mod) {
         super(mod);
     }
 
     public boolean addTrainer(Trainer trainer) {
         if (trainerMap.containsKey(trainer.getName())) return false;
         trainerMap.put(trainer.getName(), trainer);
+        save();
         return true;
     }
 
     public void addOrUpdateTrainer(Trainer trainer) {
         trainerMap.put(trainer.getName(), trainer);
+        save();
     }
 
     public boolean removeTrainer(String trainerName) {
         if (!trainerMap.containsKey(trainerName)) return false;
         trainerMap.remove(trainerName);
+        save();
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.selfdot.cobblemontrainers.util;
 
 import com.google.gson.JsonElement;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +12,7 @@ public abstract class JsonFile extends ReadOnlyJsonFile {
 
     protected abstract JsonElement toJson();
 
-    public JsonFile(DisableableMod mod) {
+    public JsonFile(CobblemonTrainers mod) {
         super(mod);
     }
 

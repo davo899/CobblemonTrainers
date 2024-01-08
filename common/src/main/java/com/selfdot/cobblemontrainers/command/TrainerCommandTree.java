@@ -3,8 +3,8 @@ package com.selfdot.cobblemontrainers.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.CommandUtils;
-import com.selfdot.cobblemontrainers.util.DisableableMod;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
@@ -13,7 +13,7 @@ import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class TrainerCommandTree {
 
-    public void register(CommandDispatcher<ServerCommandSource> dispatcher, DisableableMod mod) {
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, CobblemonTrainers mod) {
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
             .requires(source -> !mod.isDisabled())

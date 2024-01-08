@@ -1,6 +1,7 @@
 package com.selfdot.cobblemontrainers.util;
 
 import com.google.gson.*;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,9 +18,9 @@ public abstract class ReadOnlyJsonFile {
 
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    protected final DisableableMod mod;
+    protected final CobblemonTrainers mod;
 
-    public ReadOnlyJsonFile(DisableableMod mod) {
+    public ReadOnlyJsonFile(CobblemonTrainers mod) {
         this.mod = mod;
     }
 
