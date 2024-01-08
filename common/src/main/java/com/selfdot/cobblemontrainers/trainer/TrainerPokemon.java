@@ -10,13 +10,8 @@ import com.cobblemon.mod.common.pokemon.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.screen.TrainerPokemonScreen;
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.util.Identifier;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class TrainerPokemon {
 
@@ -28,6 +23,7 @@ public class TrainerPokemon {
     private MoveSet moveset;
     private IVs ivs;
     private EVs evs;
+    private boolean isShiny = false;
 
     public TrainerPokemon() { }
 
@@ -51,6 +47,7 @@ public class TrainerPokemon {
         for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
             moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
         }
+        if (jsonObject.has(DataKeys.POKEMON_SHINY)) isShiny = jsonObject.get(DataKeys.POKEMON_SHINY).getAsBoolean();
     }
 
     public JsonObject toJson() {
@@ -65,6 +62,7 @@ public class TrainerPokemon {
         jsonObject.add(DataKeys.POKEMON_MOVESET, movesetJson);
         jsonObject.add(DataKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
         jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
+        jsonObject.addProperty(DataKeys.POKEMON_SHINY, isShiny);
         return jsonObject;
     }
 
@@ -79,6 +77,7 @@ public class TrainerPokemon {
         pokemon.getMoveSet().copyFrom(moveset);
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
+        pokemon.setShiny(isShiny);
         return pokemon;
     }
 
@@ -92,6 +91,7 @@ public class TrainerPokemon {
         trainerPokemon.moveset = pokemon.getMoveSet();
         trainerPokemon.ivs = pokemon.getIvs();
         trainerPokemon.evs = pokemon.getEvs();
+        trainerPokemon.isShiny = pokemon.getShiny();
         return trainerPokemon;
     }
 
@@ -125,6 +125,10 @@ public class TrainerPokemon {
 
     public void setNature(Nature nature) {
         this.nature = nature;
+    }
+
+    public void toggleShiny() {
+        isShiny = !isShiny;
     }
 
 }

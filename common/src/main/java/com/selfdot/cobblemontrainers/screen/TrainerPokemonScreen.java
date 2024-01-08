@@ -22,6 +22,7 @@ public class TrainerPokemonScreen extends Screen {
     private int deleteSlot;
     private int levelSlot;
     private int natureSlot;
+    private int shinySlot;
 
     public TrainerPokemonScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerTeamScreen(trainer));
@@ -41,12 +42,14 @@ public class TrainerPokemonScreen extends Screen {
 
         levelSlot = evsSlot + columns;
         natureSlot = levelSlot + 1;
+        shinySlot = levelSlot - 1;
 
         setSlot(inventory, movesSlot, Items.MUSIC_DISC_5, "Moves");
         setSlot(inventory, abilitiesSlot, CobblemonItems.CLOVER_SWEET, "Abilities");
         setSlot(inventory, evsSlot, CobblemonItems.FLOWER_SWEET, "EVs");
         setSlot(inventory, ivsSlot, CobblemonItems.STAR_SWEET, "IVs");
         setSlot(inventory, deleteSlot, Items.BARRIER, "Delete Pokémon");
+        setSlot(inventory, shinySlot, Items.NETHER_STAR, "Toggle Shiny");
         setSlot(inventory, levelSlot, CobblemonItems.WISE_GLASSES, "Level");
         setSlot(inventory, natureSlot, Items.CYAN_DYE, "Nature");
     }
@@ -69,6 +72,9 @@ public class TrainerPokemonScreen extends Screen {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new LevelEditScreen(trainer, trainerPokemon)));
         } else if (slotIndex == natureSlot) {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new NatureSelectScreen(trainer, trainerPokemon)));
+        } else if (slotIndex == shinySlot) {
+            trainerPokemon.toggleShiny();
+            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
         }
     }
 
