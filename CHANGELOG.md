@@ -1,3 +1,6 @@
+# 0.9.3
+- Fixed new trainers not initialising with default data, resulting in a corrupt trainer file.
+
 # 0.9.2
 - Changed trainer data to be stored as individual trainer files in group directories. Existing data will be reformatted automatically.
 - Added trainer canOnlyBeatOnce property, which will prevent players from battling a trainer that they have already beaten.
