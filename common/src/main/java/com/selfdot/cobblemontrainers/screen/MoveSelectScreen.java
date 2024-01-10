@@ -11,7 +11,9 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MoveSelectScreen extends PagedScreen<Move> {
 
@@ -23,7 +25,14 @@ public class MoveSelectScreen extends PagedScreen<Move> {
     public MoveSelectScreen(int moveIndex, Trainer trainer, TrainerPokemon trainerPokemon) {
         super(
             new PokemonMovesetScreen(trainer, trainerPokemon),
-            trainerPokemon.toPokemon().getAllAccessibleMoves().stream()
+            Stream.of(
+                trainerPokemon.toPokemon().getForm().getMoves().getLevelUpMovesUpTo(trainerPokemon.getLevel()),
+                trainerPokemon.toPokemon().getForm().getMoves().getTmMoves(),
+                trainerPokemon.toPokemon().getForm().getMoves().getEggMoves(),
+                trainerPokemon.toPokemon().getForm().getMoves().getEvolutionMoves(),
+                trainerPokemon.toPokemon().getForm().getMoves().getFormChangeMoves(),
+                trainerPokemon.toPokemon().getForm().getMoves().getTutorMoves()
+            ).flatMap(Collection::stream)
                 .filter(moveTemplate -> trainerPokemon.getMoveset().getMoves().stream().noneMatch(
                     move -> move.getTemplate().equals(moveTemplate)
                 ))
