@@ -27,12 +27,14 @@ public class Trainer extends JsonFile {
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
         super(mod);
+        setDefaults();
         this.name = name;
         this.group = group;
     }
 
     public Trainer(CobblemonTrainers mod, JsonElement jsonElement) {
         super(mod);
+        setDefaults();
         loadFromJson(jsonElement);
     }
 
