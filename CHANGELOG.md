@@ -3,6 +3,7 @@
 - Added trainer canOnlyBeatOnce property, which will prevent players from battling a trainer that they have already beaten.
 - Added TM, egg, evolution, form change and tutor moves to the move select screen.
 - Added saving data on setup GUI updates.
+- Lowered required permissions for commands from 4 to 2.
 
 # 0.9.1
 - Added trainer loss command, command that is run when the player loses to the trainer. Syntax: /trainers \<name\> setlosscommand \<command\>
