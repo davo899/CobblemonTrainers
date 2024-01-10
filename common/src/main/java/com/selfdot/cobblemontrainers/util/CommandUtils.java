@@ -20,7 +20,7 @@ public class CommandUtils {
     }
 
     public static boolean hasPermission(ServerCommandSource source, String permission) {
-        if (source.hasPermissionLevel(4)) return true;
+        if (source.hasPermissionLevel(2)) return true;
         if (!source.isExecutedByPlayer()) return false;
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) return false;
