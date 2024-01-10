@@ -7,56 +7,39 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
+import com.selfdot.cobblemontrainers.util.JsonFile;
 import kotlin.Unit;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Trainer {
+public class Trainer extends JsonFile {
 
     private String name;
-    private String group = DataKeys.UNGROUPED;
-    private List<TrainerPokemon> team = new ArrayList<>();
-    private String winCommand = "";
-    private String lossCommand = "";
+    private String group;
+    private List<TrainerPokemon> team;
+    private String winCommand;
+    private String lossCommand;
 
-    public Trainer(String name) {
+    public Trainer(CobblemonTrainers mod, String name, String group) {
+        super(mod);
         this.name = name;
+        this.group = group;
     }
 
-    public Trainer(JsonElement jsonElement) {
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
-        if (name.isEmpty()) throw new IllegalStateException("Trainer name cannot be empty");
-        team = new ArrayList<>();
-        jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
-            .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
-        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
-            winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
-        } else {
-            if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
-                winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
-            } else {
-                winCommand = "";
-            }
-        }
-        if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
-            group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
-        }
-        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
-            lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
-        }
+    public Trainer(CobblemonTrainers mod, JsonElement jsonElement) {
+        super(mod);
+        loadFromJson(jsonElement);
     }
 
     public JsonElement toJson() {
         JsonArray teamArray = new JsonArray(team.size());
         team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(DataKeys.TRAINER_NAME, name);
         jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(DataKeys.TRAINER_GROUP, group);
         jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
         jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
         return jsonObject;
@@ -113,6 +96,45 @@ public class Trainer {
 
     public void setLossCommand(String lossCommand) {
         this.lossCommand = lossCommand;
+    }
+
+    @Override
+    protected String filename() {
+        return "config/trainers/groups/" + group + "/" + name + ".json";
+    }
+
+    @Override
+    protected void setDefaults() {
+        team = new ArrayList<>();
+        winCommand = "";
+        lossCommand = "";
+    }
+
+    @Override
+    protected void loadFromJson(JsonElement jsonElement) {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        if (jsonObject.has(DataKeys.TRAINER_NAME)) {
+            name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
+            if (name.isEmpty()) throw new IllegalStateException("Trainer name cannot be empty");
+        }
+        team = new ArrayList<>();
+        jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
+            .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
+        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
+            winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+        } else {
+            if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
+                winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
+            } else {
+                winCommand = "";
+            }
+        }
+        if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
+            group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
+        }
+        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
+            lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
+        }
     }
 
 }

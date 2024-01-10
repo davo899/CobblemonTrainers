@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
+import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
@@ -12,7 +13,9 @@ public class AddTrainerCommand implements Command<ServerCommandSource> {
 
     public int run(CommandContext<ServerCommandSource> context) {
         String name = StringArgumentType.getString(context, "name");
-        if (!CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().addTrainer(new Trainer(name))) {
+        if (!CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY()
+            .addTrainer(new Trainer(CobblemonTrainers.INSTANCE, name, DataKeys.UNGROUPED))
+        ) {
             context.getSource().sendError(Text.literal("Trainer " + name + " already exists"));
             return -1;
         }

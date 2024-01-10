@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.util;
 import com.google.gson.JsonElement;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,6 +30,15 @@ public abstract class JsonFile extends ReadOnlyJsonFile {
                 mod.getLogger().error("Unable to store to " + filename());
             }
         }
+    }
+
+    public void delete() {
+        File file = new File(filename());
+        if (!mod.isDisabled() && !file.delete()) {
+            mod.getLogger().error("Unable to delete file: " + filename());
+            mod.getLogger().error("Will attempt to delete on exit.");
+        }
+        file.deleteOnExit();
     }
 
 }

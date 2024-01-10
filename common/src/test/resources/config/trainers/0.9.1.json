@@ -1,9 +1,34 @@
 [
   {
     "name": "a",
-    "team": [],
+    "team": [
+      {
+        "species": "cobblemon:rayquaza",
+        "gender": "GENDERLESS",
+        "level": 1,
+        "nature": "cobblemon:docile",
+        "ability": "airlock",
+        "moveset": [
+          "twister",
+          "scaryface",
+          "dragonascent",
+          "ancientpower"
+        ],
+        "ivs": {
+          "hp": 22,
+          "attack": 15,
+          "defence": 18,
+          "special_attack": 24,
+          "special_defence": 3,
+          "speed": 12
+        },
+        "evs": {},
+        "shiny": true
+      }
+    ],
+    "group": "Ungrouped",
     "winCommand": "",
-    "group": "Ungrouped"
+    "lossCommand": ""
   },
   {
     "name": "b",
@@ -26,11 +51,13 @@
           "special_defence": 12,
           "speed": 1
         },
-        "evs": {}
+        "evs": {},
+        "shiny": false
       }
     ],
+    "group": "group1",
     "winCommand": "",
-    "group": "group1"
+    "lossCommand": ""
   },
   {
     "name": "Ash",
@@ -52,11 +79,13 @@
           "special_defence": 16,
           "speed": 12
         },
-        "evs": {}
+        "evs": {},
+        "shiny": false
       }
     ],
+    "group": "Ungrouped",
     "winCommand": "eco give %player% 0",
-    "group": "Ungrouped"
+    "lossCommand": "say haha u lose"
   },
   {
     "name": "ash",
@@ -79,11 +108,13 @@
           "special_defence": 28,
           "speed": 11
         },
-        "evs": {}
+        "evs": {},
+        "shiny": false
       }
     ],
+    "group": "group1",
     "winCommand": "tell %player% gg",
-    "group": "group1"
+    "lossCommand": ""
   },
   {
     "name": "hello",
@@ -108,10 +139,12 @@
           "special_defence": 4,
           "speed": 9
         },
-        "evs": {}
+        "evs": {},
+        "shiny": false
       }
     ],
+    "group": "Ungrouped",
     "winCommand": "",
-    "group": "Ungrouped"
+    "lossCommand": ""
   }
 ]
