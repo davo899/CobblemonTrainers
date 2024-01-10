@@ -85,21 +85,27 @@ public class IVEditScreen extends Screen {
 
         if (slotIndex == setMinSlot) {
             ivs.set(stat, MIN);
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseHighSlot) {
             ivs.set(stat, Math.max(ivs.getOrDefault(stat) - EDIT_HIGH, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseLowSlot) {
             ivs.set(stat, Math.max(ivs.getOrDefault(stat) - EDIT_LOW, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseLowSlot) {
             ivs.set(stat, Math.min(ivs.getOrDefault(stat) + EDIT_LOW, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseHighSlot) {
             ivs.set(stat, Math.min(ivs.getOrDefault(stat) + EDIT_HIGH, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == setMaxSlot) {
             ivs.set(stat, MAX);
+            trainer.save();
             updateInfoItem();
         }
     }

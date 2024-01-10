@@ -60,6 +60,7 @@ public class AbilitySelectScreen extends Screen {
         int diff = slotIndex - baseSlot;
         if (diff != selectedIndex && 0 <= diff && diff < abilities.size()) {
             trainerPokemon.setAbility(abilities.get(diff).create(false));
+            trainer.save();
             player.openHandledScreen(new TrainerSetupHandlerFactory(new AbilitySelectScreen(trainer, trainerPokemon)));
         }
     }

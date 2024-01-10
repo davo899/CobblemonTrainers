@@ -87,21 +87,27 @@ public class EVEditScreen extends Screen {
 
         if (slotIndex == setMinSlot) {
             evs.set(stat, MIN);
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseHighSlot) {
             evs.set(stat, Math.max(evs.getOrDefault(stat) - EDIT_HIGH, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseLowSlot) {
             evs.set(stat, Math.max(evs.getOrDefault(stat) - EDIT_LOW, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseLowSlot && currentTotal + EDIT_LOW <= EVs.MAX_TOTAL_VALUE) {
             evs.set(stat, Math.min(evs.getOrDefault(stat) + EDIT_LOW, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseHighSlot && currentTotal + EDIT_HIGH <= EVs.MAX_TOTAL_VALUE) {
             evs.set(stat, Math.min(evs.getOrDefault(stat) + EDIT_HIGH, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == setMaxSlot && currentTotal - evs.getOrDefault(stat) + MAX <= EVs.MAX_TOTAL_VALUE) {
             evs.set(stat, MAX);
+            trainer.save();
             updateInfoItem();
         }
     }

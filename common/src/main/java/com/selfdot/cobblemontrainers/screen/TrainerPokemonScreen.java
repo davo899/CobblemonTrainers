@@ -74,6 +74,7 @@ public class TrainerPokemonScreen extends Screen {
             player.openHandledScreen(new TrainerSetupHandlerFactory(new NatureSelectScreen(trainer, trainerPokemon)));
         } else if (slotIndex == shinySlot) {
             trainerPokemon.toggleShiny();
+            trainer.save();
             player.openHandledScreen(new TrainerSetupHandlerFactory(this));
         }
     }

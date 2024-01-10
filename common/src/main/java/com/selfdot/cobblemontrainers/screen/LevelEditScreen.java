@@ -19,6 +19,7 @@ public class LevelEditScreen extends Screen {
     private static final int EDIT_HIGH = 10;
     private static final int MIN = 1;
     private static final int MAX = 100;
+    private final Trainer trainer;
     private final TrainerPokemon trainerPokemon;
     private ItemStack infoItem;
     private int setMinSlot;
@@ -30,6 +31,7 @@ public class LevelEditScreen extends Screen {
 
     public LevelEditScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerPokemonScreen(trainer, trainerPokemon));
+        this.trainer = trainer;
         this.trainerPokemon = trainerPokemon;
     }
 
@@ -77,21 +79,27 @@ public class LevelEditScreen extends Screen {
 
         if (slotIndex == setMinSlot) {
             trainerPokemon.setLevel(MIN);
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseHighSlot) {
             trainerPokemon.setLevel(Math.max(trainerPokemon.getLevel() - EDIT_HIGH, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == decreaseLowSlot) {
             trainerPokemon.setLevel(Math.max(trainerPokemon.getLevel() - EDIT_LOW, MIN));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseLowSlot) {
             trainerPokemon.setLevel(Math.min(trainerPokemon.getLevel() + EDIT_LOW, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == increaseHighSlot) {
             trainerPokemon.setLevel(Math.min(trainerPokemon.getLevel() + EDIT_HIGH, MAX));
+            trainer.save();
             updateInfoItem();
         } else if (slotIndex == setMaxSlot) {
             trainerPokemon.setLevel(MAX);
+            trainer.save();
             updateInfoItem();
         }
     }

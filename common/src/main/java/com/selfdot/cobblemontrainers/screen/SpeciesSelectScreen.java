@@ -40,6 +40,7 @@ public class SpeciesSelectScreen extends PagedScreen<Species> {
     @Override
     protected void onSelected(Species species, PlayerEntity player) {
         trainer.addSpecies(species);
+        trainer.save();
         player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerTeamScreen(trainer)));
     }
 

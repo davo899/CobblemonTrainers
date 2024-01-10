@@ -66,6 +66,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
 
         if (slotIndex == deleteMoveIndex) {
             trainerPokemon.getMoveset().setMove(moveIndex, null);
+            trainer.save();
             player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
         }
     }
@@ -80,6 +81,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
     @Override
     protected void onSelected(Move move, PlayerEntity player) {
         trainerPokemon.getMoveset().setMove(moveIndex, move);
+        trainer.save();
         player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
     }
 
