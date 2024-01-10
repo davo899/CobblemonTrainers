@@ -23,6 +23,7 @@ public class Trainer extends JsonFile {
     private List<TrainerPokemon> team;
     private String winCommand;
     private String lossCommand;
+    private boolean canOnlyBeatOnce;
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
         super(mod);
@@ -33,16 +34,6 @@ public class Trainer extends JsonFile {
     public Trainer(CobblemonTrainers mod, JsonElement jsonElement) {
         super(mod);
         loadFromJson(jsonElement);
-    }
-
-    public JsonElement toJson() {
-        JsonArray teamArray = new JsonArray(team.size());
-        team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
-        jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
-        return jsonObject;
     }
 
     public void addSpecies(Species species) {
@@ -98,6 +89,14 @@ public class Trainer extends JsonFile {
         this.lossCommand = lossCommand;
     }
 
+    public boolean canOnlyBeatOnce() {
+        return canOnlyBeatOnce;
+    }
+
+    public void setCanOnlyBeatOnce(boolean canOnlyBeatOnce) {
+        this.canOnlyBeatOnce = canOnlyBeatOnce;
+    }
+
     @Override
     protected String filename() {
         return "config/trainers/groups/" + group + "/" + name + ".json";
@@ -108,6 +107,7 @@ public class Trainer extends JsonFile {
         team = new ArrayList<>();
         winCommand = "";
         lossCommand = "";
+        canOnlyBeatOnce = false;
     }
 
     @Override
@@ -135,6 +135,21 @@ public class Trainer extends JsonFile {
         if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
             lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
         }
+        if (jsonObject.has(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE)) {
+            canOnlyBeatOnce = jsonObject.get(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
+        }
+    }
+
+    @Override
+    public JsonElement toJson() {
+        JsonArray teamArray = new JsonArray(team.size());
+        team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
+        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
+        jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
+        jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
+        return jsonObject;
     }
 
 }

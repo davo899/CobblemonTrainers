@@ -16,9 +16,10 @@ public class RenameTrainerCommand extends TrainerCommand {
             context.getSource().sendError(Text.literal("Trainer " + newName + " already exists"));
             return -1;
         }
-        trainer.setName(newName);
         CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().removeTrainer(oldName);
+        trainer.setName(newName);
         CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().addTrainer(trainer);
+        CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().rename(oldName, newName);
         context.getSource().sendMessage(Text.literal("Renamed trainer " + oldName + " to " + newName));
         return SINGLE_SUCCESS;
     }

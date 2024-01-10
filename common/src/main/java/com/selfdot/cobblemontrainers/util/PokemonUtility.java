@@ -11,6 +11,7 @@ import com.cobblemon.mod.common.client.net.battle.BattleMusicHandler;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
 import kotlin.Unit;
@@ -125,13 +126,20 @@ public class PokemonUtility {
     }
 
     public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer) {
+        if (trainer.canOnlyBeatOnce() &&
+            CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, trainer)
+        ) {
+            player.sendMessage(Text.literal(Formatting.RED + "You have already beaten this trainer!"));
+            return;
+        }
+
         PokemonUtility.startBattle(player, trainer, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
                 return Unit.INSTANCE;
             })
             .ifSuccessful(battle -> {
-                TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer.getWinCommand());
+                TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer);
                 TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
                 return Unit.INSTANCE;
             });

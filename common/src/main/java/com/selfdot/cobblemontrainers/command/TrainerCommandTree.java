@@ -9,6 +9,7 @@ import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 
+import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class TrainerCommandTree {
@@ -105,6 +106,17 @@ public class TrainerCommandTree {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                         argument("lossCommand", string())
                         .executes(new SetLossCommandCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setCanOnlyBeatOnce")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Boolean>
+                        argument("canOnlyBeatOnce", bool())
+                        .executes(new SetCanOnlyBeatOnceCommand())
                     )
                 )
             )

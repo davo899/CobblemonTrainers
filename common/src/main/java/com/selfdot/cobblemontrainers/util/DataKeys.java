@@ -16,6 +16,7 @@ public class DataKeys {
     public static final String TRAINER_MONEY_REWARD = "moneyReward";
     public static final String TRAINER_WIN_COMMAND = "winCommand";
     public static final String TRAINER_LOSS_COMMAND = "lossCommand";
+    public static final String TRAINER_CAN_ONLY_BEAT_ONCE = "canOnlyBeatOnce";
     public static final String TRAINER_GROUP = "group";
     public static final String UNGROUPED = "Ungrouped";
     public static final String PLAYER_TOKEN = "%player%";

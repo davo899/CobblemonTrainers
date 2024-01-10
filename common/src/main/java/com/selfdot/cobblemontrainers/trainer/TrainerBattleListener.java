@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.trainer;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.CommandUtils;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
@@ -17,22 +18,25 @@ public class TrainerBattleListener {
     private static final TrainerBattleListener INSTANCE = new TrainerBattleListener();
     public static TrainerBattleListener getInstance() { return INSTANCE; }
     private MinecraftServer server;
-    private final Map<PokemonBattle, String> onBattleVictory = new HashMap<>();
+    private final Map<PokemonBattle, Trainer> onBattleVictory = new HashMap<>();
     private final Map<PokemonBattle, String> onBattleLoss = new HashMap<>();
 
     private TrainerBattleListener() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, battleVictoryEvent -> {
             PokemonBattle battle = battleVictoryEvent.getBattle();
             if (onBattleVictory.containsKey(battle)) {
+                Trainer trainer = onBattleVictory.get(battle);
                 battleVictoryEvent.getWinners().forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
+                    CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().add(trainer, uuid);
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
                     if (player != null) {
-                        CommandUtils.executeCommandAsServer(
-                            onBattleVictory.get(battle).replace(
-                                DataKeys.PLAYER_TOKEN, player.getName().getString()
-                            ),
-                            server
-                        );
+                        String winCommand = trainer.getWinCommand();
+                        if (winCommand != null && !winCommand.isEmpty()) {
+                            CommandUtils.executeCommandAsServer(
+                                winCommand.replace(DataKeys.PLAYER_TOKEN, player.getName().getString()),
+                                server
+                            );
+                        }
                     }
                 }));
             }
@@ -54,8 +58,8 @@ public class TrainerBattleListener {
         });
     }
 
-    public void addOnBattleVictory(PokemonBattle battle, String winCommand) {
-        if (winCommand != null && !winCommand.isEmpty()) onBattleVictory.put(battle, winCommand);
+    public void addOnBattleVictory(PokemonBattle battle, Trainer trainer) {
+        onBattleVictory.put(battle, trainer);
     }
 
     public void addOnBattleLoss(PokemonBattle battle, String lossCommand) {
