@@ -1,0 +1,28 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:bulbasaur",
+      "gender": "FEMALE",
+      "level": 100,
+      "nature": "cobblemon:lonely",
+      "ability": "overgrow",
+      "moveset": [
+        "tackle",
+        "growl"
+      ],
+      "ivs": {
+        "hp": 25,
+        "attack": 20,
+        "defence": 15,
+        "special_attack": 12,
+        "special_defence": 12,
+        "speed": 1
+      },
+      "evs": {},
+      "shiny": false
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false
+}
