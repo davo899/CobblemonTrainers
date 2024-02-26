@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public abstract class JsonFile extends ReadOnlyJsonFile {
 
@@ -32,13 +34,22 @@ public abstract class JsonFile extends ReadOnlyJsonFile {
         }
     }
 
-    public void delete() {
-        File file = new File(filename());
-        if (!mod.isDisabled() && !file.delete()) {
-            mod.getLogger().error("Unable to delete file: " + filename());
-            mod.getLogger().error("Will attempt to delete on exit.");
+    public void updateLocation(String oldLocation) {
+        try {
+            Files.move(Path.of(oldLocation), Path.of(filename()), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            mod.getLogger().error("Could not move file " + filename());
+            mod.getLogger().error(e.getMessage());
         }
-        file.deleteOnExit();
+    }
+
+    public void delete() {
+        try {
+            Files.delete(Path.of(filename()));
+        } catch (IOException e) {
+            mod.getLogger().error("Could not delete file " + filename());
+            mod.getLogger().error(e.getMessage());
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 # 0.9.3b
 - Fixed starting trainer battles with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.
+- Fixed changing a trainer's group leaving a duplicate file in its old group directory.
 
 # 0.9.3
 - Fixed new trainers not initialising with default data, resulting in a corrupt trainer file.

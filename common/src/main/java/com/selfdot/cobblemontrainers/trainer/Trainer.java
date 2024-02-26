@@ -80,7 +80,9 @@ public class Trainer extends JsonFile {
     }
 
     public void setGroup(String group) {
+        String oldLocation = filename();
         this.group = group;
+        updateLocation(oldLocation);
     }
 
     public String getLossCommand() {
