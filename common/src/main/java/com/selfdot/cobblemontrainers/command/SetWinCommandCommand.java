@@ -5,18 +5,15 @@ import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-import java.util.List;
-
 public class SetWinCommandCommand extends TrainerCommand {
 
     @Override
     protected int runSubCommand(CommandContext<ServerCommandSource> context) {
-        List<String> commandList = CommandListArgumentType.getCommands(context, "commandList");
-        trainer.setWinCommandList(commandList);
+        String winCommand = StringArgumentType.getString(context, "winCommand");
+        trainer.setWinCommand(winCommand);
         context.getSource().sendMessage(Text.literal(
-            "Set trainer " + trainer.getName() + "'s win command list to:"
+            "Set win command for trainer " + trainer.getName() + " to '" + winCommand + "'"
         ));
-        commandList.forEach(command -> context.getSource().sendMessage(Text.literal("  " + command)));
         return SINGLE_SUCCESS;
     }
 

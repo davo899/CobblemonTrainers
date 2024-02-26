@@ -3,19 +3,13 @@ package com.selfdot.cobblemontrainers.util;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import net.minecraft.command.argument.ArgumentTypes;
-import net.minecraft.command.argument.serialize.ArgumentSerializer;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.List;
-
 public class CommandUtils {
 
     public static void executeCommandAsServer(String command, MinecraftServer server) {
-        if (command == null || command.isEmpty()) return;
         try {
             server.getCommandManager().getDispatcher().execute(command, server.getCommandSource());
 
@@ -23,16 +17,6 @@ public class CommandUtils {
             CobblemonTrainersLog.LOGGER.error("Could not run: " + command);
             CobblemonTrainersLog.LOGGER.error(e.getMessage());
         }
-    }
-
-    public static void executeCommandAsServer(String command, MinecraftServer server, PlayerEntity player) {
-        executeCommandAsServer(command.replace(DataKeys.PLAYER_TOKEN, player.getName().getString()), server);
-    }
-
-    public static void executeCommandListAsServer(
-        List<String> commandList, MinecraftServer server, PlayerEntity player
-    ) {
-        commandList.forEach(command -> executeCommandAsServer(command, server, player));
     }
 
     public static boolean hasPermission(ServerCommandSource source, String permission) {

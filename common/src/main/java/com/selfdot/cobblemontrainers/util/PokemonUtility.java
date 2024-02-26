@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
 import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
+import com.cobblemon.mod.common.client.net.battle.BattleMusicHandler;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
@@ -143,7 +144,7 @@ public class PokemonUtility {
             })
             .ifSuccessful(battle -> {
                 TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer);
-                TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommandList());
+                TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
                 return Unit.INSTANCE;
             });
     }

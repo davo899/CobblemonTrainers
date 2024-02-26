@@ -2,11 +2,7 @@ package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.*;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.command.CommandListArgumentType;
 import com.selfdot.cobblemontrainers.util.JsonFile;
-import net.minecraft.command.argument.ArgumentTypes;
-import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
-import net.minecraft.registry.Registries;
 
 import javax.annotation.Nullable;
 import java.io.File;

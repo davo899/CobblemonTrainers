@@ -2,7 +2,6 @@ package com.selfdot.cobblemontrainers
 
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
-import com.selfdot.cobblemontrainers.command.CommandListArgumentType
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
@@ -13,15 +12,10 @@ import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
 import dev.architectury.event.events.common.CommandRegistrationEvent
 import dev.architectury.event.events.common.LifecycleEvent
 import net.minecraft.command.CommandRegistryAccess
-import net.minecraft.command.argument.serialize.ConstantArgumentSerializer
-import net.minecraft.registry.Registries
-import net.minecraft.registry.Registry
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.util.Identifier
 import org.slf4j.Logger
-import java.util.function.Supplier
 
 object CobblemonTrainers {
     const val MODID = "cobblemontrainers"
@@ -37,12 +31,6 @@ object CobblemonTrainers {
         LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
 
         CommandRegistrationEvent.EVENT.register(CobblemonTrainers::registerCommands)
-
-        Registry.register(
-            Registries.COMMAND_ARGUMENT_TYPE,
-            Identifier(MODID, "command_list"),
-            ConstantArgumentSerializer.of(Supplier { CommandListArgumentType() })
-        )
     }
 
     fun isDisabled(): Boolean {

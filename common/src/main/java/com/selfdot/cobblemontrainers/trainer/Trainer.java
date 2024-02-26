@@ -21,8 +21,8 @@ public class Trainer extends JsonFile {
     private String name;
     private String group;
     private List<TrainerPokemon> team;
-    private List<String> winCommandList;
-    private List<String> lossCommandList;
+    private String winCommand;
+    private String lossCommand;
     private boolean canOnlyBeatOnce;
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
@@ -67,12 +67,12 @@ public class Trainer extends JsonFile {
         this.name = name;
     }
 
-    public List<String> getWinCommandList() {
-        return winCommandList;
+    public String getWinCommand() {
+        return winCommand;
     }
 
-    public void setWinCommandList(List<String> winCommandList) {
-        this.winCommandList = winCommandList;
+    public void setWinCommand(String winCommand) {
+        this.winCommand = winCommand;
     }
 
     public String getGroup() {
@@ -85,12 +85,12 @@ public class Trainer extends JsonFile {
         updateLocation(oldLocation);
     }
 
-    public List<String> getLossCommandList() {
-        return lossCommandList;
+    public String getLossCommand() {
+        return lossCommand;
     }
 
-    public void setLossCommandList(List<String> lossCommandList) {
-        this.lossCommandList = lossCommandList;
+    public void setLossCommand(String lossCommand) {
+        this.lossCommand = lossCommand;
     }
 
     public boolean canOnlyBeatOnce() {
@@ -109,8 +109,8 @@ public class Trainer extends JsonFile {
     @Override
     protected void setDefaults() {
         team = new ArrayList<>();
-        winCommandList = new ArrayList<>();
-        lossCommandList = new ArrayList<>();
+        winCommand = "";
+        lossCommand = "";
         canOnlyBeatOnce = false;
     }
 
@@ -124,28 +124,20 @@ public class Trainer extends JsonFile {
         team = new ArrayList<>();
         jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
             .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
-        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND_LIST)) {
-            jsonObject.getAsJsonArray(DataKeys.TRAINER_WIN_COMMAND_LIST).forEach(
-                commandJson -> winCommandList.add(commandJson.getAsString())
-            );
-        } else if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
-            String winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
-            if (!winCommand.isEmpty()) winCommandList = List.of(winCommand);
-        } else if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
-            winCommandList = List.of(
-                "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt()
-            );
+        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
+            winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
+        } else {
+            if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
+                winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
+            } else {
+                winCommand = "";
+            }
         }
         if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
             group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
         }
-        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND_LIST)) {
-            jsonObject.getAsJsonArray(DataKeys.TRAINER_LOSS_COMMAND_LIST).forEach(
-                commandJson -> lossCommandList.add(commandJson.getAsString())
-            );
-        } else if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
-            String lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
-            if (!lossCommand.isEmpty()) lossCommandList = List.of(lossCommand);
+        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
+            lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
         }
         if (jsonObject.has(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE)) {
             canOnlyBeatOnce = jsonObject.get(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
@@ -158,12 +150,8 @@ public class Trainer extends JsonFile {
         team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
         JsonObject jsonObject = new JsonObject();
         jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        JsonArray winCommandArray = new JsonArray();
-        JsonArray lossCommandArray = new JsonArray();
-        winCommandList.forEach(winCommandArray::add);
-        lossCommandList.forEach(lossCommandArray::add);
-        jsonObject.add(DataKeys.TRAINER_WIN_COMMAND_LIST, winCommandArray);
-        jsonObject.add(DataKeys.TRAINER_LOSS_COMMAND_LIST, lossCommandArray);
+        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
+        jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
         jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
         return jsonObject;
     }
