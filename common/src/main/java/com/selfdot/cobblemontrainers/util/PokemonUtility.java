@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.util;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
+import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
@@ -87,10 +88,17 @@ public class PokemonUtility {
         Trainer trainer,
         BattleFormat battleFormat
     ) {
+        PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
+        UUID leadingPokemon = null;
+        for (Pokemon pokemon : party) {
+            if (!pokemon.isFainted()) {
+                leadingPokemon = pokemon.getUuid();
+                break;
+            }
+        }
+
         BattleActor playerActor = new PlayerBattleActor(
-            player.getUuid(), Cobblemon.INSTANCE.getStorage().getParty(player).toBattleTeam(
-            false, true, null
-        )
+            player.getUuid(), party.toBattleTeam(false, true, leadingPokemon)
         );
         BattleActor trainerActor = new TrainerBattleActor(
             trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new RandomBattleAI()
@@ -98,15 +106,11 @@ public class PokemonUtility {
 
         ErroredBattleStart errors = new ErroredBattleStart();
 
-        int playerTeamSize = (int) playerActor.getPokemonList().stream()
-            .filter(battlePokemon -> !battlePokemon.getEffectedPokemon().isFainted())
-            .count();
-
-        if (playerTeamSize < battleFormat.getBattleType().getSlotsPerActor()) {
+        if (playerActor.getPokemonList().size() < battleFormat.getBattleType().getSlotsPerActor()) {
             errors.getParticipantErrors().get(playerActor).add(BattleStartError.Companion.insufficientPokemon(
                 player,
                 battleFormat.getBattleType().getSlotsPerActor(),
-                playerTeamSize
+                playerActor.getPokemonList().size()
             ));
         }
 
