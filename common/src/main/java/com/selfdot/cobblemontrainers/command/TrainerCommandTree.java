@@ -15,17 +15,10 @@ import static com.mojang.brigadier.arguments.StringArgumentType.string;
 public class TrainerCommandTree {
 
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CobblemonTrainers mod) {
+
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-            .requires(source -> !mod.isDisabled())
-            .requires(source -> CommandUtils.hasPermission(source, "selfdot.op.trainers"))
-            .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("add")
-                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("name", string())
-                    .executes(new AddTrainerCommand())
-                )
-            )
+            .requires(source -> !mod.isDisabled() && CommandUtils.hasPermission(source, "selfdot.trainers.battle"))
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
                 .requires(ServerCommandSource::isExecutedByPlayer)
@@ -33,6 +26,18 @@ public class TrainerCommandTree {
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
                     .executes(new BattleTrainerCommand())
+                )
+            )
+        );
+
+        dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
+            literal("trainers")
+            .requires(source -> !mod.isDisabled() && CommandUtils.hasPermission(source, "selfdot.op.trainers"))
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("add")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string())
+                    .executes(new AddTrainerCommand())
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
@@ -110,7 +115,7 @@ public class TrainerCommandTree {
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("setCanOnlyBeatOnce")
+                literal("setcanonlybeatonce")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
