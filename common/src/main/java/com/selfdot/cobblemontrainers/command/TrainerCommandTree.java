@@ -9,6 +9,8 @@ import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 
+import java.util.List;
+
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
@@ -88,29 +90,29 @@ public class TrainerCommandTree {
                 .executes(new SetupCommand())
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("setwincommand")
+                literal("setwincommandlist")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
-                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("winCommand", string())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, List<String>>
+                        argument("commandList", new CommandListArgumentType())
                         .executes(new SetWinCommandCommand())
                     )
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("setlosscommand")
+                literal("setlosscommandlist")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
-                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("lossCommand", string())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, List<String>>
+                        argument("commandList", new CommandListArgumentType())
                         .executes(new SetLossCommandCommand())
                     )
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("setCanOnlyBeatOnce")
+                literal("setcanonlybeatonce")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
