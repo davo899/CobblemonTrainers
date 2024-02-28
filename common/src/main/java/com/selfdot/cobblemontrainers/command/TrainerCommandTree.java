@@ -49,6 +49,10 @@ public class TrainerCommandTree {
                         argument("trainer", string())
                         .suggests(new TrainerNameSuggestionProvider())
                         .executes(new MakeBattleCommand())
+                        .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
+                            argument("entity", EntityArgumentType.entity())
+                            .executes(new MakeBattleWithEntityCommand())
+                        )
                     )
                 )
             )

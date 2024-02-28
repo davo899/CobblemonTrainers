@@ -9,7 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-public class MakeBattleCommand extends TrainerCommand {
+public class MakeBattleWithEntityCommand extends TrainerCommand {
 
     @Override
     protected int runSubCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
@@ -18,7 +18,11 @@ public class MakeBattleCommand extends TrainerCommand {
             context.getSource().sendError(Text.literal("Trainer " + trainer.getName() + " has no Pokémon"));
             return -1;
         }
-        PokemonUtility.startTrainerBattle(player, trainer, null);
+        PokemonUtility.startTrainerBattle(
+            player, trainer,
+            (EntityArgumentType.getEntity(context, "entity") instanceof LivingEntity livingEntity) ?
+                livingEntity : null
+        );
         return SINGLE_SUCCESS;
     }
 

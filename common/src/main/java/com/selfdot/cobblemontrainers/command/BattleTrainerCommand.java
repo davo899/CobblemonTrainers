@@ -16,7 +16,7 @@ public class BattleTrainerCommand extends TrainerCommand {
         }
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player == null) return 0;
-        PokemonUtility.startTrainerBattle(player, trainer);
+        PokemonUtility.startTrainerBattle(player, trainer, null);
         return SINGLE_SUCCESS;
     }
 
