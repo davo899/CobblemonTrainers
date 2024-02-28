@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers
 
+import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
@@ -61,6 +62,9 @@ object CobblemonTrainers {
         TRAINER_WIN_TRACKER.load()
         TrainerBattleListener.getInstance().setServer(server);
         Generation5AI.initialiseTypeChart();
+        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe {
+            print(it.entity.pokemon.storeCoordinates.get())
+        }
     }
 
     private fun onServerStop(server: MinecraftServer) {

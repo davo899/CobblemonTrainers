@@ -12,8 +12,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Unique;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class TrainerPokemon {
+
+    public static final Set<UUID> IS_TRAINER_OWNED = new HashSet<>();
+    public static final Set<UUID> MUST_REENABLE_LOOT_GAMERULE = new HashSet<>();
 
     private Species species;
     private Gender gender;
@@ -24,6 +32,8 @@ public class TrainerPokemon {
     private IVs ivs;
     private EVs evs;
     private boolean isShiny = false;
+
+    private final UUID uuid = UUID.randomUUID();
 
     public TrainerPokemon() { }
 
@@ -78,6 +88,8 @@ public class TrainerPokemon {
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
         pokemon.setShiny(isShiny);
+        pokemon.setUuid(uuid);
+        IS_TRAINER_OWNED.add(uuid);
         return pokemon;
     }
 
