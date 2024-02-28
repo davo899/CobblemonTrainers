@@ -5,6 +5,7 @@ import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
+import com.selfdot.cobblemontrainers.trainer.Generation5AI
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
 import com.selfdot.cobblemontrainers.trainer.TrainerWinTracker
@@ -59,6 +60,7 @@ object CobblemonTrainers {
         TRAINER_REGISTRY.load()
         TRAINER_WIN_TRACKER.load()
         TrainerBattleListener.getInstance().setServer(server);
+        Generation5AI.initialiseTypeChart();
     }
 
     private fun onServerStop(server: MinecraftServer) {

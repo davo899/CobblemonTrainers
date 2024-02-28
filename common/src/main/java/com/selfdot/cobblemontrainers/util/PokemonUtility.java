@@ -7,12 +7,11 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
-import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
-import com.cobblemon.mod.common.client.net.battle.BattleMusicHandler;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
 import kotlin.Unit;
@@ -101,7 +100,7 @@ public class PokemonUtility {
             player.getUuid(), party.toBattleTeam(false, true, leadingPokemon)
         );
         BattleActor trainerActor = new TrainerBattleActor(
-            trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new RandomBattleAI()
+            trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
         );
 
         ErroredBattleStart errors = new ErroredBattleStart();
