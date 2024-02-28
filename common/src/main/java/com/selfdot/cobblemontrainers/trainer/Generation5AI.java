@@ -283,14 +283,15 @@ public class Generation5AI implements BattleAI {
                 activeBattlePokemon.getAllActivePokemon().spliterator(), false
             )
             .filter(abp -> !abp.isAllied(activeBattlePokemon))
-            .filter(abp -> activeBattlePokemon.getBattlePokemon() != null)
             .findFirst();
 
         if (mustSwitch || activeBattlePokemon.isGone()) {
             List<BattlePokemon> canSwitchTo = activeBattlePokemon.getActor().getPokemonList().stream()
                 .filter(BattlePokemon::canBeSentOut)
                 .toList();
-            if (canSwitchTo.isEmpty()) return new DefaultActionResponse();
+            if (canSwitchTo.isEmpty()) {
+                return new DefaultActionResponse();
+            }
             if (opponentActiveBattlePokemon.isEmpty() || opponentActiveBattlePokemon.get().getBattlePokemon() == null) {
                 return new SwitchActionResponse(canSwitchTo.get(RANDOM.nextInt(canSwitchTo.size())).getUuid());
             }
@@ -346,13 +347,10 @@ public class Generation5AI implements BattleAI {
             );
             moveDamages.put(inBattleMove, dmg);
         });
-        moveDamages.forEach((k, v) -> System.out.println(k.id + " - " + v));
 
         List<String> killingMoves = new ArrayList<>();
         moveDamages.forEach((move, damage) -> { if (damage >= opponent.getHealth()) killingMoves.add(move.id); });
         if (!killingMoves.isEmpty()) {
-            System.out.println("See kill with:");
-            killingMoves.forEach(move -> System.out.println("\t" + move));
             return new MoveActionResponse(
                 killingMoves.get(RANDOM.nextInt(killingMoves.size())),
                 opponentActiveBattlePokemon.get().getPNX(),
