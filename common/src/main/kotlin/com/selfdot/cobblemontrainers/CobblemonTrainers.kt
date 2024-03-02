@@ -6,10 +6,7 @@ import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
-import com.selfdot.cobblemontrainers.trainer.Generation5AI
-import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener
-import com.selfdot.cobblemontrainers.trainer.TrainerRegistry
-import com.selfdot.cobblemontrainers.trainer.TrainerWinTracker
+import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
 import dev.architectury.event.events.common.CommandRegistrationEvent
 import dev.architectury.event.events.common.LifecycleEvent
@@ -60,8 +57,9 @@ object CobblemonTrainers {
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
         TRAINER_REGISTRY.load()
         TRAINER_WIN_TRACKER.load()
-        TrainerBattleListener.getInstance().setServer(server);
-        Generation5AI.initialiseTypeChart();
+        TrainerBattleListener.getInstance().setServer(server)
+        Generation5AI.initialiseTypeChart()
+        TrainerPokemon.registerPokemonSendOutListener()
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe {
             print(it.entity.pokemon.storeCoordinates.get())
         }

@@ -23,9 +23,10 @@ architectury {
 loom {
     silentMojangMappingsLicense()
 
+    /*
     mixin {
         defaultRefmapName.set("cobblemon-${project.name}-refmap.json")
-    }
+    }*/
 }
 
 dependencies {

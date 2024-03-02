@@ -9,9 +9,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PokemonEntity.class)
 public abstract class PokemonEntityMixin extends LivingEntity {
@@ -20,14 +22,24 @@ public abstract class PokemonEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
+    @Unique
+    private boolean cobblemonTrainers$isTrainerOwned() {
+        return TrainerPokemon.IS_TRAINER_OWNED.contains(getPokemon().getUuid());
+    }
+
     @Shadow
     public abstract Pokemon getPokemon();
+
+    @Inject(method = "shouldSave", at = @At("HEAD"), cancellable = true)
+    private void injectShouldSave(CallbackInfoReturnable<Boolean> cir) {
+        if (cobblemonTrainers$isTrainerOwned()) cir.setReturnValue(false);
+    }
 
     @Inject(method = "updatePostDeath", at = @At("HEAD"))
     private void injectUpdatePostDeath(CallbackInfo ci) {
         if (deathTime != 59 || getWorld().isClient) return;
         if (
-            TrainerPokemon.IS_TRAINER_OWNED.contains(getPokemon().getUuid()) &&
+            cobblemonTrainers$isTrainerOwned() &&
             getWorld().getGameRules().getBoolean(CobblemonGameRules.DO_POKEMON_LOOT)
         ) {
             TrainerPokemon.MUST_REENABLE_LOOT_GAMERULE.add(getPokemon().getUuid());

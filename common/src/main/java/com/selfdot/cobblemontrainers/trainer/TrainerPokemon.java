@@ -1,18 +1,21 @@
 package com.selfdot.cobblemontrainers.trainer;
 
+import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.abilities.Abilities;
 import com.cobblemon.mod.common.api.abilities.Ability;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.moves.MoveSet;
 import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.api.pokemon.Natures;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.pokemon.*;
+import com.cobblemon.mod.common.pokemon.properties.UncatchableProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
+import kotlin.Unit;
 import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -89,6 +92,7 @@ public class TrainerPokemon {
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
         pokemon.setShiny(isShiny);
         pokemon.setUuid(uuid);
+        pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
         IS_TRAINER_OWNED.add(uuid);
         return pokemon;
     }
@@ -141,6 +145,15 @@ public class TrainerPokemon {
 
     public void toggleShiny() {
         isShiny = !isShiny;
+    }
+
+    public static void registerPokemonSendOutListener() {
+        CobblemonEvents.POKEMON_SENT_POST.subscribe(Priority.NORMAL, event -> {
+            if (IS_TRAINER_OWNED.contains(event.getPokemon().getUuid())) {
+                event.getPokemonEntity().getUnbattleable().set(true);
+            }
+            return Unit.INSTANCE;
+        });
     }
 
 }
