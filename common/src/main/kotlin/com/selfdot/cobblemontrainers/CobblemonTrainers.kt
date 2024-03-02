@@ -4,7 +4,6 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
-import com.selfdot.cobblemontrainers.config.CobblemonConfig
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
@@ -23,9 +22,6 @@ object CobblemonTrainers {
     private var disabled = false
     private val LOGGER = LogUtils.getLogger()
     fun initialize() {
-        // Load official Cobblemon's config.
-        CobblemonConfig()
-
         LifecycleEvent.SERVER_STARTING.register(CobblemonTrainers::onServerStart)
         LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
 
