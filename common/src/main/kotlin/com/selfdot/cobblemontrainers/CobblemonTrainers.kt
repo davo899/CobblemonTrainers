@@ -1,6 +1,5 @@
 package com.selfdot.cobblemontrainers
 
-import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree

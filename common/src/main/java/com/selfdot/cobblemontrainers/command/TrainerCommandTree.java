@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.command;
 
+import com.cobblemon.mod.common.command.argument.PartySlotArgumentType;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
@@ -126,6 +127,17 @@ public class TrainerCommandTree {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, Boolean>
                         argument("canOnlyBeatOnce", bool())
                         .executes(new SetCanOnlyBeatOnceCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("addfromparty")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
+                    argument("pokemon", PartySlotArgumentType.Companion.partySlot())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("trainer", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(new AddFromPartyCommand())
                     )
                 )
             )

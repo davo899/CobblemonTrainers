@@ -1,6 +1,7 @@
 # 0.9.4
 - Added Generation 5 based trainer AI.
-- Added sending out trainer's Pokémon (/trainers makebattle <player> <trainer> <trainerEntity>)
+- Added sending out trainer's Pokémon with "/trainers makebattle <player> <trainer> <trainerEntity>"
+- Added "/trainers addfromparty <trainer> <partySlot>" to add a pokemon from your party to a trainer's team
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.
