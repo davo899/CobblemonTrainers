@@ -56,9 +56,6 @@ object CobblemonTrainers {
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
         TrainerPokemon.registerPokemonSendOutListener()
-        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe {
-            print(it.entity.pokemon.storeCoordinates.get())
-        }
     }
 
     private fun onServerStop(server: MinecraftServer) {
