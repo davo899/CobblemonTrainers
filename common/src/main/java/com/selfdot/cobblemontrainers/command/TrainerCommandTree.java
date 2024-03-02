@@ -1,6 +1,8 @@
 package com.selfdot.cobblemontrainers.command;
 
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.command.argument.PartySlotArgumentType;
+import com.cobblemon.mod.common.command.argument.PokemonPropertiesArgumentType;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
@@ -132,12 +134,23 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("addfromparty")
-                .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
-                    argument("pokemon", PartySlotArgumentType.Companion.partySlot())
-                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("trainer", string())
-                        .suggests(new TrainerNameSuggestionProvider())
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
+                        argument("pokemon", PartySlotArgumentType.Companion.partySlot())
                         .executes(new AddFromPartyCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("addpokemon")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, PokemonProperties>
+                        argument("pokemon", PokemonPropertiesArgumentType.Companion.properties())
+                        .executes(new AddPokemonCommand())
                     )
                 )
             )

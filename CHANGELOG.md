@@ -1,6 +1,7 @@
 # 0.9.4
 - Added Generation 5 based trainer AI.
 - Added sending out trainer's Pokémon with "/trainers makebattle <player> <trainer> <trainerEntity>"
+- Added "/trainers addpokemon <trainer> <pokemon>" to add a pokemon to a trainer's team
 - Added "/trainers addfromparty <trainer> <partySlot>" to add a pokemon from your party to a trainer's team
 
 # 0.9.3b
