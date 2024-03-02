@@ -3,6 +3,7 @@
 - Added sending out trainer's Pokémon with "/trainers makebattle <player> <trainer> <trainerEntity>"
 - Added "/trainers addpokemon <trainer> <pokemon>" to add a pokemon to a trainer's team
 - Added "/trainers addfromparty <trainer> <partySlot>" to add a pokemon from your party to a trainer's team
+- Added "/trainers add <name> <group>" to add a new trainer directly to a group
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.

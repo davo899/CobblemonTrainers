@@ -44,6 +44,16 @@ public class TrainerCommandTree {
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("add")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("group", string())
+                        .executes(new AddTrainerWithGroupCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("makebattle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
                     argument("player", EntityArgumentType.player())
