@@ -54,25 +54,25 @@ public class EVEditScreen extends Screen {
         increaseHighSlot = increaseLowSlot + 1;
         setMaxSlot = increaseHighSlot + 1;
 
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("Set to " + MIN));
         inventory.setStack(setMinSlot, itemStack);
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("-" + EDIT_HIGH));
         inventory.setStack(decreaseHighSlot, itemStack);
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("-" + EDIT_LOW));
         inventory.setStack(decreaseLowSlot, itemStack);
         infoItem = ScreenUtils.statVitaminItem(stat);
         updateInfoItem();
         inventory.setStack(infoSlot, infoItem);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("+" + EDIT_LOW));
         inventory.setStack(increaseLowSlot, itemStack);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("+" + EDIT_HIGH));
         inventory.setStack(increaseHighSlot, itemStack);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("Set to " + MAX));
         inventory.setStack(setMaxSlot, itemStack);
     }

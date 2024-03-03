@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.pokemon.stats.Stat;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.pokemon.Nature;
+import com.cobblemon.mod.common.util.DataKeys;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,7 @@ public class ScreenUtils {
     }
 
     public static ItemStack statVitaminItem(Stats stat) {
-        return new ItemStack(switch (stat) {
+        return withoutAdditional(switch (stat) {
             case HP -> CobblemonItems.HP_UP;
             case ATTACK -> CobblemonItems.PROTEIN;
             case DEFENCE -> CobblemonItems.IRON;
@@ -58,21 +59,13 @@ public class ScreenUtils {
         stack.setNbt(nbt);
     }
 
-    public static ItemStack natureToItem(Nature nature) {
-        ItemStack itemStack = new ItemStack(Items.CYAN_DYE);
-        itemStack.setCustomName(Text.translatable(nature.getDisplayName()));
-        Stat increasedStat = nature.getIncreasedStat();
-        Stat decreasedStat = nature.getDecreasedStat();
-        if (increasedStat == null || decreasedStat == null) {
-            ScreenUtils.addLore(itemStack, new Text[]{
-                Text.literal(Formatting.GRAY + "No stat change")
-            });
-        } else {
-            ScreenUtils.addLore(itemStack, new Text[]{
-                Text.literal(Formatting.GREEN + "+" + increasedStat.getDisplayName().getString()),
-                Text.literal(Formatting.RED + "-" + decreasedStat.getDisplayName().getString())
-            });
-        }
+    public static ItemStack withoutAdditional(Item item) {
+        ItemStack itemStack = new ItemStack(item);
+        itemStack.addHideFlag(ItemStack.TooltipSection.ADDITIONAL);
+        NbtCompound nbt = itemStack.getNbt();
+        if (nbt == null) nbt = new NbtCompound();
+        nbt.putBoolean(DataKeys.HIDE_TOOLTIP, true);
+        itemStack.setNbt(nbt);
         return itemStack;
     }
 

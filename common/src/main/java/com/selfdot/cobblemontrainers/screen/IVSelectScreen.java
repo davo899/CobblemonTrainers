@@ -24,7 +24,7 @@ public class IVSelectScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.STAR_SWEET);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.STAR_SWEET);
         itemStack.setCustomName(Text.literal("IVs"));
         inventory.setStack(columns / 2, itemStack);
 

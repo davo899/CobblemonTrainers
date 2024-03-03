@@ -2,6 +2,7 @@ package com.selfdot.cobblemontrainers.screen;
 
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -23,13 +24,13 @@ public class ConfirmDeletePokemonScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack titleItem = new ItemStack(Items.BARRIER);
+        ItemStack titleItem = ScreenUtils.withoutAdditional(Items.BARRIER);
         titleItem.setCustomName(Text.literal("Delete Pokémon"));
         inventory.setStack(columns / 2, titleItem);
 
         confirmSlot = (columns * 2) + (columns / 2);
 
-        ItemStack confirmItem = new ItemStack(Items.LIME_CONCRETE);
+        ItemStack confirmItem = ScreenUtils.withoutAdditional(Items.LIME_CONCRETE);
         confirmItem.setCustomName(Text.literal("Confirm?"));
         inventory.setStack(confirmSlot, confirmItem);
     }

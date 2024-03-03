@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -51,11 +52,11 @@ public class MoveSelectScreen extends PagedScreen<Move> {
 
         super.initialize(inventory);
 
-        ItemStack movesItem = new ItemStack(Items.MUSIC_DISC_MELLOHI);
+        ItemStack movesItem = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_MELLOHI);
         movesItem.setCustomName(Text.literal("Moves"));
         inventory.setStack(columns / 2, movesItem);
 
-        ItemStack deleteMoveItem = new ItemStack(Items.MUSIC_DISC_CHIRP);
+        ItemStack deleteMoveItem = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_CHIRP);
         deleteMoveItem.setCustomName(Text.literal("Delete Move"));
         inventory.setStack(deleteMoveIndex, deleteMoveItem);
     }
@@ -73,7 +74,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
 
     @Override
     protected ItemStack toItem(Move move) {
-        ItemStack itemStack = new ItemStack(Items.MUSIC_DISC_MELLOHI);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_MELLOHI);
         itemStack.setCustomName(move.getDisplayName());
         return itemStack;
     }

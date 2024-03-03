@@ -29,7 +29,7 @@ public class NatureSelectScreen extends PagedScreen<Nature> {
 
     @Override
     protected ItemStack toItem(Nature nature) {
-        ItemStack itemStack = new ItemStack(Items.CYAN_DYE);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(Items.CYAN_DYE);
         itemStack.setCustomName(Text.translatable(nature.getDisplayName()));
         Stat increasedStat = nature.getIncreasedStat();
         Stat decreasedStat = nature.getDecreasedStat();

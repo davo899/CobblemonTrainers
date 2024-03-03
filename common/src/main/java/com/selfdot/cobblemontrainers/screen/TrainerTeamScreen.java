@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ public class TrainerTeamScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack trainerItem = new ItemStack(CobblemonItems.POKE_BALL);
+        ItemStack trainerItem = ScreenUtils.withoutAdditional(CobblemonItems.POKE_BALL);
         trainerItem.setCustomName(Text.literal(trainer.getName()));
         inventory.setStack(columns / 2, trainerItem);
 
@@ -39,7 +40,7 @@ public class TrainerTeamScreen extends Screen {
                     PokemonUtility.pokemonToInfoItem(pokemon.getOriginalPokemon())
                 );
             } else {
-                ItemStack itemStack = new ItemStack(Items.BEDROCK);
+                ItemStack itemStack = ScreenUtils.withoutAdditional(Items.BEDROCK);
                 itemStack.setCustomName(Text.literal("Empty"));
                 inventory.setStack((2 * columns) + (columns / 2) - 1 + ((i / 3) * columns) + (i % 3), itemStack);
             }
@@ -47,7 +48,7 @@ public class TrainerTeamScreen extends Screen {
 
         if (team.size() < TEAM_MAX_SIZE) {
             newPokemonSlot = (2 * columns) + (columns / 2) - 2;
-            ItemStack newPokemonItem = new ItemStack(CobblemonItems.POKE_BALL);
+            ItemStack newPokemonItem = ScreenUtils.withoutAdditional(CobblemonItems.POKE_BALL);
             newPokemonItem.setCustomName(Text.literal("New Pokémon"));
             inventory.setStack(newPokemonSlot, newPokemonItem);
         }

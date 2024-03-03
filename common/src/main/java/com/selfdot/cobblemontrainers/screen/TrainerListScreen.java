@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -30,7 +31,7 @@ public class TrainerListScreen extends PagedScreen<Trainer> {
 
     @Override
     protected ItemStack toItem(Trainer trainer) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.POKE_BALL);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.POKE_BALL);
         itemStack.setCustomName(Text.literal(trainer.getName()));
         return itemStack;
     }

@@ -37,7 +37,7 @@ public class LevelEditScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.WISE_GLASSES);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.WISE_GLASSES);
         itemStack.setCustomName(Text.literal("Level"));
         inventory.setStack(columns / 2, itemStack);
 
@@ -49,25 +49,25 @@ public class LevelEditScreen extends Screen {
         increaseHighSlot = increaseLowSlot + 1;
         setMaxSlot = increaseHighSlot + 1;
 
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("Set to " + MIN));
         inventory.setStack(setMinSlot, itemStack);
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("-" + EDIT_HIGH));
         inventory.setStack(decreaseHighSlot, itemStack);
-        itemStack = new ItemStack(Items.RED_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
         itemStack.setCustomName(Text.literal("-" + EDIT_LOW));
         inventory.setStack(decreaseLowSlot, itemStack);
-        infoItem = new ItemStack(CobblemonItems.WISE_GLASSES);
+        infoItem = ScreenUtils.withoutAdditional(CobblemonItems.WISE_GLASSES);
         updateInfoItem();
         inventory.setStack(infoSlot, infoItem);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("+" + EDIT_LOW));
         inventory.setStack(increaseLowSlot, itemStack);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("+" + EDIT_HIGH));
         inventory.setStack(increaseHighSlot, itemStack);
-        itemStack = new ItemStack(Items.GREEN_DYE);
+        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
         itemStack.setCustomName(Text.literal("Set to " + MAX));
         inventory.setStack(setMaxSlot, itemStack);
     }
