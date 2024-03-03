@@ -4,6 +4,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -18,7 +19,10 @@ public class MakeBattleCommand extends TrainerCommand {
             context.getSource().sendError(Text.literal("Trainer " + trainer.getName() + " has no Pokémon"));
             return -1;
         }
-        PokemonUtility.startTrainerBattle(player, trainer, null);
+        PokemonUtility.startTrainerBattle(
+            player, trainer,
+            context.getSource().getEntity() instanceof LivingEntity livingEntity ? livingEntity : null
+        );
         return SINGLE_SUCCESS;
     }
 
