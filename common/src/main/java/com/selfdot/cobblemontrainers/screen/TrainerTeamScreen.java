@@ -68,9 +68,9 @@ public class TrainerTeamScreen extends Screen {
 
         if ((columns / 2) - 1 <= x && x <= (columns / 2) + 1 && 2 <= y && y <= 3) {
             int index = ((y - 2) * 3) + (x - (columns / 2) + 1);
-            if (index < trainer.getTeam().size()) {
+            if (index < trainer.getTeamSize()) {
                 player.openHandledScreen(new TrainerSetupHandlerFactory(
-                    new TrainerPokemonScreen(trainer, trainer.getTeam().get(index))
+                    new TrainerPokemonScreen(trainer, trainer.getTeamSlot(index))
                 ));
             }
         }

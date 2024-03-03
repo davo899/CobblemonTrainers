@@ -39,7 +39,7 @@ public class ConfirmDeletePokemonScreen extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
         if (slotIndex == confirmSlot) {
-            trainer.getTeam().remove(trainerPokemon);
+            trainer.removeTrainerPokemon(trainerPokemon);
             trainer.save();
             player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerTeamScreen(trainer)));
         }
