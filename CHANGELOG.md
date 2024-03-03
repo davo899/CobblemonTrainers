@@ -5,6 +5,7 @@
 - Added "/trainers addfromparty <trainer> <partySlot>" to add a pokemon from your party to a trainer's team
 - Added "/trainers add <name> <group>" to add a new trainer directly to a group
 - Removed additional tooltips from menu items (e.g. disc names)
+- Added type, damage category and power tooltips to move icons in menu
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.

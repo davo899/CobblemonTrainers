@@ -74,9 +74,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
 
     @Override
     protected ItemStack toItem(Move move) {
-        ItemStack itemStack = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_MELLOHI);
-        itemStack.setCustomName(move.getDisplayName());
-        return itemStack;
+        return ScreenUtils.moveItem(move);
     }
 
     @Override

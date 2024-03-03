@@ -44,8 +44,7 @@ public class PokemonMovesetScreen extends Screen {
                 moveItem = ScreenUtils.withoutAdditional(Items.BARRIER);
                 moveItem.setCustomName(Text.literal("Empty"));
             } else {
-                moveItem = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_5);
-                moveItem.setCustomName(move.getDisplayName());
+                moveItem = ScreenUtils.moveItem(move);
             }
             inventory.setStack(moveSlots[i], moveItem);
         }
