@@ -11,6 +11,7 @@
 - Fixed HTML escaping in JSON strings ('=' becoming '\\u003d').
 - Fixed moves appearing multiple times in move select screen.
 - Changed moves to be sorted alphabetically in move select screen.
+- Added held items on trainer pokemon.
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.

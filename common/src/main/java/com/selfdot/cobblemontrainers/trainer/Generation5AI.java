@@ -307,6 +307,7 @@ public class Generation5AI implements BattleAI {
                         )
                     ).max(Double::compare).orElse(0d)
                 )).get();
+            nextPokemon.setWillBeSwitchedIn(true);
             return new SwitchActionResponse(nextPokemon.getUuid());
         }
 

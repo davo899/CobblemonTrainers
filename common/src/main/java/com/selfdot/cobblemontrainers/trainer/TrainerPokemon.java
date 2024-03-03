@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.trainer;
 
+import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.abilities.Abilities;
 import com.cobblemon.mod.common.api.abilities.Ability;
@@ -15,6 +16,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 import java.util.HashSet;
@@ -35,6 +41,7 @@ public class TrainerPokemon {
     private IVs ivs;
     private EVs evs;
     private boolean isShiny = false;
+    private Item heldItem = null;
 
     private final UUID uuid = UUID.randomUUID();
 
@@ -61,6 +68,11 @@ public class TrainerPokemon {
             moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
         }
         if (jsonObject.has(DataKeys.POKEMON_SHINY)) isShiny = jsonObject.get(DataKeys.POKEMON_SHINY).getAsBoolean();
+        if (jsonObject.has(DataKeys.POKEMON_HELD_ITEM)) {
+            heldItem = Registries.ITEM.get(
+                Identifier.tryParse(jsonObject.get(DataKeys.POKEMON_HELD_ITEM).getAsString())
+            );
+        }
     }
 
     public JsonObject toJson() {
@@ -76,6 +88,7 @@ public class TrainerPokemon {
         jsonObject.add(DataKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
         jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
         jsonObject.addProperty(DataKeys.POKEMON_SHINY, isShiny);
+        jsonObject.addProperty(DataKeys.POKEMON_HELD_ITEM, Registries.ITEM.getId(heldItem).toString());
         return jsonObject;
     }
 
@@ -91,6 +104,7 @@ public class TrainerPokemon {
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
         pokemon.setShiny(isShiny);
+        pokemon.swapHeldItem(new ItemStack(heldItem), false);
         pokemon.setUuid(uuid);
         pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
         IS_TRAINER_OWNED.add(uuid);
@@ -108,6 +122,7 @@ public class TrainerPokemon {
         trainerPokemon.ivs = pokemon.getIvs();
         trainerPokemon.evs = pokemon.getEvs();
         trainerPokemon.isShiny = pokemon.getShiny();
+        trainerPokemon.heldItem = pokemon.heldItem().getItem();
         return trainerPokemon;
     }
 
@@ -145,6 +160,14 @@ public class TrainerPokemon {
 
     public void toggleShiny() {
         isShiny = !isShiny;
+    }
+
+    public Item getHeldItem() {
+        return heldItem;
+    }
+
+    public void setHeldItem(Item heldItem) {
+        this.heldItem = heldItem;
     }
 
     public static void registerPokemonSendOutListener() {
