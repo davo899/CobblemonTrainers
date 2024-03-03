@@ -16,7 +16,10 @@ public abstract class ReadOnlyJsonFile {
     protected abstract void setDefaults();
     protected abstract void loadFromJson(JsonElement jsonElement);
 
-    protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    protected static final Gson GSON = new GsonBuilder()
+        .disableHtmlEscaping()
+        .setPrettyPrinting()
+        .create();
 
     protected final CobblemonTrainers mod;
 
