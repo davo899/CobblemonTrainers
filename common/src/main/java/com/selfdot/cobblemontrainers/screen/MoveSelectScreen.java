@@ -2,6 +2,7 @@ package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
+import com.cobblemon.mod.common.api.pokemon.moves.Learnset;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import com.selfdot.cobblemontrainers.util.ScreenUtils;
@@ -13,6 +14,9 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,24 +27,31 @@ public class MoveSelectScreen extends PagedScreen<Move> {
     private final TrainerPokemon trainerPokemon;
     private int deleteMoveIndex;
 
+    private static List<Move> moveSelection(TrainerPokemon trainerPokemon) {
+        Learnset learnset = trainerPokemon.toPokemon().getForm().getMoves();
+        return Stream.of(
+            learnset.getLevelUpMovesUpTo(trainerPokemon.getLevel()),
+            learnset.getTmMoves(),
+            learnset.getEggMoves(),
+            learnset.getEvolutionMoves(),
+            learnset.getFormChangeMoves(),
+            learnset.getTutorMoves()
+        )
+            .flatMap(Collection::stream)
+            .collect(Collectors.toMap(
+                (moveTemplate) -> moveTemplate.getName() + moveTemplate.getElementalType().getName(),
+                p -> p, (p, q) -> p
+            )).values().stream()
+            .filter(moveTemplate -> trainerPokemon.getMoveset().getMoves().stream().noneMatch(
+                move -> move.getTemplate().equals(moveTemplate)
+            ))
+            .map(MoveTemplate::create)
+            .sorted(Comparator.comparing(Move::getName))
+            .toList();
+    }
+
     public MoveSelectScreen(int moveIndex, Trainer trainer, TrainerPokemon trainerPokemon) {
-        super(
-            new PokemonMovesetScreen(trainer, trainerPokemon),
-            Stream.of(
-                trainerPokemon.toPokemon().getForm().getMoves().getLevelUpMovesUpTo(trainerPokemon.getLevel()),
-                trainerPokemon.toPokemon().getForm().getMoves().getTmMoves(),
-                trainerPokemon.toPokemon().getForm().getMoves().getEggMoves(),
-                trainerPokemon.toPokemon().getForm().getMoves().getEvolutionMoves(),
-                trainerPokemon.toPokemon().getForm().getMoves().getFormChangeMoves(),
-                trainerPokemon.toPokemon().getForm().getMoves().getTutorMoves()
-            ).flatMap(Collection::stream)
-                .filter(moveTemplate -> trainerPokemon.getMoveset().getMoves().stream().noneMatch(
-                    move -> move.getTemplate().equals(moveTemplate)
-                ))
-                .map(MoveTemplate::create)
-                .collect(Collectors.toList()),
-            0
-        );
+        super(new PokemonMovesetScreen(trainer, trainerPokemon), moveSelection(trainerPokemon), 0);
         this.moveIndex = moveIndex;
         this.trainer = trainer;
         this.trainerPokemon = trainerPokemon;
