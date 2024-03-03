@@ -3,11 +3,12 @@
 - Added sending out trainer's Pokémon
   - "/trainers makebattle \<player\> \<trainer\>" - If the command executor is a LivingEntity, it will send out the trainer's pokemon.
   - "/trainers makebattle \<player\> \<trainer\> \<trainerEntity\>" - Can use a target selector to select the entity to send out the trainer's pokemon (must be a LivingEntity).
-- Added "/trainers addpokemon <trainer> <pokemon>" to add a pokemon to a trainer's team
-- Added "/trainers addfromparty <trainer> <partySlot>" to add a pokemon from your party to a trainer's team
-- Added "/trainers add <name> <group>" to add a new trainer directly to a group
+- Added "/trainers addpokemon \<trainer\> \<pokemon\>" to add a pokemon to a trainer's team
+- Added "/trainers addfromparty \<trainer\> \<partySlot\>" to add a pokemon from your party to a trainer's team
+- Added "/trainers add \<name\> \<group\>" to add a new trainer directly to a group
 - Removed additional tooltips from menu items (e.g. disc names)
 - Added type, damage category and power tooltips to move icons in menu
+- Fixed HTML escaping in JSON strings ('=' becoming '\\u003d')
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.
