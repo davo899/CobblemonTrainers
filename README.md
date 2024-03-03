@@ -16,6 +16,8 @@ Adds a trainer battle system to Cobblemon. Intended to be used with an interacta
 - /trainers addfromparty \<trainer\> \<partySlot\> - Adds a pokemon from your party to a trainer's team
 
 Single quotes can be used to include spaces in the trainer name or commands: /trainers add 'Ash Ketchum'\
+To include single quotes within a string, use \': 'say \'hello\'' (becomes say 'hello')
+
 All commands require permission level 2, or their corresponding permission node:
 - "selfdot.trainers.battle" - /trainers battle \<trainerName\>
 - "selfdot.op.trainers" - All other commands
