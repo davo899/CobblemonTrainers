@@ -1,5 +1,5 @@
 plugins {
-    id("cobblemon.base-conventions")
+    id("cobblemontrainers.base-conventions")
     id("com.github.johnrengelman.shadow")
 }
 

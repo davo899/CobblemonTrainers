@@ -1,0 +1,78 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:absol",
+      "gender": "FEMALE",
+      "level": 100,
+      "nature": "cobblemon:bashful",
+      "ability": "pressure",
+      "moveset": [
+        "aerialace",
+        "nightslash",
+        "flamethrower",
+        "closecombat"
+      ],
+      "ivs": {
+        "hp": 1,
+        "attack": 21,
+        "defence": 6,
+        "special_attack": 31,
+        "special_defence": 30,
+        "speed": 21
+      },
+      "evs": {},
+      "shiny": true,
+      "heldItem": "minecraft:air"
+    },
+    {
+      "species": "cobblemon:rattata",
+      "gender": "MALE",
+      "level": 100,
+      "nature": "cobblemon:mild",
+      "ability": "guts",
+      "moveset": [
+        "tailwhip",
+        "tackle"
+      ],
+      "ivs": {
+        "hp": 24,
+        "attack": 4,
+        "defence": 6,
+        "special_attack": 14,
+        "special_defence": 23,
+        "speed": 16
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    },
+    {
+      "species": "cobblemon:pidgeot",
+      "gender": "FEMALE",
+      "level": 100,
+      "nature": "cobblemon:bashful",
+      "ability": "tangledfeet",
+      "moveset": [
+        "tackle",
+        "sandattack",
+        "quickattack",
+        "aerialace"
+      ],
+      "ivs": {
+        "hp": 16,
+        "attack": 21,
+        "defence": 12,
+        "special_attack": 15,
+        "special_defence": 4,
+        "speed": 4
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}

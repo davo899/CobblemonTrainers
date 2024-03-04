@@ -1,0 +1,31 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:venusaur",
+      "gender": "FEMALE",
+      "level": 1,
+      "nature": "cobblemon:timid",
+      "ability": "overgrow",
+      "moveset": [
+        "tackle",
+        "petaldance",
+        "growth"
+      ],
+      "ivs": {
+        "hp": 14,
+        "attack": 27,
+        "defence": 1,
+        "special_attack": 20,
+        "special_defence": 8,
+        "speed": 16
+      },
+      "evs": {},
+      "shiny": true,
+      "heldItem": "cobblemon:sitrus_berry"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}

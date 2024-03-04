@@ -1,3 +1,6 @@
+# 0.9.4b
+- Fixed refmap conflicts which prevented the mod from loading with some other mods that don't name their refmaps.
+
 # 0.9.4
 - Added Generation 5 based trainer AI.
 - Added sending out trainer pokemon.

@@ -1,6 +1,5 @@
 plugins {
-    id("cobblemon.platform-conventions")
-    id("cobblemon.publish-conventions")
+    id("cobblemontrainers.platform-conventions")
 }
 
 architectury {

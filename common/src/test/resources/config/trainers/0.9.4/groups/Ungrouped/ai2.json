@@ -1,0 +1,30 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:kakuna",
+      "gender": "MALE",
+      "level": 1,
+      "nature": "cobblemon:serious",
+      "ability": "shedskin",
+      "moveset": [
+        "stringshot",
+        "bugbite"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 22,
+        "defence": 17,
+        "special_attack": 3,
+        "special_defence": 14,
+        "speed": 22
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}

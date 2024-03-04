@@ -1,0 +1,29 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:charmander",
+      "gender": "MALE",
+      "level": 1,
+      "nature": "cobblemon:adamant",
+      "ability": "blaze",
+      "moveset": [
+        "scratch"
+      ],
+      "ivs": {
+        "hp": 13,
+        "attack": 6,
+        "defence": 26,
+        "special_attack": 5,
+        "special_defence": 16,
+        "speed": 12
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}
