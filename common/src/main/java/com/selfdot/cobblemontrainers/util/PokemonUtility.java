@@ -16,7 +16,6 @@ import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
 import kotlin.Unit;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -24,6 +23,8 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class PokemonUtility {
@@ -136,11 +137,24 @@ public class PokemonUtility {
         return errors;
     }
 
+    public static final Set<UUID> IN_TRAINER_BATTLE = new HashSet<>();
+
     public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer, LivingEntity trainerEntity) {
+        if (IN_TRAINER_BATTLE.contains(player.getUuid())) return;
         if (trainer.canOnlyBeatOnce() &&
             CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, trainer)
         ) {
             player.sendMessage(Text.literal(Formatting.RED + "You have already beaten this trainer!"));
+            return;
+        }
+
+        long cooldownMillis = CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER()
+            .remainingCooldownMillis(player, trainer);
+        if (cooldownMillis > 0) {
+            player.sendMessage(Text.literal(
+                Formatting.RED + "You can't battle this trainer for another " +
+                    (cooldownMillis / 1000) + " seconds"
+            ));
             return;
         }
 
@@ -150,8 +164,10 @@ public class PokemonUtility {
                 return Unit.INSTANCE;
             })
             .ifSuccessful(battle -> {
+                CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER().onBattleStart(player, trainer);
                 TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer);
                 TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
+                IN_TRAINER_BATTLE.add(player.getUuid());
                 return Unit.INSTANCE;
             });
     }

@@ -1,6 +1,6 @@
 # 0.9.4
 - Added Generation 5 based trainer AI.
-- Added sending out trainer's Pokémon.
+- Added sending out trainer pokemon.
   - "/trainers makebattle \<player\> \<trainer\>" - If the command executor is a LivingEntity, it will send out the trainer's pokemon.
   - "/trainers makebattle \<player\> \<trainer\> \<trainerEntity\>" - Can use a target selector to select the entity to send out the trainer's pokemon (must be a LivingEntity).
 - Added "/trainers addpokemon \<trainer\> \<pokemon\>" to add a pokemon to a trainer's team.
@@ -12,6 +12,7 @@
 - Fixed moves appearing multiple times in move select screen.
 - Changed moves to be sorted alphabetically in move select screen.
 - Added held items on trainer pokemon.
+- Added "/trainers setcooldownseconds \<trainer\> \<cooldownSeconds\>" to set cooldowns for battling trainers.
 
 # 0.9.3b
 - Fixed allowing starting a trainer battle with a fainted lead pokemon. Battles now start with the first non-fainted pokemon in the player's party.

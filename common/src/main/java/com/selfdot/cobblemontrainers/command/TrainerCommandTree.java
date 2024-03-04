@@ -13,6 +13,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
+import static com.mojang.brigadier.arguments.LongArgumentType.longArg;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class TrainerCommandTree {
@@ -161,6 +162,17 @@ public class TrainerCommandTree {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, PokemonProperties>
                         argument("pokemon", PokemonPropertiesArgumentType.Companion.properties())
                         .executes(new AddPokemonCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setcooldownseconds")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Long>
+                        argument("cooldownSeconds", longArg())
+                        .executes(new SetCooldownSecondsCommand())
                     )
                 )
             )

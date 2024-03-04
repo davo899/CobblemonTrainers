@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.battles.ActiveBattlePokemon;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.selfdot.cobblemontrainers.trainer.EntityBackerTrainerBattleActor;
+import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,6 +33,8 @@ public abstract class PokemonBattleMixin {
                 if (pokemonEntity == null) return;
                 pokemonEntity.recallWithAnimation();
             }
+
+            actor.getPlayerUUIDs().forEach(PokemonUtility.IN_TRAINER_BATTLE::remove);
         });
     }
 

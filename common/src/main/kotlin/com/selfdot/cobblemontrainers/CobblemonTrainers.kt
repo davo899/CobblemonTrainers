@@ -18,6 +18,7 @@ object CobblemonTrainers {
     const val MODID = "cobblemontrainers"
     val TRAINER_REGISTRY = TrainerRegistry(this)
     val TRAINER_WIN_TRACKER = TrainerWinTracker(this)
+    val TRAINER_COOLDOWN_TRACKER = TrainerCooldownTracker(this)
     private var disabled = false
     private val LOGGER = LogUtils.getLogger()
     fun initialize() {
@@ -52,6 +53,7 @@ object CobblemonTrainers {
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
         TRAINER_REGISTRY.load()
         TRAINER_WIN_TRACKER.load()
+        TRAINER_COOLDOWN_TRACKER.load()
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
         TrainerPokemon.registerPokemonSendOutListener()
@@ -62,6 +64,7 @@ object CobblemonTrainers {
             CobblemonTrainersLog.LOGGER.info("Storing trainer data")
             TRAINER_REGISTRY.save()
             TRAINER_WIN_TRACKER.save()
+            TRAINER_COOLDOWN_TRACKER.save()
         }
     }
 

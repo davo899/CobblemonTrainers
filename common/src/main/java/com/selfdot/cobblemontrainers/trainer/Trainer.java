@@ -24,6 +24,7 @@ public class Trainer extends JsonFile {
     private String winCommand;
     private String lossCommand;
     private boolean canOnlyBeatOnce;
+    private long cooldownSeconds;
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
         super(mod);
@@ -101,6 +102,15 @@ public class Trainer extends JsonFile {
         save();
     }
 
+    public long getCooldownMilliseconds() {
+        return cooldownSeconds * 1000;
+    }
+
+    public void setCooldownSeconds(long cooldownSeconds) {
+        this.cooldownSeconds = cooldownSeconds;
+        save();
+    }
+
     public int getTeamSize() {
         return team.size();
     }
@@ -130,6 +140,7 @@ public class Trainer extends JsonFile {
         winCommand = "";
         lossCommand = "";
         canOnlyBeatOnce = false;
+        cooldownSeconds = 0;
     }
 
     @Override
@@ -160,6 +171,9 @@ public class Trainer extends JsonFile {
         if (jsonObject.has(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE)) {
             canOnlyBeatOnce = jsonObject.get(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
         }
+        if (jsonObject.has(DataKeys.TRAINER_COOLDOWN_SECONDS)) {
+            cooldownSeconds = jsonObject.get(DataKeys.TRAINER_COOLDOWN_SECONDS).getAsLong();
+        }
     }
 
     @Override
@@ -171,6 +185,7 @@ public class Trainer extends JsonFile {
         jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
         jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
         jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
+        jsonObject.addProperty(DataKeys.TRAINER_COOLDOWN_SECONDS, cooldownSeconds);
         return jsonObject;
     }
 
