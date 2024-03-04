@@ -1,0 +1,32 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:charmeleon",
+      "gender": "FEMALE",
+      "level": 90,
+      "nature": "cobblemon:rash",
+      "ability": "solarpower",
+      "moveset": [
+        "facade",
+        "ember"
+      ],
+      "ivs": {
+        "hp": 1,
+        "attack": 9,
+        "defence": 9,
+        "special_attack": 5,
+        "special_defence": 4
+      },
+      "evs": {
+        "hp": 248,
+        "special_defence": 32
+      },
+      "shiny": true,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}

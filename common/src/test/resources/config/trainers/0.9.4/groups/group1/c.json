@@ -1,0 +1,30 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:caterpie",
+      "gender": "MALE",
+      "level": 1,
+      "nature": "cobblemon:docile",
+      "ability": "shielddust",
+      "moveset": [
+        "tackle",
+        "stringshot"
+      ],
+      "ivs": {
+        "hp": 23,
+        "attack": 3,
+        "defence": 26,
+        "special_attack": 16,
+        "special_defence": 28,
+        "speed": 11
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": true,
+  "cooldownSeconds": 0
+}

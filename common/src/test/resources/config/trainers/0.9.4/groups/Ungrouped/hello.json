@@ -1,0 +1,76 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:bulbasaur",
+      "gender": "FEMALE",
+      "level": 11,
+      "nature": "cobblemon:bold",
+      "ability": "overgrow",
+      "moveset": [
+        "tackle",
+        "growl",
+        "vinewhip",
+        "gigadrain"
+      ],
+      "ivs": {
+        "hp": 3,
+        "attack": 27,
+        "defence": 31,
+        "special_attack": 29,
+        "special_defence": 25,
+        "speed": 22
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    },
+    {
+      "species": "cobblemon:squirtle",
+      "gender": "FEMALE",
+      "level": 1,
+      "nature": "cobblemon:quirky",
+      "ability": "torrent",
+      "moveset": [
+        "tailwhip",
+        "tackle"
+      ],
+      "ivs": {
+        "hp": 14,
+        "attack": 23,
+        "defence": 12,
+        "special_attack": 15,
+        "special_defence": 29,
+        "speed": 6
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    },
+    {
+      "species": "cobblemon:charmander",
+      "gender": "MALE",
+      "level": 1,
+      "nature": "cobblemon:mild",
+      "ability": "blaze",
+      "moveset": [
+        "scratch",
+        "growl"
+      ],
+      "ivs": {
+        "hp": 28,
+        "attack": 14,
+        "defence": 26,
+        "special_attack": 10,
+        "special_defence": 25,
+        "speed": 18
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air"
+    }
+  ],
+  "winCommand": "",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0
+}

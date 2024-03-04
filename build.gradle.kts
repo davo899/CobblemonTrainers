@@ -1,6 +1,6 @@
 plugins {
     base
-    id("cobblemon.root-conventions")
+    id("cobblemontrainers.root-conventions")
 }
 
 group = "com.selfdot.cobblemontrainers"
