@@ -104,7 +104,8 @@ public class TrainerPokemon {
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
         pokemon.setShiny(isShiny);
-        pokemon.swapHeldItem(new ItemStack(heldItem), false);
+        if (heldItem.equals(Items.AIR)) pokemon.removeHeldItem();
+        else pokemon.swapHeldItem(new ItemStack(heldItem), false);
         pokemon.setUuid(uuid);
         pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
         IS_TRAINER_OWNED.add(uuid);
