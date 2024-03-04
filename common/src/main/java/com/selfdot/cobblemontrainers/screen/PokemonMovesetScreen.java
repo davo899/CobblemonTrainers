@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveSet;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class PokemonMovesetScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack movesItem = new ItemStack(Items.MUSIC_DISC_5);
+        ItemStack movesItem = ScreenUtils.withoutAdditional(Items.MUSIC_DISC_5);
         movesItem.setCustomName(Text.literal("Moveset"));
         inventory.setStack(columns / 2, movesItem);
 
@@ -40,11 +41,10 @@ public class PokemonMovesetScreen extends Screen {
             Move move = trainerPokemon.getMoveset().get(i);
             ItemStack moveItem;
             if (move == null) {
-                moveItem = new ItemStack(Items.BARRIER);
+                moveItem = ScreenUtils.withoutAdditional(Items.BARRIER);
                 moveItem.setCustomName(Text.literal("Empty"));
             } else {
-                moveItem = new ItemStack(Items.MUSIC_DISC_5);
-                moveItem.setCustomName(move.getDisplayName());
+                moveItem = ScreenUtils.moveItem(move);
             }
             inventory.setStack(moveSlots[i], moveItem);
         }

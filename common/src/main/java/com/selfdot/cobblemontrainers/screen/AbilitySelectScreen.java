@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -36,16 +37,16 @@ public class AbilitySelectScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = new ItemStack(CobblemonItems.CLOVER_SWEET);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CLOVER_SWEET);
         itemStack.setCustomName(Text.literal("Abilities"));
         inventory.setStack(columns / 2, itemStack);
 
         baseSlot = (columns * 2) + (columns / 2) - 1;
         for (int i = 0; i < abilities.size(); i++) {
             if (i == selectedIndex) {
-                itemStack = new ItemStack(CobblemonItems.CLOVER_SWEET);
+                itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CLOVER_SWEET);
             } else {
-                itemStack = new ItemStack(CobblemonItems.CHARCOAL);
+                itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CHARCOAL);
             }
             itemStack.setCustomName(LocalizationUtilsKt.lang(
                 abilities.get(i).getDisplayName().replace("cobblemon.", "")

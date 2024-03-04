@@ -1,5 +1,8 @@
 package com.selfdot.cobblemontrainers.command;
 
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
+import com.cobblemon.mod.common.command.argument.PartySlotArgumentType;
+import com.cobblemon.mod.common.command.argument.PokemonPropertiesArgumentType;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
@@ -10,6 +13,7 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
+import static com.mojang.brigadier.arguments.LongArgumentType.longArg;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class TrainerCommandTree {
@@ -41,6 +45,16 @@ public class TrainerCommandTree {
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("add")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("group", string())
+                        .executes(new AddTrainerWithGroupCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("makebattle")
                 .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
                     argument("player", EntityArgumentType.player())
@@ -49,6 +63,10 @@ public class TrainerCommandTree {
                         argument("trainer", string())
                         .suggests(new TrainerNameSuggestionProvider())
                         .executes(new MakeBattleCommand())
+                        .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
+                            argument("entity", EntityArgumentType.entity())
+                            .executes(new MakeBattleWithEntityCommand())
+                        )
                     )
                 )
             )
@@ -122,6 +140,39 @@ public class TrainerCommandTree {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, Boolean>
                         argument("canOnlyBeatOnce", bool())
                         .executes(new SetCanOnlyBeatOnceCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("addfromparty")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
+                        argument("pokemon", PartySlotArgumentType.Companion.partySlot())
+                        .executes(new AddFromPartyCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("addpokemon")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, PokemonProperties>
+                        argument("pokemon", PokemonPropertiesArgumentType.Companion.properties())
+                        .executes(new AddPokemonCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setcooldownseconds")
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Long>
+                        argument("cooldownSeconds", longArg())
+                        .executes(new SetCooldownSecondsCommand())
                     )
                 )
             )

@@ -7,21 +7,24 @@ import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
-import com.cobblemon.mod.common.battles.ai.RandomBattleAI;
-import com.cobblemon.mod.common.client.net.battle.BattleMusicHandler;
 import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.trainer.EntityBackerTrainerBattleActor;
+import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
 import kotlin.Unit;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class PokemonUtility {
@@ -86,6 +89,7 @@ public class PokemonUtility {
     private static BattleStartResult startBattle(
         ServerPlayerEntity player,
         Trainer trainer,
+        LivingEntity trainerEntity,
         BattleFormat battleFormat
     ) {
         PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
@@ -100,9 +104,13 @@ public class PokemonUtility {
         BattleActor playerActor = new PlayerBattleActor(
             player.getUuid(), party.toBattleTeam(false, true, leadingPokemon)
         );
-        BattleActor trainerActor = new TrainerBattleActor(
-            trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new RandomBattleAI()
-        );
+        BattleActor trainerActor = trainerEntity == null ?
+            new TrainerBattleActor(
+                trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
+            ) :
+            new EntityBackerTrainerBattleActor(
+                trainer.getName(), trainerEntity, UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
+            );
 
         ErroredBattleStart errors = new ErroredBattleStart();
 
@@ -129,7 +137,10 @@ public class PokemonUtility {
         return errors;
     }
 
-    public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer) {
+    public static final Set<UUID> IN_TRAINER_BATTLE = new HashSet<>();
+
+    public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer, LivingEntity trainerEntity) {
+        if (IN_TRAINER_BATTLE.contains(player.getUuid())) return;
         if (trainer.canOnlyBeatOnce() &&
             CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, trainer)
         ) {
@@ -137,14 +148,26 @@ public class PokemonUtility {
             return;
         }
 
-        PokemonUtility.startBattle(player, trainer, BattleFormat.Companion.getGEN_9_SINGLES())
+        long cooldownMillis = CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER()
+            .remainingCooldownMillis(player, trainer);
+        if (cooldownMillis > 0) {
+            player.sendMessage(Text.literal(
+                Formatting.RED + "You can't battle this trainer for another " +
+                    (cooldownMillis / 1000) + " seconds"
+            ));
+            return;
+        }
+
+        PokemonUtility.startBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
                 return Unit.INSTANCE;
             })
             .ifSuccessful(battle -> {
+                CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER().onBattleStart(player, trainer);
                 TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer);
                 TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
+                IN_TRAINER_BATTLE.add(player.getUuid());
                 return Unit.INSTANCE;
             });
     }

@@ -24,6 +24,7 @@ public class Trainer extends JsonFile {
     private String winCommand;
     private String lossCommand;
     private boolean canOnlyBeatOnce;
+    private long cooldownSeconds;
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
         super(mod);
@@ -47,10 +48,6 @@ public class Trainer extends JsonFile {
         team.add(TrainerPokemon.fromPokemon(pokemon));
     }
 
-    public List<TrainerPokemon> getTeam() {
-        return team;
-    }
-
     public List<BattlePokemon> getBattleTeam() {
         return team.stream()
             .map(TrainerPokemon::toPokemon)
@@ -65,6 +62,7 @@ public class Trainer extends JsonFile {
 
     public void setName(String name) {
         this.name = name;
+        save();
     }
 
     public String getWinCommand() {
@@ -73,6 +71,7 @@ public class Trainer extends JsonFile {
 
     public void setWinCommand(String winCommand) {
         this.winCommand = winCommand;
+        save();
     }
 
     public String getGroup() {
@@ -91,6 +90,7 @@ public class Trainer extends JsonFile {
 
     public void setLossCommand(String lossCommand) {
         this.lossCommand = lossCommand;
+        save();
     }
 
     public boolean canOnlyBeatOnce() {
@@ -99,6 +99,34 @@ public class Trainer extends JsonFile {
 
     public void setCanOnlyBeatOnce(boolean canOnlyBeatOnce) {
         this.canOnlyBeatOnce = canOnlyBeatOnce;
+        save();
+    }
+
+    public long getCooldownMilliseconds() {
+        return cooldownSeconds * 1000;
+    }
+
+    public void setCooldownSeconds(long cooldownSeconds) {
+        this.cooldownSeconds = cooldownSeconds;
+        save();
+    }
+
+    public int getTeamSize() {
+        return team.size();
+    }
+
+    public TrainerPokemon getTeamSlot(int index) {
+        return team.get(index);
+    }
+
+    public void addPokemon(Pokemon pokemon) {
+        team.add(TrainerPokemon.fromPokemon(pokemon));
+        save();
+    }
+
+    public void removeTrainerPokemon(TrainerPokemon trainerPokemon) {
+        team.remove(trainerPokemon);
+        save();
     }
 
     @Override
@@ -112,6 +140,7 @@ public class Trainer extends JsonFile {
         winCommand = "";
         lossCommand = "";
         canOnlyBeatOnce = false;
+        cooldownSeconds = 0;
     }
 
     @Override
@@ -142,6 +171,9 @@ public class Trainer extends JsonFile {
         if (jsonObject.has(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE)) {
             canOnlyBeatOnce = jsonObject.get(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
         }
+        if (jsonObject.has(DataKeys.TRAINER_COOLDOWN_SECONDS)) {
+            cooldownSeconds = jsonObject.get(DataKeys.TRAINER_COOLDOWN_SECONDS).getAsLong();
+        }
     }
 
     @Override
@@ -153,6 +185,7 @@ public class Trainer extends JsonFile {
         jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
         jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
         jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
+        jsonObject.addProperty(DataKeys.TRAINER_COOLDOWN_SECONDS, cooldownSeconds);
         return jsonObject;
     }
 

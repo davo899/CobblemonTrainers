@@ -17,7 +17,9 @@
     ],
     "client": []
   },
-  "mixins": [],
+  "mixins": [
+    "mixins.cobblemontrainers-common.json"
+  ],
   "depends": {
     "fabricloader": ">=0.14.23",
     "fabric": ">=0.90.0",

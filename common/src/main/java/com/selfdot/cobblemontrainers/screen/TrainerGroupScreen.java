@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers.screen;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
+import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -24,7 +25,7 @@ public class TrainerGroupScreen extends PagedScreen<String> {
 
     @Override
     protected ItemStack toItem(String trainerGroup) {
-        ItemStack itemStack = new ItemStack(Items.BOOK);
+        ItemStack itemStack = ScreenUtils.withoutAdditional(Items.BOOK);
         itemStack.setCustomName(Text.literal(trainerGroup));
         return itemStack;
     }

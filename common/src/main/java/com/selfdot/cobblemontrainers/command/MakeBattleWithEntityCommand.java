@@ -4,13 +4,12 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 
-public class MakeBattleCommand extends TrainerCommand {
+public class MakeBattleWithEntityCommand extends TrainerCommand {
 
     @Override
     protected int runSubCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
@@ -21,7 +20,8 @@ public class MakeBattleCommand extends TrainerCommand {
         }
         PokemonUtility.startTrainerBattle(
             player, trainer,
-            context.getSource().getEntity() instanceof LivingEntity livingEntity ? livingEntity : null
+            (EntityArgumentType.getEntity(context, "entity") instanceof LivingEntity livingEntity) ?
+                livingEntity : null
         );
         return SINGLE_SUCCESS;
     }
