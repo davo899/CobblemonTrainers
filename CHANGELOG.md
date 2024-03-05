@@ -1,3 +1,6 @@
+# 0.9.4c
+- Fixed trainer rolling a multi-target killing move causing a battle error.
+
 # 0.9.4b
 - Fixed refmap conflicts which prevented the mod from loading with some other mods that don't name their refmaps.
 

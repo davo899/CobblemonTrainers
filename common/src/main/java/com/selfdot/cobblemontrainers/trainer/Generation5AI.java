@@ -349,17 +349,11 @@ public class Generation5AI implements BattleAI {
             moveDamages.put(inBattleMove, dmg);
         });
 
-        List<String> killingMoves = new ArrayList<>();
-        moveDamages.forEach((move, damage) -> { if (damage >= opponent.getHealth()) killingMoves.add(move.id); });
-        if (!killingMoves.isEmpty()) {
-            return new MoveActionResponse(
-                killingMoves.get(RANDOM.nextInt(killingMoves.size())),
-                opponentActiveBattlePokemon.get().getPNX(),
-                null
-            );
-        }
-
-        InBattleMove move = Collections.max(moveDamages.entrySet(), Map.Entry.comparingByValue()).getKey();
+        List<InBattleMove> killingMoves = new ArrayList<>();
+        moveDamages.forEach((move, damage) -> { if (damage >= opponent.getHealth()) killingMoves.add(move); });
+        InBattleMove move = killingMoves.isEmpty() ?
+            Collections.max(moveDamages.entrySet(), Map.Entry.comparingByValue()).getKey() :
+            killingMoves.get(RANDOM.nextInt(killingMoves.size()));
         List<Targetable> targets = move.mustBeUsed() ? null : move.getTarget().getTargetList().invoke(activeBattlePokemon);
         return new MoveActionResponse(
             move.id,
