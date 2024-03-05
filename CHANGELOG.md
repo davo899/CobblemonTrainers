@@ -1,3 +1,7 @@
+# 0.9.4c
+- Fixed first time loading trainers from before 0.9.4 setting all held items to invalid values.
+- Fixed trainer rolling a multi-target killing move causing a battle error.
+
 # 0.9.4b
 - Fixed refmap conflicts which prevented the mod from loading with some other mods that don't name their refmaps.
 

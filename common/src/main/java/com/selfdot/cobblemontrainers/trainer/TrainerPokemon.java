@@ -41,7 +41,7 @@ public class TrainerPokemon {
     private IVs ivs;
     private EVs evs;
     private boolean isShiny = false;
-    private Item heldItem = null;
+    private Item heldItem = Items.AIR;
 
     private final UUID uuid = UUID.randomUUID();
 
