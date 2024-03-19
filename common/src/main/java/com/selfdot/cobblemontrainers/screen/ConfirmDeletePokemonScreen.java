@@ -24,15 +24,10 @@ public class ConfirmDeletePokemonScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack titleItem = ScreenUtils.withoutAdditional(Items.BARRIER);
-        titleItem.setCustomName(Text.literal("Delete Pokémon"));
-        inventory.setStack(columns / 2, titleItem);
+        setSlot(inventory, columns / 2, Items.BARRIER, "Delete Pokémon");
 
         confirmSlot = (columns * 2) + (columns / 2);
-
-        ItemStack confirmItem = ScreenUtils.withoutAdditional(Items.LIME_CONCRETE);
-        confirmItem.setCustomName(Text.literal("Confirm?"));
-        inventory.setStack(confirmSlot, confirmItem);
+        setSlot(inventory, confirmSlot, Items.LIME_CONCRETE, "Confirm?");
     }
 
     @Override
