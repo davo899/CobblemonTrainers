@@ -8,6 +8,7 @@ import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;
@@ -37,39 +38,25 @@ public class LevelEditScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.WISE_GLASSES);
-        itemStack.setCustomName(Text.literal("Level"));
-        inventory.setStack(columns / 2, itemStack);
+        setSlot(inventory, columns / 2, CobblemonItems.WISE_GLASSES, "Level");
 
         setMinSlot = (columns * 2) + (columns / 2) - 3;
         decreaseHighSlot = setMinSlot + 1;
         decreaseLowSlot = decreaseHighSlot + 1;
-        int infoSlot = decreaseLowSlot + 1;
-        increaseLowSlot = infoSlot + 1;
+        increaseLowSlot = decreaseLowSlot + 2;
         increaseHighSlot = increaseLowSlot + 1;
         setMaxSlot = increaseHighSlot + 1;
 
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("Set to " + MIN));
-        inventory.setStack(setMinSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("-" + EDIT_HIGH));
-        inventory.setStack(decreaseHighSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("-" + EDIT_LOW));
-        inventory.setStack(decreaseLowSlot, itemStack);
         infoItem = ScreenUtils.withoutAdditional(CobblemonItems.WISE_GLASSES);
         updateInfoItem();
-        inventory.setStack(infoSlot, infoItem);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("+" + EDIT_LOW));
-        inventory.setStack(increaseLowSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("+" + EDIT_HIGH));
-        inventory.setStack(increaseHighSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("Set to " + MAX));
-        inventory.setStack(setMaxSlot, itemStack);
+        inventory.setStack(decreaseLowSlot + 1, infoItem);
+
+        setSlot(inventory, setMinSlot, Items.RED_DYE, "Set to " + MIN);
+        setSlot(inventory, decreaseHighSlot, Items.RED_DYE, "-" + EDIT_HIGH);
+        setSlot(inventory, decreaseLowSlot, Items.RED_DYE, "-" + EDIT_LOW);
+        setSlot(inventory, increaseLowSlot, Items.GREEN_DYE, "+" + EDIT_LOW);
+        setSlot(inventory, increaseHighSlot, Items.GREEN_DYE, "+" + EDIT_HIGH);
+        setSlot(inventory, setMaxSlot, Items.GREEN_DYE, "Set to " + MAX);
     }
 
     private void setLevel(int level) {
