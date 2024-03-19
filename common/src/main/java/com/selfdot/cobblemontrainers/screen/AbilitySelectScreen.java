@@ -23,7 +23,7 @@ public class AbilitySelectScreen extends Screen {
     private final TrainerPokemon trainerPokemon;
     private final List<AbilityTemplate> abilities = new ArrayList<>();
     private int baseSlot;
-    private int selectedIndex;
+    private final int selectedIndex;
 
     public AbilitySelectScreen(Trainer trainer, TrainerPokemon trainerPokemon) {
         super(new TrainerPokemonScreen(trainer, trainerPokemon));
@@ -37,21 +37,16 @@ public class AbilitySelectScreen extends Screen {
 
     @Override
     public void initialize(Inventory inventory) {
-        ItemStack itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CLOVER_SWEET);
-        itemStack.setCustomName(Text.literal("Abilities"));
-        inventory.setStack(columns / 2, itemStack);
+        setSlot(inventory, columns / 2, CobblemonItems.CLOVER_SWEET, "Abilities");
 
         baseSlot = (columns * 2) + (columns / 2) - 1;
         for (int i = 0; i < abilities.size(); i++) {
-            if (i == selectedIndex) {
-                itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CLOVER_SWEET);
-            } else {
-                itemStack = ScreenUtils.withoutAdditional(CobblemonItems.CHARCOAL);
-            }
-            itemStack.setCustomName(LocalizationUtilsKt.lang(
-                abilities.get(i).getDisplayName().replace("cobblemon.", "")
-            ));
-            inventory.setStack(baseSlot + i, itemStack);
+            setSlot(
+                inventory,
+                baseSlot + i,
+                i == selectedIndex ? CobblemonItems.CLOVER_SWEET : CobblemonItems.CHARCOAL,
+                Text.translatable(abilities.get(i).getDisplayName()).getString()
+            );
         }
     }
 
