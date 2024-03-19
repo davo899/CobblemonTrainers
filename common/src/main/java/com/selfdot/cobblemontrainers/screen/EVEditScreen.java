@@ -2,7 +2,6 @@ package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.pokemon.EVs;
-import com.cobblemon.mod.common.pokemon.IVs;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import com.selfdot.cobblemontrainers.util.ScreenUtils;

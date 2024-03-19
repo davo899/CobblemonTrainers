@@ -59,7 +59,7 @@ public class TrainerTeamScreen extends Screen {
         super.onSlotClick(slotIndex, button, actionType, player);
 
         if (slotIndex == newPokemonSlot && trainer.getBattleTeam().size() < TEAM_MAX_SIZE) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new SpeciesSelectScreen(trainer)));
+            switchTo(new SpeciesSelectScreen(trainer));
             return;
         }
 
@@ -68,11 +68,7 @@ public class TrainerTeamScreen extends Screen {
 
         if ((columns / 2) - 1 <= x && x <= (columns / 2) + 1 && 2 <= y && y <= 3) {
             int index = ((y - 2) * 3) + (x - (columns / 2) + 1);
-            if (index < trainer.getTeamSize()) {
-                player.openHandledScreen(new TrainerSetupHandlerFactory(
-                    new TrainerPokemonScreen(trainer, trainer.getTeamSlot(index))
-                ));
-            }
+            if (index < trainer.getTeamSize()) switchTo(new TrainerPokemonScreen(trainer, trainer.getTeamSlot(index)));
         }
     }
 

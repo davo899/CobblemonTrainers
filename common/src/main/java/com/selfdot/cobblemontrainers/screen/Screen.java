@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 
 public abstract class Screen {
 
+    private TrainerSetupScreenHandler handler;
     protected int rows = 0;
     protected int columns = 0;
     private Screen returnsTo;
@@ -48,11 +49,15 @@ public abstract class Screen {
 
     public abstract void initialize(Inventory inventory);
 
+    public void setHandler(TrainerSetupScreenHandler handler) {
+        this.handler = handler;
+    }
+
+    protected void switchTo(Screen screen) { handler.switchTo(screen); }
+
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
-        if (returnsTo != null && slotIndex == backButtonSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(returnsTo));
-        }
-    };
+        if (returnsTo != null && slotIndex == backButtonSlot) switchTo(returnsTo);
+    }
 
     public abstract String getDisplayName();
 

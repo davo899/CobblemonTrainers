@@ -52,10 +52,10 @@ public abstract class PagedScreen<T> extends Screen {
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
-        if (slotIndex == prevPageSlot) changePage(-1, player);
-        else if (slotIndex == nextPageSlot) changePage(1, player);
-        else if (slotIndex == prevPrevPageSlot) changePage(-2, player);
-        else if (slotIndex == nextNextPageSlot) changePage(2, player);
+        if (slotIndex == prevPageSlot) changePage(-1);
+        else if (slotIndex == nextPageSlot) changePage(1);
+        else if (slotIndex == prevPrevPageSlot) changePage(-2);
+        else if (slotIndex == nextNextPageSlot) changePage(2);
         else {
             int x = slotIndex % columns;
             int y = slotIndex / columns;
@@ -67,12 +67,12 @@ public abstract class PagedScreen<T> extends Screen {
         }
     }
 
-    private void changePage(int n, PlayerEntity player) {
+    private void changePage(int n) {
         int pages = (trackedList.size() / maxPerPage) + 1;
         pageNumber += n;
         while (pageNumber < 0) pageNumber += pages;
         while (pageNumber >= pages) pageNumber -= pages;
-        player.openHandledScreen(new TrainerSetupHandlerFactory(this));
+        switchTo(this);
     }
 
     protected abstract ItemStack toItem(T t);

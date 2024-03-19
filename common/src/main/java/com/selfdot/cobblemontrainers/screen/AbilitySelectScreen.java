@@ -2,15 +2,11 @@ package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
-import com.cobblemon.mod.common.api.abilities.PotentialAbility;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
-import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
@@ -57,7 +53,7 @@ public class AbilitySelectScreen extends Screen {
         if (diff != selectedIndex && 0 <= diff && diff < abilities.size()) {
             trainerPokemon.setAbility(abilities.get(diff).create(false));
             trainer.save();
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new AbilitySelectScreen(trainer, trainerPokemon)));
+            switchTo(new AbilitySelectScreen(trainer, trainerPokemon));
         }
     }
 

@@ -1,4 +1,5 @@
 # 0.9.5
+- Fixed cursor snapping to centre when switching screens in the setup GUI.
 
 # 0.9.4c
 - Fixed first time loading trainers from before 0.9.4 setting all held items to invalid values.

@@ -1,12 +1,9 @@
 package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
-import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
-import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
-import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,7 +38,7 @@ public class SpeciesSelectScreen extends PagedScreen<Species> {
     protected void onSelected(Species species, PlayerEntity player) {
         trainer.addSpecies(species);
         trainer.save();
-        player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerTeamScreen(trainer)));
+        switchTo(new TrainerTeamScreen(trainer));
     }
 
     @Override

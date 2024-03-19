@@ -11,7 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class SetupCommand implements Command<ServerCommandSource> {
 
     @Override
-    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+    public int run(CommandContext<ServerCommandSource> context) {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player == null) return 0;
         player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerGroupScreen()));

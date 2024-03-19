@@ -55,7 +55,7 @@ public class HeldItemSelectScreen extends PagedScreen<Item> {
         if (slotIndex == removeItemIndex) {
             trainerPokemon.setHeldItem(Items.AIR);
             trainer.save();
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerPokemonScreen(trainer, trainerPokemon)));
+            switchTo(new TrainerPokemonScreen(trainer, trainerPokemon));
         }
     }
 
@@ -63,7 +63,7 @@ public class HeldItemSelectScreen extends PagedScreen<Item> {
     protected void onSelected(Item item, PlayerEntity player) {
         trainerPokemon.setHeldItem(item);
         trainer.save();
-        player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerPokemonScreen(trainer, trainerPokemon)));
+        switchTo(new TrainerPokemonScreen(trainer, trainerPokemon));
     }
 
     @Override

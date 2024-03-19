@@ -14,7 +14,6 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +78,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
         if (slotIndex == deleteMoveIndex) {
             trainerPokemon.getMoveset().setMove(moveIndex, null);
             trainer.save();
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
+            switchTo(new PokemonMovesetScreen(trainer, trainerPokemon));
         }
     }
 
@@ -92,7 +91,7 @@ public class MoveSelectScreen extends PagedScreen<Move> {
     protected void onSelected(Move move, PlayerEntity player) {
         trainerPokemon.getMoveset().setMove(moveIndex, move);
         trainer.save();
-        player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
+        switchTo(new PokemonMovesetScreen(trainer, trainerPokemon));
     }
 
     @Override

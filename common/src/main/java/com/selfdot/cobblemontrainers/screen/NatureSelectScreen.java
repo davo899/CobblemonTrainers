@@ -50,7 +50,7 @@ public class NatureSelectScreen extends PagedScreen<Nature> {
     protected void onSelected(Nature nature, PlayerEntity player) {
         trainerPokemon.setNature(nature);
         trainer.save();
-        player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerPokemonScreen(trainer, trainerPokemon)));
+        switchTo(new TrainerPokemonScreen(trainer, trainerPokemon));
     }
 
     @Override

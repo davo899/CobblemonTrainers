@@ -75,25 +75,25 @@ public class TrainerPokemonScreen extends Screen {
         super.onSlotClick(slotIndex, button, actionType, player);
 
         if (slotIndex == movesSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new PokemonMovesetScreen(trainer, trainerPokemon)));
+            switchTo(new PokemonMovesetScreen(trainer, trainerPokemon));
         } else if (slotIndex == abilitiesSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new AbilitySelectScreen(trainer, trainerPokemon)));
+            switchTo(new AbilitySelectScreen(trainer, trainerPokemon));
         } else if (slotIndex == evsSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new EVSelectScreen(trainer, trainerPokemon)));
+            switchTo(new EVSelectScreen(trainer, trainerPokemon));
         } else if (slotIndex == ivsSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new IVSelectScreen(trainer, trainerPokemon)));
+            switchTo(new IVSelectScreen(trainer, trainerPokemon));
         } else if (slotIndex == deleteSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new ConfirmDeletePokemonScreen(trainer, trainerPokemon)));
+            switchTo(new ConfirmDeletePokemonScreen(trainer, trainerPokemon));
         } else if (slotIndex == levelSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new LevelEditScreen(trainer, trainerPokemon)));
+            switchTo(new LevelEditScreen(trainer, trainerPokemon));
         } else if (slotIndex == natureSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new NatureSelectScreen(trainer, trainerPokemon)));
+            switchTo(new NatureSelectScreen(trainer, trainerPokemon));
         } else if (slotIndex == shinySlot) {
             trainerPokemon.toggleShiny();
             trainer.save();
-            player.openHandledScreen(new TrainerSetupHandlerFactory(this));
+            switchTo(this);
         } else if (slotIndex == heldItemSlot) {
-            player.openHandledScreen(new TrainerSetupHandlerFactory(new HeldItemSelectScreen(trainer, trainerPokemon)));
+            switchTo(new HeldItemSelectScreen(trainer, trainerPokemon));
         }
     }
 

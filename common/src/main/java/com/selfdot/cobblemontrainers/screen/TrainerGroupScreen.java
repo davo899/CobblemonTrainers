@@ -2,7 +2,6 @@ package com.selfdot.cobblemontrainers.screen;
 
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
-import com.selfdot.cobblemontrainers.trainer.TrainerRegistry;
 import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -32,7 +31,7 @@ public class TrainerGroupScreen extends PagedScreen<String> {
 
     @Override
     protected void onSelected(String trainerGroup, PlayerEntity player) {
-        player.openHandledScreen(new TrainerSetupHandlerFactory(new TrainerListScreen(trainerGroup)));
+        switchTo(new TrainerListScreen(trainerGroup));
     }
 
     @Override

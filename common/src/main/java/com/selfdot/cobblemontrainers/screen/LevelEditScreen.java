@@ -1,14 +1,11 @@
 package com.selfdot.cobblemontrainers.screen;
 
 import com.cobblemon.mod.common.CobblemonItems;
-import com.cobblemon.mod.common.api.pokemon.stats.Stats;
-import com.cobblemon.mod.common.pokemon.EVs;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import com.selfdot.cobblemontrainers.util.ScreenUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.slot.SlotActionType;

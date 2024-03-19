@@ -47,42 +47,21 @@ public class IVSelectScreen extends Screen {
         super.onSlotClick(slotIndex, button, actionType, player);
 
         switch (slotIndex - ((columns * 2) + (columns / 2) - 1)) {
-            case 0 -> {
-                player.openHandledScreen(new TrainerSetupHandlerFactory(
-                    new IVEditScreen(Stats.HP, trainer, trainerPokemon)
-                ));
-                return;
-            }
-            case 1 -> {
-                player.openHandledScreen(new TrainerSetupHandlerFactory(
-                    new IVEditScreen(Stats.ATTACK, trainer, trainerPokemon)
-                ));
-                return;
-            }
-            case 2 -> {
-                player.openHandledScreen(new TrainerSetupHandlerFactory(
-                    new IVEditScreen(Stats.DEFENCE, trainer, trainerPokemon)
-                ));
-                return;
-            }
+            case 0 -> switchTo(new IVEditScreen(Stats.HP, trainer, trainerPokemon));
+            case 1 -> switchTo(new IVEditScreen(Stats.ATTACK, trainer, trainerPokemon));
+            case 2 -> switchTo(new IVEditScreen(Stats.DEFENCE, trainer, trainerPokemon));
         }
 
         switch (slotIndex - ((columns * 3) + (columns / 2) - 1)) {
-            case 0 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
-                new IVEditScreen(Stats.SPECIAL_ATTACK, trainer, trainerPokemon)
-            ));
-            case 1 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
-                new IVEditScreen(Stats.SPECIAL_DEFENCE, trainer, trainerPokemon)
-            ));
-            case 2 -> player.openHandledScreen(new TrainerSetupHandlerFactory(
-                new IVEditScreen(Stats.SPEED, trainer, trainerPokemon)
-            ));
+            case 0 -> switchTo(new IVEditScreen(Stats.SPECIAL_ATTACK, trainer, trainerPokemon));
+            case 1 -> switchTo(new IVEditScreen(Stats.SPECIAL_DEFENCE, trainer, trainerPokemon));
+            case 2 -> switchTo(new IVEditScreen(Stats.SPEED, trainer, trainerPokemon));
         }
-
     }
 
     @Override
     public String getDisplayName() {
         return "IVs";
     }
+
 }
