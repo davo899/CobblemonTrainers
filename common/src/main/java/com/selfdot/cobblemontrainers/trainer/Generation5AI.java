@@ -1,5 +1,6 @@
 package com.selfdot.cobblemontrainers.trainer;
 
+import com.cobblemon.mod.common.api.abilities.Ability;
 import com.cobblemon.mod.common.api.battles.model.ai.BattleAI;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.Moves;
@@ -27,6 +28,172 @@ public class Generation5AI implements BattleAI {
     private static final double NOT_VERY_EFFECTIVE = 0.5;
     private static final double IMMUNE = 0;
     private static final Map<ElementalType, Map<ElementalType, Double>> typeChart = new HashMap<>();
+
+    private static double typeEffectiveness(ElementalType attacker, ElementalType defender) {
+        if (typeChart.get(defender).containsKey(attacker)) return typeChart.get(defender).get(attacker);
+        return 1;
+    }
+
+    private static double typeEffectiveness(ElementalType attacker, ElementalType defender, Ability defenderAbility) {
+        if (
+            attacker.equals(ElementalTypes.INSTANCE.getGROUND()) &&
+            defenderAbility.getName().equalsIgnoreCase("levitate")
+        ) {
+            return 0;
+        }
+        return typeEffectiveness(attacker, defender);
+    }
+
+    private static double damage(
+        int attackerLevel,
+        int attackerEffectiveAttack,
+        int defenderEffectiveDefence,
+        double movePower,
+        ElementalType moveType,
+        ElementalType attackerPrimaryType,
+        ElementalType attackerSecondaryType,
+        ElementalType defenderPrimaryType,
+        ElementalType defenderSecondaryType,
+        Ability defenderAbility,
+        boolean isAttackerBurned,
+        boolean isPhysicalMove
+    ) {
+        double baseDamage = (
+            (((2d * attackerLevel) / 5) * movePower * ((double)attackerEffectiveAttack / defenderEffectiveDefence)) / 50
+        ) + 2;
+        return typeEffectiveness(moveType, defenderPrimaryType, defenderAbility) *
+            (defenderSecondaryType == null ? 1 : typeEffectiveness(moveType, defenderSecondaryType, defenderAbility)) *
+            (moveType.equals(attackerPrimaryType) || moveType.equals(attackerSecondaryType) ? 1.5 : 1) *
+            (isPhysicalMove && isAttackerBurned ? 0.5 : 1) *
+            ((RANDOM.nextDouble() * 0.15) + 0.85) *
+            baseDamage;
+    }
+
+    private static double damage(BattlePokemon attacker, BattlePokemon defender, Move move) {
+        String damageCategory = move.getDamageCategory().getName();
+        if (damageCategory.equals(DamageCategories.INSTANCE.getSTATUS().getName())) return 0;
+        boolean isPhysicalMove = damageCategory.equals(DamageCategories.INSTANCE.getPHYSICAL().getName());
+        boolean isAttackerBurned = false;
+        PersistentStatusContainer statusContainer = attacker.getEffectedPokemon().getStatus();
+        if (statusContainer != null && !statusContainer.isExpired()) {
+            isAttackerBurned = statusContainer.getStatus().equals(Statuses.INSTANCE.getBURN());
+        }
+        return damage(
+            attacker.getOriginalPokemon().getLevel(),
+            attacker.getOriginalPokemon().getStat(isPhysicalMove ? Stats.ATTACK : Stats.SPECIAL_ATTACK),
+            defender.getOriginalPokemon().getStat(isPhysicalMove ? Stats.DEFENCE : Stats.SPECIAL_DEFENCE),
+            move.getPower(),
+            move.getType(),
+            attacker.getOriginalPokemon().getPrimaryType(),
+            attacker.getOriginalPokemon().getSecondaryType(),
+            defender.getOriginalPokemon().getPrimaryType(),
+            defender.getOriginalPokemon().getSecondaryType(),
+            defender.getOriginalPokemon().getAbility(),
+            isAttackerBurned,
+            isPhysicalMove
+        );
+    }
+
+    private static double powerAndTypeDamage(
+        double movePower,
+        ElementalType moveType,
+        ElementalType defenderPrimaryType,
+        ElementalType defenderSecondaryType
+    ) {
+        return movePower *
+            typeEffectiveness(moveType, defenderPrimaryType) *
+            (defenderSecondaryType == null ? 1 : typeEffectiveness(moveType, defenderSecondaryType));
+    }
+
+    @NotNull
+    @Override
+    public ShowdownActionResponse choose(
+        @NotNull ActiveBattlePokemon activeBattlePokemon,
+        @Nullable ShowdownMoveset showdownMoveset,
+        boolean mustSwitch
+    ) {
+        Optional<ActiveBattlePokemon> opponentActiveBattlePokemon = StreamSupport.stream(
+                activeBattlePokemon.getAllActivePokemon().spliterator(), false
+            )
+            .filter(abp -> !abp.isAllied(activeBattlePokemon))
+            .findFirst();
+
+        if (mustSwitch || activeBattlePokemon.isGone()) {
+            List<BattlePokemon> canSwitchTo = activeBattlePokemon.getActor().getPokemonList().stream()
+                .filter(BattlePokemon::canBeSentOut)
+                .toList();
+            if (canSwitchTo.isEmpty()) {
+                return new DefaultActionResponse();
+            }
+            if (opponentActiveBattlePokemon.isEmpty() || opponentActiveBattlePokemon.get().getBattlePokemon() == null) {
+                return new SwitchActionResponse(canSwitchTo.get(RANDOM.nextInt(canSwitchTo.size())).getUuid());
+            }
+            BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
+            BattlePokemon nextPokemon = canSwitchTo.stream()
+                .max(Comparator.comparingDouble(pokemon ->
+                    pokemon.getMoveSet().getMoves().stream().map(move ->
+                        powerAndTypeDamage(
+                            move.getPower(),
+                            move.getType(),
+                            opponent.getOriginalPokemon().getPrimaryType(),
+                            opponent.getOriginalPokemon().getSecondaryType()
+                        )
+                    ).max(Double::compare).orElse(0d)
+                )).get();
+            nextPokemon.setWillBeSwitchedIn(true);
+            return new SwitchActionResponse(nextPokemon.getUuid());
+        }
+
+        if (showdownMoveset == null) return PassActionResponse.INSTANCE;
+        List<InBattleMove> inBattleMoves = showdownMoveset.moves.stream()
+            .filter(InBattleMove::canBeUsed)
+            .filter(inBattleMove -> {
+                List<Targetable> targetList = inBattleMove.getTarget().getTargetList().invoke(activeBattlePokemon);
+                return inBattleMove.mustBeUsed() || targetList == null || !targetList.isEmpty();
+            }).toList();
+
+        if (inBattleMoves.isEmpty()) return new MoveActionResponse("struggle", null, null);
+        if (opponentActiveBattlePokemon.isEmpty()) {
+            return new MoveActionResponse(
+                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
+            );
+        }
+        BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
+        if (opponent == null) {
+            return new MoveActionResponse(
+                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
+            );
+        }
+
+        Map<InBattleMove, Move> moveMap = new HashMap<>();
+        IntStream.range(0, inBattleMoves.size())
+            .forEach(i -> moveMap.put(
+                inBattleMoves.get(i),
+                activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getMoveSet().getMoves().get(i)
+            ));
+
+        Map<InBattleMove, Double> moveDamages = new HashMap<>();
+        inBattleMoves.forEach(inBattleMove -> {
+            double dmg = damage(
+                activeBattlePokemon.getBattlePokemon(),
+                opponent,
+                moveMap.get(inBattleMove)
+            );
+            moveDamages.put(inBattleMove, dmg);
+        });
+
+        List<InBattleMove> killingMoves = new ArrayList<>();
+        moveDamages.forEach((move, damage) -> { if (damage >= opponent.getHealth()) killingMoves.add(move); });
+        InBattleMove move = killingMoves.isEmpty() ?
+            Collections.max(moveDamages.entrySet(), Map.Entry.comparingByValue()).getKey() :
+            killingMoves.get(RANDOM.nextInt(killingMoves.size()));
+        List<Targetable> targets = move.mustBeUsed() ? null : move.getTarget().getTargetList().invoke(activeBattlePokemon);
+        return new MoveActionResponse(
+            move.id,
+            targets == null ? null : opponentActiveBattlePokemon.get().getPNX(),
+            null
+        );
+    }
 
     public static void initialiseTypeChart() {
         ElementalTypes types = ElementalTypes.INSTANCE;
@@ -206,160 +373,6 @@ public class Generation5AI implements BattleAI {
             DRAGON, IMMUNE,
             DARK, NOT_VERY_EFFECTIVE
         ));
-    }
-
-    private static double typeEffectiveness(ElementalType attacker, ElementalType defender) {
-        if (typeChart.get(defender).containsKey(attacker)) return typeChart.get(defender).get(attacker);
-        return 1;
-    }
-
-    private static double damage(
-        int attackerLevel,
-        int attackerEffectiveAttack,
-        int defenderEffectiveDefence,
-        double movePower,
-        ElementalType moveType,
-        ElementalType attackerPrimaryType,
-        ElementalType attackerSecondaryType,
-        ElementalType defenderPrimaryType,
-        ElementalType defenderSecondaryType,
-        boolean isAttackerBurned,
-        boolean isPhysicalMove
-    ) {
-        double baseDamage = (
-            (((2d * attackerLevel) / 5) * movePower * ((double)attackerEffectiveAttack / defenderEffectiveDefence)) / 50
-        ) + 2;
-        return baseDamage *
-            typeEffectiveness(moveType, defenderPrimaryType) *
-            (defenderSecondaryType == null ? 1 : typeEffectiveness(moveType, defenderSecondaryType)) *
-            (moveType.equals(attackerPrimaryType) || moveType.equals(attackerSecondaryType) ? 1.5 : 1) *
-            (isPhysicalMove && isAttackerBurned ? 0.5 : 1) *
-            ((RANDOM.nextDouble() * 0.15) + 0.85);
-    }
-
-    private static double damage(BattlePokemon attacker, BattlePokemon defender, Move move) {
-        String damageCategory = move.getDamageCategory().getName();
-        if (damageCategory.equals(DamageCategories.INSTANCE.getSTATUS().getName())) return 0;
-        boolean isPhysicalMove = damageCategory.equals(DamageCategories.INSTANCE.getPHYSICAL().getName());
-        boolean isAttackerBurned = false;
-        PersistentStatusContainer statusContainer = attacker.getEffectedPokemon().getStatus();
-        if (statusContainer != null && !statusContainer.isExpired()) {
-            isAttackerBurned = statusContainer.getStatus().equals(Statuses.INSTANCE.getBURN());
-        }
-        return damage(
-            attacker.getOriginalPokemon().getLevel(),
-            attacker.getOriginalPokemon().getStat(isPhysicalMove ? Stats.ATTACK : Stats.SPECIAL_ATTACK),
-            defender.getOriginalPokemon().getStat(isPhysicalMove ? Stats.DEFENCE : Stats.SPECIAL_DEFENCE),
-            move.getPower(),
-            move.getType(),
-            attacker.getOriginalPokemon().getPrimaryType(),
-            attacker.getOriginalPokemon().getSecondaryType(),
-            defender.getOriginalPokemon().getPrimaryType(),
-            defender.getOriginalPokemon().getSecondaryType(),
-            isAttackerBurned,
-            isPhysicalMove
-        );
-    }
-
-    private static double powerAndTypeDamage(
-        double movePower,
-        ElementalType moveType,
-        ElementalType defenderPrimaryType,
-        ElementalType defenderSecondaryType
-    ) {
-        return movePower *
-            typeEffectiveness(moveType, defenderPrimaryType) *
-            (defenderSecondaryType == null ? 1 : typeEffectiveness(moveType, defenderSecondaryType));
-    }
-
-    @NotNull
-    @Override
-    public ShowdownActionResponse choose(
-        @NotNull ActiveBattlePokemon activeBattlePokemon,
-        @Nullable ShowdownMoveset showdownMoveset,
-        boolean mustSwitch
-    ) {
-        Optional<ActiveBattlePokemon> opponentActiveBattlePokemon = StreamSupport.stream(
-                activeBattlePokemon.getAllActivePokemon().spliterator(), false
-            )
-            .filter(abp -> !abp.isAllied(activeBattlePokemon))
-            .findFirst();
-
-        if (mustSwitch || activeBattlePokemon.isGone()) {
-            List<BattlePokemon> canSwitchTo = activeBattlePokemon.getActor().getPokemonList().stream()
-                .filter(BattlePokemon::canBeSentOut)
-                .toList();
-            if (canSwitchTo.isEmpty()) {
-                return new DefaultActionResponse();
-            }
-            if (opponentActiveBattlePokemon.isEmpty() || opponentActiveBattlePokemon.get().getBattlePokemon() == null) {
-                return new SwitchActionResponse(canSwitchTo.get(RANDOM.nextInt(canSwitchTo.size())).getUuid());
-            }
-            BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
-            BattlePokemon nextPokemon = canSwitchTo.stream()
-                .max(Comparator.comparingDouble(pokemon ->
-                    pokemon.getMoveSet().getMoves().stream().map(move ->
-                        powerAndTypeDamage(
-                            move.getPower(),
-                            move.getType(),
-                            opponent.getOriginalPokemon().getPrimaryType(),
-                            opponent.getOriginalPokemon().getSecondaryType()
-                        )
-                    ).max(Double::compare).orElse(0d)
-                )).get();
-            nextPokemon.setWillBeSwitchedIn(true);
-            return new SwitchActionResponse(nextPokemon.getUuid());
-        }
-
-        if (showdownMoveset == null) return PassActionResponse.INSTANCE;
-        List<InBattleMove> inBattleMoves = showdownMoveset.moves.stream()
-            .filter(InBattleMove::canBeUsed)
-            .filter(inBattleMove -> {
-                List<Targetable> targetList = inBattleMove.getTarget().getTargetList().invoke(activeBattlePokemon);
-                return inBattleMove.mustBeUsed() || targetList == null || !targetList.isEmpty();
-            }).toList();
-
-        if (inBattleMoves.isEmpty()) return new MoveActionResponse("struggle", null, null);
-        if (opponentActiveBattlePokemon.isEmpty()) {
-            return new MoveActionResponse(
-                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
-            );
-        }
-        BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
-        if (opponent == null) {
-            return new MoveActionResponse(
-                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
-            );
-        }
-
-        Map<InBattleMove, Move> moveMap = new HashMap<>();
-        IntStream.range(0, inBattleMoves.size())
-            .forEach(i -> moveMap.put(
-                inBattleMoves.get(i),
-                activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getMoveSet().getMoves().get(i)
-            ));
-
-        Map<InBattleMove, Double> moveDamages = new HashMap<>();
-        inBattleMoves.forEach(inBattleMove -> {
-            double dmg = damage(
-                activeBattlePokemon.getBattlePokemon(),
-                opponent,
-                moveMap.get(inBattleMove)
-            );
-            moveDamages.put(inBattleMove, dmg);
-        });
-
-        List<InBattleMove> killingMoves = new ArrayList<>();
-        moveDamages.forEach((move, damage) -> { if (damage >= opponent.getHealth()) killingMoves.add(move); });
-        InBattleMove move = killingMoves.isEmpty() ?
-            Collections.max(moveDamages.entrySet(), Map.Entry.comparingByValue()).getKey() :
-            killingMoves.get(RANDOM.nextInt(killingMoves.size()));
-        List<Targetable> targets = move.mustBeUsed() ? null : move.getTarget().getTargetList().invoke(activeBattlePokemon);
-        return new MoveActionResponse(
-            move.id,
-            targets == null ? null : opponentActiveBattlePokemon.get().getPNX(),
-            null
-        );
     }
 
 }
