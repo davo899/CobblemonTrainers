@@ -72,36 +72,22 @@ public class LevelEditScreen extends Screen {
         inventory.setStack(setMaxSlot, itemStack);
     }
 
-    @SuppressWarnings("DataFlowIssue")
+    private void setLevel(int level) {
+        trainerPokemon.setLevel(level);
+        trainer.save();
+        updateInfoItem();
+    }
+
     @Override
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
 
-        if (slotIndex == setMinSlot) {
-            trainerPokemon.setLevel(MIN);
-            trainer.save();
-            updateInfoItem();
-        } else if (slotIndex == decreaseHighSlot) {
-            trainerPokemon.setLevel(Math.max(trainerPokemon.getLevel() - EDIT_HIGH, MIN));
-            trainer.save();
-            updateInfoItem();
-        } else if (slotIndex == decreaseLowSlot) {
-            trainerPokemon.setLevel(Math.max(trainerPokemon.getLevel() - EDIT_LOW, MIN));
-            trainer.save();
-            updateInfoItem();
-        } else if (slotIndex == increaseLowSlot) {
-            trainerPokemon.setLevel(Math.min(trainerPokemon.getLevel() + EDIT_LOW, MAX));
-            trainer.save();
-            updateInfoItem();
-        } else if (slotIndex == increaseHighSlot) {
-            trainerPokemon.setLevel(Math.min(trainerPokemon.getLevel() + EDIT_HIGH, MAX));
-            trainer.save();
-            updateInfoItem();
-        } else if (slotIndex == setMaxSlot) {
-            trainerPokemon.setLevel(MAX);
-            trainer.save();
-            updateInfoItem();
-        }
+        if      (slotIndex == setMinSlot)       setLevel(MIN);
+        else if (slotIndex == decreaseHighSlot) setLevel(Math.max(trainerPokemon.getLevel() - EDIT_HIGH, MIN));
+        else if (slotIndex == decreaseLowSlot)  setLevel(Math.max(trainerPokemon.getLevel() - EDIT_LOW, MIN));
+        else if (slotIndex == increaseLowSlot)  setLevel(Math.min(trainerPokemon.getLevel() + EDIT_LOW, MAX));
+        else if (slotIndex == increaseHighSlot) setLevel(Math.min(trainerPokemon.getLevel() + EDIT_HIGH, MAX));
+        else if (slotIndex == setMaxSlot)       setLevel(MAX);
     }
 
     @Override
