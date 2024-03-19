@@ -22,12 +22,10 @@ public class EVEditScreen extends Screen {
     private final EVs evs;
     private final Stats stat;
     private final Trainer trainer;
-    private final TrainerPokemon trainerPokemon;
     private ItemStack infoItem;
     private int setMinSlot;
     private int decreaseHighSlot;
     private int decreaseLowSlot;
-    private int infoSlot;
     private int increaseLowSlot;
     private int increaseHighSlot;
     private int setMaxSlot;
@@ -36,7 +34,6 @@ public class EVEditScreen extends Screen {
         super(new EVSelectScreen(trainer, trainerPokemon));
         this.stat = stat;
         this.trainer = trainer;
-        this.trainerPokemon = trainerPokemon;
         this.evs = trainerPokemon.getEvs();
     }
 
@@ -49,35 +46,28 @@ public class EVEditScreen extends Screen {
         setMinSlot = (columns * 2) + (columns / 2) - 3;
         decreaseHighSlot = setMinSlot + 1;
         decreaseLowSlot = decreaseHighSlot + 1;
-        infoSlot = decreaseLowSlot + 1;
-        increaseLowSlot = infoSlot + 1;
+        increaseLowSlot = decreaseLowSlot + 2;
         increaseHighSlot = increaseLowSlot + 1;
         setMaxSlot = increaseHighSlot + 1;
 
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("Set to " + MIN));
-        inventory.setStack(setMinSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("-" + EDIT_HIGH));
-        inventory.setStack(decreaseHighSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.RED_DYE);
-        itemStack.setCustomName(Text.literal("-" + EDIT_LOW));
-        inventory.setStack(decreaseLowSlot, itemStack);
         infoItem = ScreenUtils.statVitaminItem(stat);
         updateInfoItem();
-        inventory.setStack(infoSlot, infoItem);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("+" + EDIT_LOW));
-        inventory.setStack(increaseLowSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("+" + EDIT_HIGH));
-        inventory.setStack(increaseHighSlot, itemStack);
-        itemStack = ScreenUtils.withoutAdditional(Items.GREEN_DYE);
-        itemStack.setCustomName(Text.literal("Set to " + MAX));
-        inventory.setStack(setMaxSlot, itemStack);
+        inventory.setStack(decreaseLowSlot + 1, infoItem);
+
+        setSlot(inventory, setMinSlot, Items.RED_DYE, "Set to " + MIN);
+        setSlot(inventory, decreaseHighSlot, Items.RED_DYE, "-" + EDIT_HIGH);
+        setSlot(inventory, decreaseLowSlot, Items.RED_DYE, "-" + EDIT_LOW);
+        setSlot(inventory, increaseLowSlot, Items.GREEN_DYE, "+" + EDIT_LOW);
+        setSlot(inventory, increaseHighSlot, Items.GREEN_DYE, "+" + EDIT_HIGH);
+        setSlot(inventory, setMaxSlot, Items.GREEN_DYE, "Set to " + MAX);
     }
 
-    @SuppressWarnings("DataFlowIssue")
+    private void setEv(int ev) {
+        evs.set(stat, ev);
+        trainer.save();
+        updateInfoItem();
+    }
+
     @Override
     public void onSlotClick(int slotIndex, int button, SlotActionType actionType, PlayerEntity player) {
         super.onSlotClick(slotIndex, button, actionType, player);
@@ -86,29 +76,17 @@ public class EVEditScreen extends Screen {
         for (Stats stats : ScreenUtils.STATS) currentTotal += evs.getOrDefault(stats);
 
         if (slotIndex == setMinSlot) {
-            evs.set(stat, MIN);
-            trainer.save();
-            updateInfoItem();
+            setEv(MIN);
         } else if (slotIndex == decreaseHighSlot) {
-            evs.set(stat, Math.max(evs.getOrDefault(stat) - EDIT_HIGH, MIN));
-            trainer.save();
-            updateInfoItem();
+            setEv(Math.max(evs.getOrDefault(stat) - EDIT_HIGH, MIN));
         } else if (slotIndex == decreaseLowSlot) {
-            evs.set(stat, Math.max(evs.getOrDefault(stat) - EDIT_LOW, MIN));
-            trainer.save();
-            updateInfoItem();
+            setEv(Math.max(evs.getOrDefault(stat) - EDIT_LOW, MIN));
         } else if (slotIndex == increaseLowSlot && currentTotal + EDIT_LOW <= EVs.MAX_TOTAL_VALUE) {
-            evs.set(stat, Math.min(evs.getOrDefault(stat) + EDIT_LOW, MAX));
-            trainer.save();
-            updateInfoItem();
+            setEv(Math.min(evs.getOrDefault(stat) + EDIT_LOW, MAX));
         } else if (slotIndex == increaseHighSlot && currentTotal + EDIT_HIGH <= EVs.MAX_TOTAL_VALUE) {
-            evs.set(stat, Math.min(evs.getOrDefault(stat) + EDIT_HIGH, MAX));
-            trainer.save();
-            updateInfoItem();
+            setEv(Math.min(evs.getOrDefault(stat) + EDIT_HIGH, MAX));
         } else if (slotIndex == setMaxSlot && currentTotal - evs.getOrDefault(stat) + MAX <= EVs.MAX_TOTAL_VALUE) {
-            evs.set(stat, MAX);
-            trainer.save();
-            updateInfoItem();
+            setEv(MAX);
         }
     }
 
