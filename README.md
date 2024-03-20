@@ -1,6 +1,7 @@
 ![image](https://media.forgecdn.net/attachments/description/959503/description_399370d4-14fe-4f47-941f-7a0e2b11def1.png)
 
-Cobblemon Trainers introduces a trainer battle system to Cobblemon, designed to seamlessly integrate with interactable NPC mods.
+Cobblemon Trainers introduces a trainer battle system to Cobblemon, designed to seamlessly integrate with interactable NPC mods.\
+These trainers feature a custom AI inspired by Generation 5's trainer AI, ensuring engaging and challenging battles.
 
 - Customize trainer teams extensively, including Moves, IVs, EVs, Abilities, Level, and Nature, offering diverse and challenging battles.
 - Access any Pokémon available on your server, including those from datapacks.
