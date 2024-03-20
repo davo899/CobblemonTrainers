@@ -1,3 +1,17 @@
+# 0.9.6
+- AI damage calculator now considers the following abilities:
+  - Storm Drain
+  - Water Absorb
+  - Dry Skin
+  - Volt Absorb
+  - Lightning Rod
+  - Motor Drive
+  - Earth Eater
+  - Well-Baked Body
+  - Flash Fire
+  - Sap Sipper
+  - Wonder Guard
+
 # 0.9.5
 - Fixed cursor snapping to centre when switching screens in the setup GUI.
 - Changed AI to consider the ability Levitate in its damage calculator.

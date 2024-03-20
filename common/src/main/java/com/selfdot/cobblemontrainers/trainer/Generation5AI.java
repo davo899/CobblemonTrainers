@@ -35,13 +35,52 @@ public class Generation5AI implements BattleAI {
     }
 
     private static double typeEffectiveness(ElementalType attacker, ElementalType defender, Ability defenderAbility) {
+        String defenderAbilityId = defenderAbility.getDisplayName();
+        if (attacker.equals(ElementalTypes.INSTANCE.getWATER())) {
+            if (
+                defenderAbilityId.equals("cobblemon.ability.stormdrain") ||
+                defenderAbilityId.equals("cobblemon.ability.waterabsorb") ||
+                defenderAbilityId.equals("cobblemon.ability.dryskin")
+            ) {
+                return 0;
+            }
+        } else if (attacker.equals(ElementalTypes.INSTANCE.getELECTRIC())) {
+            if (
+                defenderAbilityId.equals("cobblemon.ability.voltabsorb") ||
+                defenderAbilityId.equals("cobblemon.ability.lightningrod") ||
+                defenderAbilityId.equals("cobblemon.ability.motordrive")
+            ) {
+                return 0;
+            }
+        } else if (attacker.equals(ElementalTypes.INSTANCE.getGROUND())) {
+            if (
+                defenderAbilityId.equals("cobblemon.ability.levitate") ||
+                defenderAbilityId.equals("cobblemon.ability.eartheater")
+            ) {
+                return 0;
+            }
+        } else if (attacker.equals(ElementalTypes.INSTANCE.getFIRE())) {
+            if (
+                defenderAbilityId.equals("cobblemon.ability.wellbakedbody") ||
+                defenderAbilityId.equals("cobblemon.ability.flashfire")
+            ) {
+                return 0;
+            }
+        } else if (attacker.equals(ElementalTypes.INSTANCE.getGRASS())) {
+            if (defenderAbilityId.equals("cobblemon.ability.sapsipper")) {
+                return 0;
+            }
+        }
+
+        double typeEffectiveness = typeEffectiveness(attacker, defender);
         if (
-            attacker.equals(ElementalTypes.INSTANCE.getGROUND()) &&
-            defenderAbility.getName().equalsIgnoreCase("levitate")
+            defenderAbilityId.equals("cobblemon.ability.wonderguard") &&
+            typeEffectiveness != SUPER_EFFECTIVE
         ) {
             return 0;
         }
-        return typeEffectiveness(attacker, defender);
+
+        return typeEffectiveness;
     }
 
     private static double damage(
