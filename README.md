@@ -1,24 +1,39 @@
-# Cobblemon Trainers
-Adds a trainer battle system to Cobblemon. Intended to be used with an interactable NPC mod.
+![image](https://media.forgecdn.net/attachments/description/959503/description_399370d4-14fe-4f47-941f-7a0e2b11def1.png)
 
-- **/trainers add \<name\> [\<group\>]** - Creates a new trainer with an empty team. Can add to a specified group.
-- **/trainers setup** - Opens GUI to configure trainers' teams
-- **/trainers battle \<trainer\>** - Starts a battle with a trainer
-- **/trainers setwincommand \<trainer\> \<command\>** - Sets the command run when the trainer is defeated. All occurrences of the string %player% will be replaced with the winning player's name.
-- **/trainers setlosscommand \<trainer\> \<command\>** - Sets the command run when the player is defeated by the trainer. All occurrences of the string %player% will be replaced with the winning player's name.
-- **/trainers setgroup \<trainer\> \<group\>** - Groups the trainer under the given group name in the setup GUI
-- **/trainers remove \<trainer\>** - Deletes a trainer
-- **/trainers rename \<oldName\> \<newName\>** - Renames a trainer (trainer names appear in the battle log)
-- **/trainers reload** - Reloads the trainer data file (invalid teams can be setup by directly editing the trainer data file under "config/trainers/", but be warned Cobblemon may react in weird ways)
-- **/trainers makebattle \<player\> \<trainer\> [\<trainerEntity\>]** - Starts a battle between a player and a trainer
-- **/trainers setcanonlybeatonce \<trainer\> true/false** - Sets whether a trainer can only be beaten once
-- **/trainers addpokemon \<trainer\> \<pokemon\>** - Adds a pokemon to a trainer's team
-- **/trainers addfromparty \<trainer\> \<partySlot\>** - Adds a pokemon from your party to a trainer's team
-- **/trainers setcooldownseconds \<trainer\> \<cooldownSeconds\>** - Sets the cooldown for battling the trainer
+Cobblemon Trainers introduces a trainer battle system to Cobblemon, designed to seamlessly integrate with interactable NPC mods.
 
-Single quotes can be used to include spaces in the trainer name or commands: /trainers add 'Ash Ketchum'\
-To include single quotes within a string, use \\': 'say \\'hello\\'' becomes say 'hello'
+- Customize trainer teams extensively, including Moves, IVs, EVs, Abilities, Level, and Nature, offering diverse and challenging battles.
+- Access any Pokémon available on your server, including those from datapacks.
+- Efficiently organize trainers into groups for streamlined navigation within the setup interface.
+- Define win commands for trainers, enabling post-battle rewards such as economy-based incentives.
 
-All commands require permission level 2, or their corresponding permission node:
-- "selfdot.trainers.battle" - /trainers battle \<trainerName\>
-- "selfdot.op.trainers" - All other commands
+**Commands Overview:**
+
+
+- **/trainers add \<name\> [\<group\>]**: Establish a new trainer with an empty team, optionally assigning them to a specific group.
+- **/trainers setup**: Access the GUI to configure trainers' teams.
+- **/trainers setwincommand \<trainer\> \<command\>**: Specify the command executed upon defeating a trainer, with automatic player name substitution (%player%).
+- **/trainers setlosscommand \<trainer\> \<command\>**: Define the command executed when a player is defeated by a trainer, with automatic player name substitution (%player%).
+- **/trainers setgroup \<trainer\> \<group\>**: Group trainers under specified names in the setup GUI for organizational purposes.
+- **/trainers remove \<trainer\>**: Delete a trainer from the system.
+- **/trainers rename \<oldName\> \<newName\>**: Modify a trainer's name (reflects in battle logs).
+- **/trainers setcanonlybeatonce \<trainer\> true/false**: Toggle whether a trainer can only be defeated once.
+- **/trainers addpokemon \<trainer\> \<pokemon\>**: Add a Pokémon to a trainer's team via command similar to /pokegive.
+- **/trainers addfromparty \<trainer\> \<partySlot\>**: Add a Pokémon from the player's party to a trainer's team.
+- **/trainers setcooldownseconds \<trainer\> \<cooldownSeconds\>**: Set the cooldown duration for battling the trainer.
+- **/trainers battle \<trainer\>**: Initiate a battle with a trainer.
+- **/trainers makebattle \<player\> \<trainer\> [\<trainerEntity\>]**: Commence a battle between a player and a trainer.
+- **/trainers reload**: Refresh the trainer data file; caution advised for manual edits.
+
+Utilize single quotes for trainer names or commands with spaces. For instance: /trainers add 'Ash Ketchum'\
+To include single quotes within a string, utilize \': 'say \'hello\'' becomes say 'hello'
+
+All commands require permission level 2 or their corresponding permission nodes:
+- "selfdot.trainers.reload" - /trainers reload
+- "selfdot.trainers.battle" - /trainers battle \<trainer\>
+- "selfdot.trainers.makebattle" - /trainers makebattle \<player\> \<trainer\>
+- "selfdot.trainers.edit" - All other commands.
+
+Graphics by twsparklecat
+
+[![image](https://media.forgecdn.net/attachments/description/959503/description_ec38fa43-4312-4aea-b11d-849dbdd062b1.png)](https://discord.gg/y8K2HYDBuX)
