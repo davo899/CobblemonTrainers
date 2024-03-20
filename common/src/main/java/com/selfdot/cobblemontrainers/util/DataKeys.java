@@ -22,5 +22,9 @@ public class DataKeys {
     public static final String TRAINER_COOLDOWN_SECONDS = "cooldownSeconds";
     public static final String UNGROUPED = "Ungrouped";
     public static final String PLAYER_TOKEN = "%player%";
+    public static final String EDIT_COMMAND_PERMISSION = "edit";
+    public static final String BATTLE_COMMAND_PERMISSION = "battle";
+    public static final String MAKEBATTLE_COMMAND_PERMISSION = "makebattle";
+    public static final String RELOAD_COMMAND_PERMISSION = "reload";
 
 }

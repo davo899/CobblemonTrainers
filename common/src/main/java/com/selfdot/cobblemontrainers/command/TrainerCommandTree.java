@@ -8,9 +8,12 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.CommandUtils;
+import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
+
+import java.util.function.Predicate;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
 import static com.mojang.brigadier.arguments.LongArgumentType.longArg;
@@ -18,44 +21,40 @@ import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class TrainerCommandTree {
 
+    private static Predicate<ServerCommandSource> sourceWithPermission(String permission, CobblemonTrainers mod) {
+        return source ->
+            !mod.isDisabled() &&
+            (
+                CommandUtils.hasPermission(source, "selfdot.op.trainers") ||
+                CommandUtils.hasPermission(source, "selfdot.trainers." + permission)
+            );
+    }
+
+    private static Predicate<ServerCommandSource> playerWithPermission(String permission, CobblemonTrainers mod) {
+        return source -> source.isExecutedByPlayer() && sourceWithPermission(permission, mod).test(source);
+    }
+
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CobblemonTrainers mod) {
 
         dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
             literal("trainers")
-            .requires(source -> !mod.isDisabled() && CommandUtils.hasPermission(source, "selfdot.trainers.battle"))
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("reload")
+                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
+                .executes(new ReloadCommand())
+            )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
-                .requires(ServerCommandSource::isExecutedByPlayer)
+                .requires(playerWithPermission(DataKeys.BATTLE_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
                     .executes(new BattleTrainerCommand())
                 )
             )
-        );
-
-        dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
-            literal("trainers")
-            .requires(source -> !mod.isDisabled() && CommandUtils.hasPermission(source, "selfdot.op.trainers"))
-            .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("add")
-                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("name", string())
-                    .executes(new AddTrainerCommand())
-                )
-            )
-            .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("add")
-                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                    argument("name", string())
-                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("group", string())
-                        .executes(new AddTrainerWithGroupCommand())
-                    )
-                )
-            )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("makebattle")
+                .requires(playerWithPermission(DataKeys.MAKEBATTLE_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
                     argument("player", EntityArgumentType.player())
                     .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
@@ -71,11 +70,25 @@ public class TrainerCommandTree {
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("reload")
-                .executes(new ReloadCommand())
+                literal("setup")
+                .requires(playerWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .executes(new SetupCommand())
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("add")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("name", string())
+                    .executes(new AddTrainerCommand())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("group", string())
+                        .executes(new AddTrainerWithGroupCommand())
+                    )
+                )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("remove")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -84,6 +97,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("rename")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -95,6 +109,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setgroup")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -106,12 +121,8 @@ public class TrainerCommandTree {
                 )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("setup")
-                .requires(ServerCommandSource::isExecutedByPlayer)
-                .executes(new SetupCommand())
-            )
-            .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setwincommand")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -123,6 +134,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setlosscommand")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -134,6 +146,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setcanonlybeatonce")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -145,6 +158,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("addfromparty")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -156,6 +170,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("addpokemon")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -167,6 +182,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("setcooldownseconds")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                     argument("trainer", string())
                     .suggests(new TrainerNameSuggestionProvider())
@@ -177,6 +193,8 @@ public class TrainerCommandTree {
                 )
             )
         );
+
+        // && CommandUtils.hasPermission(source, "selfdot.trainers.battle")
     }
 
 }

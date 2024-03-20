@@ -1,6 +1,13 @@
 # 0.9.5
 - Fixed cursor snapping to centre when switching screens in the setup GUI.
 - Changed AI to consider the ability Levitate in its damage calculator.
+- Fixed command permissions not acting separately.
+- Changed command permissions to:
+  - "selfdot.trainers.reload" (/trainers reload)
+  - "selfdot.trainers.battle" (/trainers battle)
+  - "selfdot.trainers.makebattle" (/trainers makebattle)
+  - "selfdot.trainers.edit" (All other commands)
+  - "selfdot.op.trainers" will still allow all commands for now, but I recommend switching to using the other permissions.
 
 # 0.9.4c
 - Fixed first time loading trainers from before 0.9.4 setting all held items to invalid values.
