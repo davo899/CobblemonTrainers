@@ -54,7 +54,7 @@ public class TrainerCommandTree {
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("makebattle")
-                .requires(playerWithPermission(DataKeys.MAKEBATTLE_COMMAND_PERMISSION, mod))
+                .requires(sourceWithPermission(DataKeys.MAKEBATTLE_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
                     argument("player", EntityArgumentType.player())
                     .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))

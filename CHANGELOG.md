@@ -11,6 +11,7 @@
   - Flash Fire
   - Sap Sipper
   - Wonder Guard
+- Fixed /trainers makebattle only being executable by a player
 
 # 0.9.5
 - Fixed cursor snapping to centre when switching screens in the setup GUI.
