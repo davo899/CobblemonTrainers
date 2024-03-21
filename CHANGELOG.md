@@ -1,3 +1,6 @@
+# 0.9.7
+- Fixed %player% being replaced with server-altered names instead of the player's true username
+
 # 0.9.6
 - AI damage calculator now considers the following abilities:
   - Storm Drain

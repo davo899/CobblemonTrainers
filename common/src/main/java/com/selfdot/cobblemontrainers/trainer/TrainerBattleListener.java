@@ -33,7 +33,7 @@ public class TrainerBattleListener {
                         String winCommand = trainer.getWinCommand();
                         if (winCommand != null && !winCommand.isEmpty()) {
                             CommandUtils.executeCommandAsServer(
-                                winCommand.replace(DataKeys.PLAYER_TOKEN, player.getName().getString()),
+                                winCommand.replace(DataKeys.PLAYER_TOKEN, player.getGameProfile().getName()),
                                 server
                             );
                         }
@@ -46,7 +46,7 @@ public class TrainerBattleListener {
                     if (player != null) {
                         CommandUtils.executeCommandAsServer(
                             onBattleLoss.get(battle).replace(
-                                DataKeys.PLAYER_TOKEN, player.getName().getString()
+                                DataKeys.PLAYER_TOKEN, player.getGameProfile().getName()
                             ),
                             server
                         );
