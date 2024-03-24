@@ -20,6 +20,7 @@ public class DataKeys {
     public static final String TRAINER_CAN_ONLY_BEAT_ONCE = "canOnlyBeatOnce";
     public static final String TRAINER_GROUP = "group";
     public static final String TRAINER_COOLDOWN_SECONDS = "cooldownSeconds";
+    public static final String PLAYER_PARTY_MAXIMUM_LEVEL = "partyMaximumLevel";
     public static final String UNGROUPED = "Ungrouped";
     public static final String PLAYER_TOKEN = "%player%";
     public static final String EDIT_COMMAND_PERMISSION = "edit";
