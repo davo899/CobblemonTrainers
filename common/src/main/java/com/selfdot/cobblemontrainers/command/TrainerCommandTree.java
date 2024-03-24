@@ -16,6 +16,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import java.util.function.Predicate;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
+import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static com.mojang.brigadier.arguments.LongArgumentType.longArg;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
@@ -189,6 +190,18 @@ public class TrainerCommandTree {
                     .then(RequiredArgumentBuilder.<ServerCommandSource, Long>
                         argument("cooldownSeconds", longArg())
                         .executes(new SetCooldownSecondsCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setpartymaximumlevel")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
+                        argument("partyMaximumLevel", integer(1, 100))
+                        .executes(new SetPartyMaximumLevelCommand())
                     )
                 )
             )
