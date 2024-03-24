@@ -160,7 +160,7 @@ public class PokemonUtility {
 
         if (!PlayerPartyUtils.isUnderPartyMaximumLevel(player, trainer)) {
             player.sendMessage((Text.literal(
-                Formatting.RED + "All pokemon in your party should be lower than level " +
+                Formatting.RED + "All pokemon in your party should be no higher than level " +
                     trainer.getPartyMaximumLevel()
             )));
             return;
