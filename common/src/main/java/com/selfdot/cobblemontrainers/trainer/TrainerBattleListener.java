@@ -37,6 +37,7 @@ public class TrainerBattleListener {
                                 server
                             );
                         }
+                        TrainerReward.giveMoneyRewardToPlayer(player, trainer);
                     }
                 }));
             }
@@ -69,5 +70,4 @@ public class TrainerBattleListener {
     public void setServer(MinecraftServer server) {
         this.server = server;
     }
-
 }

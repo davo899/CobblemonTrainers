@@ -205,6 +205,18 @@ public class TrainerCommandTree {
                     )
                 )
             )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("setmoneyreward")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, Long>
+                        argument("moneyReward", longArg())
+                        .executes(new SetMoneyRewardCommand())
+                    )
+                )
+            )
         );
 
         // && CommandUtils.hasPermission(source, "selfdot.trainers.battle")
