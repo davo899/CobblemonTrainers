@@ -54,9 +54,11 @@ public class TrainerPokemon {
         );
         gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
         level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
-        nature = Natures.INSTANCE.getNature(
-            new Identifier(jsonObject.get(DataKeys.POKEMON_NATURE).getAsString())
-        );
+
+        String natureString = jsonObject.get(DataKeys.POKEMON_NATURE).getAsString();
+        nature = Natures.INSTANCE.getNature(new Identifier(natureString));
+        if (nature == null) throw new IllegalStateException("Invalid nature: " + natureString);
+
         ability = new Ability(Abilities.INSTANCE.getOrException(
             jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
         ), false);
