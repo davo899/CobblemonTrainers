@@ -116,8 +116,8 @@ public class Trainer extends JsonFile {
         return this.partyMaximumLevel;
     }
 
-    public void setPartyMaximumLevel(int partyMaxiumLevel) {
-        this.partyMaximumLevel = partyMaxiumLevel;
+    public void setPartyMaximumLevel(int partyMaximumLevel) {
+        this.partyMaximumLevel = partyMaximumLevel;
         save();
     }
 
