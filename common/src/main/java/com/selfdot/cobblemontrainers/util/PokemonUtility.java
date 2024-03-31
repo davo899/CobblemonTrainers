@@ -11,6 +11,7 @@ import com.cobblemon.mod.common.item.PokemonItem;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.battle.TrainerMaximumLevelError;
 import com.selfdot.cobblemontrainers.trainer.EntityBackerTrainerBattleActor;
 import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
@@ -86,7 +87,7 @@ public class PokemonUtility {
         return itemstack;
     }
 
-    private static BattleStartResult startBattle(
+    private static BattleStartResult createTrainerBattle(
         ServerPlayerEntity player,
         Trainer trainer,
         LivingEntity trainerEntity,
@@ -113,9 +114,17 @@ public class PokemonUtility {
             );
 
         ErroredBattleStart errors = new ErroredBattleStart();
+        Set<BattleStartError> playerErrors = errors.getParticipantErrors().get(playerActor);
+
+        for (Pokemon pokemon : party) {
+            if (pokemon.getLevel() > trainer.getPartyMaximumLevel()) {
+                playerErrors.add(new TrainerMaximumLevelError(trainer.getPartyMaximumLevel()));
+                break;
+            }
+        }
 
         if (playerActor.getPokemonList().size() < battleFormat.getBattleType().getSlotsPerActor()) {
-            errors.getParticipantErrors().get(playerActor).add(BattleStartError.Companion.insufficientPokemon(
+            playerErrors.add(BattleStartError.Companion.insufficientPokemon(
                 player,
                 battleFormat.getBattleType().getSlotsPerActor(),
                 playerActor.getPokemonList().size()
@@ -123,7 +132,7 @@ public class PokemonUtility {
         }
 
         if (Cobblemon.INSTANCE.getBattleRegistry().getBattleByParticipatingPlayer(player) != null) {
-            errors.getParticipantErrors().get(playerActor).add(BattleStartError.Companion.alreadyInBattle(player));
+            playerErrors.add(BattleStartError.Companion.alreadyInBattle(player));
         }
 
         if (errors.isEmpty()) {
@@ -158,15 +167,7 @@ public class PokemonUtility {
             return;
         }
 
-        if (!PlayerPartyUtils.isUnderPartyMaximumLevel(player, trainer)) {
-            player.sendMessage((Text.literal(
-                Formatting.RED + "All pokemon in your party should be no higher than level " +
-                    trainer.getPartyMaximumLevel()
-            )));
-            return;
-        }
-
-        PokemonUtility.startBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
+        PokemonUtility.createTrainerBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
                 return Unit.INSTANCE;
