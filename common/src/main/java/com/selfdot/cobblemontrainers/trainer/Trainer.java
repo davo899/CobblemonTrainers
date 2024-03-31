@@ -164,15 +164,9 @@ public class Trainer extends JsonFile {
         team = new ArrayList<>();
         jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
             .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
-        if (jsonObject.has(DataKeys.TRAINER_WIN_COMMAND)) {
-            winCommand = jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString();
-        } else {
-            if (jsonObject.has(DataKeys.TRAINER_MONEY_REWARD)) {
-                winCommand = "eco give %player% " + jsonObject.get(DataKeys.TRAINER_MONEY_REWARD).getAsInt();
-            } else {
-                winCommand = "";
-            }
-        }
+        winCommand = jsonObject.has(DataKeys.TRAINER_WIN_COMMAND) ?
+            jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString() : "";
+
         if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
             group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
         }
