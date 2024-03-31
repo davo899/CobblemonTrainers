@@ -89,7 +89,7 @@ public class TrainerRegistry extends JsonFile {
                 String trainerName = trainerFileName.substring(0, trainerFileName.length() - 5);
                 Trainer trainer = new Trainer(mod, trainerName, groupName);
                 trainer.load();
-                addOrUpdateTrainer(trainer);
+                if (!mod.isDisabled()) addOrUpdateTrainer(trainer);
             }
         }
     }
