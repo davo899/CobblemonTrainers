@@ -16,6 +16,7 @@ import org.slf4j.Logger
 
 object CobblemonTrainers {
     const val MODID = "cobblemontrainers"
+    val CONFIG = Config(this)
     val TRAINER_REGISTRY = TrainerRegistry(this)
     val TRAINER_WIN_TRACKER = TrainerWinTracker(this)
     val TRAINER_COOLDOWN_TRACKER = TrainerCooldownTracker(this)
@@ -51,6 +52,7 @@ object CobblemonTrainers {
     private fun onServerStart(server: MinecraftServer) {
         SpeciesSelectScreen.loadSpecies()
         CobblemonTrainersLog.LOGGER.info("Loading trainer data")
+        CONFIG.load()
         TRAINER_REGISTRY.load()
         TRAINER_WIN_TRACKER.load()
         TRAINER_COOLDOWN_TRACKER.load()

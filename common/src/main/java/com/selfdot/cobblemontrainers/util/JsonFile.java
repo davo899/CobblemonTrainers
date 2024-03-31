@@ -20,17 +20,15 @@ public abstract class JsonFile extends ReadOnlyJsonFile {
     }
 
     public void save() {
-        if (!mod.isDisabled()) {
-            try {
-                Files.createDirectories(Paths.get(filename()).getParent());
-                FileWriter writer = new FileWriter(filename());
-                GSON.toJson(toJson(), writer);
-                writer.close();
-                mod.getLogger().info("Saved " + filename());
+        try {
+            Files.createDirectories(Paths.get(filename()).getParent());
+            FileWriter writer = new FileWriter(filename());
+            GSON.toJson(toJson(), writer);
+            writer.close();
+            mod.getLogger().info("Saved " + filename());
 
-            } catch (IOException e) {
-                mod.getLogger().error("Unable to store to " + filename());
-            }
+        } catch (IOException e) {
+            mod.getLogger().error("Unable to store to " + filename());
         }
     }
 

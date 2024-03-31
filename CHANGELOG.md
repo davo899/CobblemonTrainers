@@ -1,3 +1,6 @@
+# 0.9.8
+- Added config option to disable XP when battling trainers. (config/trainers/config.json)
+
 # 0.9.7
 - Fixed %player% being replaced with server-altered names instead of the player's true username
 

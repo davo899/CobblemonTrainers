@@ -12,6 +12,7 @@ public class DataKeys {
     public static final String POKEMON_MOVESET = "moveset";
     public static final String POKEMON_SHINY = "shiny";
     public static final String POKEMON_HELD_ITEM = "heldItem";
+
     public static final String TRAINER_NAME = "name";
     public static final String TRAINER_TEAM = "team";
     public static final String TRAINER_MONEY_REWARD = "moneyReward";
@@ -20,11 +21,16 @@ public class DataKeys {
     public static final String TRAINER_CAN_ONLY_BEAT_ONCE = "canOnlyBeatOnce";
     public static final String TRAINER_GROUP = "group";
     public static final String TRAINER_COOLDOWN_SECONDS = "cooldownSeconds";
+
     public static final String UNGROUPED = "Ungrouped";
+
     public static final String PLAYER_TOKEN = "%player%";
+
     public static final String EDIT_COMMAND_PERMISSION = "edit";
     public static final String BATTLE_COMMAND_PERMISSION = "battle";
     public static final String MAKEBATTLE_COMMAND_PERMISSION = "makebattle";
     public static final String RELOAD_COMMAND_PERMISSION = "reload";
+
+    public static final String CONFIG_XP_ENABLED = "xpEnabled";
 
 }
