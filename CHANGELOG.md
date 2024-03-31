@@ -1,5 +1,6 @@
 # 0.9.8
 - Added config option to disable XP when battling trainers. (config/trainers/config.json)
+- Added /trainers setpartymaximumlevel \<trainer\> \<maxLevel\> to set a maximum level for the player's party to battle a trainer. (Added by NavyBlue)
 
 # 0.9.7
 - Fixed %player% being replaced with server-altered names instead of the player's true username

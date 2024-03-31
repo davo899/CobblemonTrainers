@@ -22,6 +22,7 @@ These trainers feature a custom AI inspired by Generation 5's trainer AI, ensuri
 - **/trainers addpokemon \<trainer\> \<pokemon\>**: Add a Pokémon to a trainer's team via command similar to /pokegive.
 - **/trainers addfromparty \<trainer\> \<partySlot\>**: Add a Pokémon from the player's party to a trainer's team.
 - **/trainers setcooldownseconds \<trainer\> \<cooldownSeconds\>**: Set the cooldown duration for battling the trainer.
+- **/trainers setpartymaximumlevel \<trainer\> \<maxLevel\>**: Set a maximum level for the player's party to battle a trainer.
 - **/trainers battle \<trainer\>**: Initiate a battle with a trainer.
 - **/trainers makebattle \<player\> \<trainer\> [\<trainerEntity\>]**: Commence a battle between a player and a trainer.
 - **/trainers reload**: Refresh the trainer data file; caution advised for manual edits.
