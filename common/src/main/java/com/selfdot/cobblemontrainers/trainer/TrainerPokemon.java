@@ -49,9 +49,11 @@ public class TrainerPokemon {
 
     public TrainerPokemon(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        species = PokemonSpecies.INSTANCE.getByIdentifier(
-            new Identifier(jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString())
-        );
+
+        String speciesString = jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString();
+        species = PokemonSpecies.INSTANCE.getByIdentifier(new Identifier(speciesString));
+        if (species == null) throw new IllegalStateException("Invalid species: " + speciesString);
+
         gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
         level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
 
