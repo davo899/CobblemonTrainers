@@ -158,6 +158,14 @@ public class PokemonUtility {
             return;
         }
 
+        if (!PlayerPartyUtils.isUnderPartyMaximumLevel(player, trainer)) {
+            player.sendMessage((Text.literal(
+                Formatting.RED + "All pokemon in your party should be no higher than level " +
+                    trainer.getPartyMaximumLevel()
+            )));
+            return;
+        }
+
         PokemonUtility.startBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
