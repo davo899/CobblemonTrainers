@@ -36,6 +36,10 @@ All commands require permission level 2 or their corresponding permission nodes:
 - "selfdot.trainers.makebattle" - /trainers makebattle \<player\> \<trainer\>
 - "selfdot.trainers.edit" - All other commands.
 
+**Config Options:**
+
+- **xpEnabled**: Controls whether player Pokémon will gain XP from battling trainers.
+
 Graphics by twsparklecat
 
 [![image](https://media.forgecdn.net/attachments/description/959503/description_ec38fa43-4312-4aea-b11d-849dbdd062b1.png)](https://discord.gg/y8K2HYDBuX)
