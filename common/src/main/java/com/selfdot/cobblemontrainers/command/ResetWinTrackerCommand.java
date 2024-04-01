@@ -13,9 +13,9 @@ public class ResetWinTrackerCommand extends TrainerCommand {
     protected int runSubCommand(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
         CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().reset(player, trainer);
-        String message = String.format("Reset win tracker of %s for trainer %s",
-                player.getGameProfile().getName(), trainer.getName());
-        player.sendMessage(Text.literal(message));
+        player.sendMessage(Text.literal(String.format(
+            "Reset win tracker of %s for trainer %s", player.getGameProfile().getName(), trainer.getName())
+        ));
         return SINGLE_SUCCESS;
     }
 }
