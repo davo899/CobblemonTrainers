@@ -206,7 +206,7 @@ public class TrainerCommandTree {
                 )
             ).then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("resetwintracker")
-                .requires(sourceWithPermission(DataKeys.MAKEBATTLE_COMMAND_PERMISSION, mod))
+                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
                     argument("player", EntityArgumentType.player())
                     .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
@@ -218,7 +218,6 @@ public class TrainerCommandTree {
                 ))
         );
 
-        // && CommandUtils.hasPermission(source, "selfdot.trainers.battle")
     }
 
 }
