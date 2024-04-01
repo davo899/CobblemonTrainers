@@ -215,7 +215,8 @@ public class TrainerCommandTree {
                         .suggests(new TrainerNameSuggestionProvider())
                         .executes(new ResetWinTrackerCommand())
                     )
-                ))
+                )
+            )
         );
 
     }
