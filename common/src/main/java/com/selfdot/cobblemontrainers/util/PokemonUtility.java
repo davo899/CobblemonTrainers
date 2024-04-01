@@ -26,6 +26,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PokemonUtility {
 
@@ -122,17 +123,10 @@ public class PokemonUtility {
             }
         }
 
-        ArrayList<String> notDefeatedTrainers = new ArrayList<>();
-        for (String defeatRequiredTrainer : trainer.getDefeatRequiredTrainers()) {
-            if (!CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(
-                    player, CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getTrainer(defeatRequiredTrainer))) {
-                notDefeatedTrainers.add(defeatRequiredTrainer);
-            }
-        }
-        if (!notDefeatedTrainers.isEmpty()) {
-            playerErrors.add(new TrainersNotDefeatedError(notDefeatedTrainers));
-        }
-
+        List<String> notDefeatedTrainers = trainer.getDefeatRequiredTrainers().stream()
+            .filter(mustDefeat -> !CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, mustDefeat))
+            .toList();
+        if (!notDefeatedTrainers.isEmpty()) playerErrors.add(new TrainersNotDefeatedError(notDefeatedTrainers));
 
         if (playerActor.getPokemonList().size() < battleFormat.getBattleType().getSlotsPerActor()) {
             playerErrors.add(BattleStartError.Companion.insufficientPokemon(

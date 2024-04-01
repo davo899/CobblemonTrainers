@@ -7,12 +7,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrainersNotDefeatedError implements BattleStartError {
     private final List<String> notDefeatedTrainers;
-    public TrainersNotDefeatedError(ArrayList<String> notDefeatedTrainers) {
+    public TrainersNotDefeatedError(List<String> notDefeatedTrainers) {
         this.notDefeatedTrainers = notDefeatedTrainers;
     }
 

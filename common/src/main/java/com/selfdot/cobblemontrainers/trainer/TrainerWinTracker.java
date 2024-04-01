@@ -30,9 +30,13 @@ public class TrainerWinTracker extends JsonFile {
         save();
     }
 
+    public boolean hasBeaten(ServerPlayerEntity player, String trainerName) {
+        if (!trainerWinMap.containsKey(trainerName)) return false;
+        return trainerWinMap.get(trainerName).contains(player.getUuid());
+    }
+
     public boolean hasBeaten(ServerPlayerEntity player, Trainer trainer) {
-        if (!trainerWinMap.containsKey(trainer.getName())) return false;
-        return trainerWinMap.get(trainer.getName()).contains(player.getUuid());
+        return hasBeaten(player, trainer.getName());
     }
 
     public void reset(ServerPlayerEntity player, Trainer trainer) {
