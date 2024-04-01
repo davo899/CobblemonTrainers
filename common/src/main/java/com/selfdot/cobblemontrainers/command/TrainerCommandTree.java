@@ -45,6 +45,19 @@ public class TrainerCommandTree {
                 .executes(new ReloadCommand())
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("resetwintracker")
+                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
+                    argument("player", EntityArgumentType.player())
+                    .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("trainer", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(new ResetWinTrackerCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
                 .requires(playerWithPermission(DataKeys.BATTLE_COMMAND_PERMISSION, mod))
                 .then(RequiredArgumentBuilder.<ServerCommandSource, String>
@@ -204,16 +217,16 @@ public class TrainerCommandTree {
                         .executes(new SetPartyMaximumLevelCommand())
                     )
                 )
-            ).then(LiteralArgumentBuilder.<ServerCommandSource>
-                literal("resetwintracker")
-                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
-                .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
-                    argument("player", EntityArgumentType.player())
-                    .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("adddefeatrequirement")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
                     .then(RequiredArgumentBuilder.<ServerCommandSource, String>
-                        argument("trainer", string())
-                        .suggests(new TrainerNameSuggestionProvider())
-                        .executes(new ResetWinTrackerCommand())
+                        argument("defeatRequirement", string())
+                        .executes(new AddDefeatRequirementCommand())
                     )
                 )
             )
