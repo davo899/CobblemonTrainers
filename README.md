@@ -23,6 +23,9 @@ These trainers feature a custom AI inspired by Generation 5's trainer AI, ensuri
 - **/trainers addfromparty \<trainer\> \<partySlot\>**: Add a Pokémon from the player's party to a trainer's team.
 - **/trainers setcooldownseconds \<trainer\> \<cooldownSeconds\>**: Set the cooldown duration for battling the trainer.
 - **/trainers setpartymaximumlevel \<trainer\> \<maxLevel\>**: Set a maximum level for the player's party to battle a trainer.
+- **/trainers adddefeatrequirement \<trainer\> \<defeatRequirement\>**: Makes it so the given trainer cannot be battled unless the player has defeated a certain trainer.
+- **/trainers removedefeatrequirement \<trainer\> \<defeatRequirement\>**: Removes a defeat requirement.
+- **/trainers resetwintracker \<player\> \<trainer\>**: Clears whether the given player has defeated the given trainer in the past.
 - **/trainers battle \<trainer\>**: Initiate a battle with a trainer.
 - **/trainers makebattle \<player\> \<trainer\> [\<trainerEntity\>]**: Commence a battle between a player and a trainer.
 - **/trainers reload**: Refresh the trainer data file; caution advised for manual edits.
