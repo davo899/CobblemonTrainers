@@ -1,3 +1,9 @@
+# 0.9.10
+- Added trainer defeat requirements, so certain trainers can only be battled if the player has already defeated certain other trainers.
+  - /trainers adddefeatrequirement \<trainer\> \<defeatRequirement\>
+  - /trainers removedefeatrequirement \<trainer\> \<defeatRequirement\>
+- Added /trainers resetwintracker \<player\> \<trainer\>
+
 # 0.9.9
 - Fixed invalid trainer files being cleared of all data.
 
