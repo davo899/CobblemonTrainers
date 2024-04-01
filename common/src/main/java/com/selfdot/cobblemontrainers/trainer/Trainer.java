@@ -26,6 +26,7 @@ public class Trainer extends JsonFile {
     private boolean canOnlyBeatOnce;
     private long cooldownSeconds;
     private int partyMaximumLevel;
+    private JsonArray defeatRequiredTrainers;
 
     public Trainer(CobblemonTrainers mod, String name, String group) {
         super(mod);
@@ -121,6 +122,11 @@ public class Trainer extends JsonFile {
         save();
     }
 
+    public List<String> getDefeatRequiredTrainers() {
+        List<JsonElement> trainers = this.defeatRequiredTrainers.asList();
+        return trainers.stream().map(JsonElement::getAsString).toList();
+    }
+
     public int getTeamSize() {
         return team.size();
     }
@@ -152,6 +158,7 @@ public class Trainer extends JsonFile {
         canOnlyBeatOnce = false;
         cooldownSeconds = 0;
         partyMaximumLevel = 100;
+        defeatRequiredTrainers = new JsonArray();
     }
 
     @Override
@@ -182,6 +189,9 @@ public class Trainer extends JsonFile {
         if (jsonObject.has(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL)) {
             partyMaximumLevel = jsonObject.get(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL).getAsInt();
         }
+        if (jsonObject.has(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS)) {
+            defeatRequiredTrainers = jsonObject.get(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS).getAsJsonArray();
+        }
     }
 
     @Override
@@ -195,6 +205,7 @@ public class Trainer extends JsonFile {
         jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
         jsonObject.addProperty(DataKeys.TRAINER_COOLDOWN_SECONDS, cooldownSeconds);
         jsonObject.addProperty(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL, partyMaximumLevel);
+        jsonObject.add(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS, defeatRequiredTrainers);
         return jsonObject;
     }
 

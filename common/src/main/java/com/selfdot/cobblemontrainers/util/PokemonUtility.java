@@ -12,6 +12,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.battle.TrainerMaximumLevelError;
+import com.selfdot.cobblemontrainers.battle.TrainersNotDefeatedError;
 import com.selfdot.cobblemontrainers.trainer.EntityBackerTrainerBattleActor;
 import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
@@ -24,9 +25,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class PokemonUtility {
 
@@ -122,6 +121,18 @@ public class PokemonUtility {
                 break;
             }
         }
+
+        ArrayList<String> notDefeatedTrainers = new ArrayList<>();
+        for (String defeatRequiredTrainer : trainer.getDefeatRequiredTrainers()) {
+            if (!CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(
+                    player, CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getTrainer(defeatRequiredTrainer))) {
+                notDefeatedTrainers.add(defeatRequiredTrainer);
+            }
+        }
+        if (!notDefeatedTrainers.isEmpty()) {
+            playerErrors.add(new TrainersNotDefeatedError(notDefeatedTrainers));
+        }
+
 
         if (playerActor.getPokemonList().size() < battleFormat.getBattleType().getSlotsPerActor()) {
             playerErrors.add(BattleStartError.Companion.insufficientPokemon(

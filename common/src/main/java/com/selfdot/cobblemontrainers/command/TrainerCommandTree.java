@@ -204,7 +204,18 @@ public class TrainerCommandTree {
                         .executes(new SetPartyMaximumLevelCommand())
                     )
                 )
-            )
+            ).then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("resetwintracker")
+                .requires(sourceWithPermission(DataKeys.MAKEBATTLE_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
+                    argument("player", EntityArgumentType.player())
+                    .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("trainer", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(new ResetWinTrackerCommand())
+                    )
+                ))
         );
 
         // && CommandUtils.hasPermission(source, "selfdot.trainers.battle")

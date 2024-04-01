@@ -35,6 +35,11 @@ public class TrainerWinTracker extends JsonFile {
         return trainerWinMap.get(trainer.getName()).contains(player.getUuid());
     }
 
+    public void reset(ServerPlayerEntity player, Trainer trainer) {
+        if (!trainerWinMap.containsKey(trainer.getName())) return;
+        trainerWinMap.get(trainer.getName()).remove(player.getUuid());
+    }
+
     @Override
     protected JsonElement toJson() {
         JsonObject jsonObject = new JsonObject();
