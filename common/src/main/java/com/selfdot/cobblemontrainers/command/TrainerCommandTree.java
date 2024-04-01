@@ -226,6 +226,7 @@ public class TrainerCommandTree {
                     .suggests(new TrainerNameSuggestionProvider())
                     .then(RequiredArgumentBuilder.<ServerCommandSource, String>
                         argument("defeatRequirement", string())
+                        .suggests(new TrainerNameSuggestionProvider())
                         .executes(new AddDefeatRequirementCommand())
                     )
                 )
