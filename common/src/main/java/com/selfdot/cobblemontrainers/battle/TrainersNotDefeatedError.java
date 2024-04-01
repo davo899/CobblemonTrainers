@@ -10,7 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class TrainersNotDefeatedError implements BattleStartError {
+
     private final List<String> notDefeatedTrainers;
+
     public TrainersNotDefeatedError(List<String> notDefeatedTrainers) {
         this.notDefeatedTrainers = notDefeatedTrainers;
     }
@@ -18,7 +20,11 @@ public class TrainersNotDefeatedError implements BattleStartError {
     @NotNull
     @Override
     public MutableText getMessageFor(@NotNull Entity entity) {
-        return Text.literal(Formatting.RED + String.format("You must defeat following trainers " +
-                        "to challenge this trainer: %s", this.notDefeatedTrainers));
+        StringBuilder message = new StringBuilder()
+            .append("To challenge this trainer, you must have defeated the following trainers: ")
+            .append(notDefeatedTrainers.get(0));
+        notDefeatedTrainers.stream().skip(1).forEach(trainer -> message.append(", ").append(trainer));
+        return Text.literal(Formatting.RED + message.toString());
     }
+
 }
