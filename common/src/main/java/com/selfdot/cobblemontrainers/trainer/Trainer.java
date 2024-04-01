@@ -151,6 +151,12 @@ public class Trainer extends JsonFile {
         save();
     }
 
+    public boolean removeDefeatRequirement(String defeatRequirement) {
+        boolean existed = defeatRequiredTrainers.remove(defeatRequirement);
+        if (existed) save();
+        return existed;
+    }
+
     @Override
     protected String filename() {
         return "config/trainers/groups/" + group + "/" + name + ".json";
