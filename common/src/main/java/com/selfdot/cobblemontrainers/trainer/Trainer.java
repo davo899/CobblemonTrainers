@@ -128,6 +128,17 @@ public class Trainer extends JsonFile {
         return defeatRequiredTrainers;
     }
 
+    public void addDefeatRequirement(String defeatRequirement) {
+        defeatRequiredTrainers.add(defeatRequirement);
+        save();
+    }
+
+    public boolean removeDefeatRequirement(String defeatRequirement) {
+        boolean existed = defeatRequiredTrainers.remove(defeatRequirement);
+        if (existed) save();
+        return existed;
+    }
+
     public int getTeamSize() {
         return team.size();
     }
@@ -144,17 +155,6 @@ public class Trainer extends JsonFile {
     public void removeTrainerPokemon(TrainerPokemon trainerPokemon) {
         team.remove(trainerPokemon);
         save();
-    }
-
-    public void addDefeatRequirement(String defeatRequirement) {
-        defeatRequiredTrainers.add(defeatRequirement);
-        save();
-    }
-
-    public boolean removeDefeatRequirement(String defeatRequirement) {
-        boolean existed = defeatRequiredTrainers.remove(defeatRequirement);
-        if (existed) save();
-        return existed;
     }
 
     @Override
