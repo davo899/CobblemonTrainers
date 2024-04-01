@@ -33,5 +33,5 @@ public class DataKeys {
     public static final String CONFIG_XP_ENABLED = "xpEnabled";
 
     public static final String PLAYER_PARTY_MAXIMUM_LEVEL = "partyMaximumLevel";
-
+    public static final String PLAYER_DEFEAT_REQUIRED_TRAINERS = "defeatRequiredTrainers";
 }

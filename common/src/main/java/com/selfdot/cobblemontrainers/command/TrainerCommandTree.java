@@ -4,9 +4,11 @@ import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.command.argument.PartySlotArgumentType;
 import com.cobblemon.mod.common.command.argument.PokemonPropertiesArgumentType;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.CommandUtils;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import net.minecraft.command.EntitySelector;
@@ -43,6 +45,19 @@ public class TrainerCommandTree {
                 literal("reload")
                 .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
                 .executes(new ReloadCommand())
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("resetwintracker")
+                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, EntitySelector>
+                    argument("player", EntityArgumentType.player())
+                    .suggests((context, builder) -> EntityArgumentType.player().listSuggestions(context, builder))
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("trainer", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(new ResetWinTrackerCommand())
+                    )
+                )
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("battle")
@@ -205,9 +220,40 @@ public class TrainerCommandTree {
                     )
                 )
             )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("adddefeatrequirement")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("defeatRequirement", string())
+                        .suggests(new TrainerNameSuggestionProvider())
+                        .executes(new AddDefeatRequirementCommand())
+                    )
+                )
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("removedefeatrequirement")
+                .requires(sourceWithPermission(DataKeys.EDIT_COMMAND_PERMISSION, mod))
+                .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                    argument("trainer", string())
+                    .suggests(new TrainerNameSuggestionProvider())
+                    .then(RequiredArgumentBuilder.<ServerCommandSource, String>
+                        argument("defeatRequirement", string())
+                        .suggests((context, builder) -> {
+                            Trainer trainer = CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY()
+                                .getTrainer(StringArgumentType.getString(context, "trainer"));
+                            if (trainer == null) return builder.buildFuture();
+                            trainer.getDefeatRequiredTrainers().forEach(builder::suggest);
+                            return builder.buildFuture();
+                        })
+                        .executes(new RemoveDefeatRequirementCommand())
+                    )
+                )
+            )
         );
 
-        // && CommandUtils.hasPermission(source, "selfdot.trainers.battle")
     }
 
 }
