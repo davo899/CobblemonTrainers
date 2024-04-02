@@ -5,6 +5,7 @@
 - Added /trainers resetwintracker \<player\> \<trainer\>
 - Fixed /trainers reload being unavailable after file loading fails.
 - Fixed /trainers reload not re-enabling commands when file loading succeeds.
+- Made /trainers reload report whether loading succeeded or failed.
 
 # 0.9.9
 - Fixed invalid trainer files being cleared of all data.

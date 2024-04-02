@@ -11,7 +11,13 @@ public class ReloadCommand implements Command<ServerCommandSource> {
     public int run(CommandContext<ServerCommandSource> context) {
         CobblemonTrainers.INSTANCE.enable();
         CobblemonTrainers.INSTANCE.loadFiles();
-        context.getSource().sendMessage(Text.literal("Reloaded CobblemonTrainers files"));
+        if (CobblemonTrainers.INSTANCE.isDisabled()) {
+            context.getSource().sendError(Text.literal(
+                "An error occurred while reloading, check the server log."
+            ));
+        } else {
+            context.getSource().sendMessage(Text.literal("Reloaded CobblemonTrainers files successfully"));
+        }
         return SINGLE_SUCCESS;
     }
 
