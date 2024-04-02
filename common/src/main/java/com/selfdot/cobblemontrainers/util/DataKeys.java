@@ -2,6 +2,8 @@ package com.selfdot.cobblemontrainers.util;
 
 public class DataKeys {
 
+    public static final String MOD_NAMESPACE = "cobblemontrainers";
+
     public static final String POKEMON_SPECIES = "species";
     public static final String POKEMON_GENDER = "gender";
     public static final String POKEMON_LEVEL = "level";

@@ -6,17 +6,15 @@ import java.util.*
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.event.server.ServerStartingEvent
-import net.minecraftforge.common.MinecraftForge
 
 @Mod(CobblemonTrainers.MODID)
-class CobblemonForge {
+class CobblemonTrainersForge {
+
     init {
         with(thedarkcolour.kotlinforforge.forge.MOD_BUS) {
             EventBuses.registerModEventBus(CobblemonTrainers.MODID, this)
-            addListener(this@CobblemonForge::initialize)
-            addListener(this@CobblemonForge::serverInit)
+            addListener(this@CobblemonTrainersForge::initialize)
+            addListener(this@CobblemonTrainersForge::serverInit)
         }
     }
 
@@ -24,6 +22,7 @@ class CobblemonForge {
 
     private fun initialize(event: FMLCommonSetupEvent) {
         CobblemonTrainers.initialize()
+        CobblemonTrainers.permissionValidator = ForgePermissionValidator()
         println("CobblemonTrainers Forge initialized")
     }
 

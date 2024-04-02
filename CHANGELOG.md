@@ -1,3 +1,6 @@
+# 0.9.11
+- Fixed error on player respawn in some cases when using LuckPerms Forge.
+
 # 0.9.10
 - Added trainer defeat requirements, so certain trainers can only be battled if the player has already defeated certain other trainers.
   - /trainers adddefeatrequirement \<trainer\> \<defeatRequirement\>

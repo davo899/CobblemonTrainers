@@ -3,6 +3,7 @@ package com.selfdot.cobblemontrainers
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.logging.LogUtils
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
+import com.selfdot.cobblemontrainers.command.permission.PermissionValidator
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.CobblemonTrainersLog
@@ -19,6 +20,7 @@ object CobblemonTrainers {
     private var disabled = false
     private val LOGGER = LogUtils.getLogger()
     private lateinit var server: MinecraftServer
+    lateinit var permissionValidator: PermissionValidator
 
     val CONFIG = Config(this)
     val TRAINER_REGISTRY = TrainerRegistry(this)
@@ -59,7 +61,7 @@ object CobblemonTrainers {
         registry: CommandRegistryAccess,
         selection: CommandManager.RegistrationEnvironment
     ) {
-        TrainerCommandTree().register(dispatcher, this)
+        TrainerCommandTree().register(dispatcher)
     }
 
     fun loadFiles() {
