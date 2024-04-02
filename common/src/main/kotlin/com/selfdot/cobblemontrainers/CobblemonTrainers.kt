@@ -37,6 +37,10 @@ object CobblemonTrainers {
         return LOGGER
     }
 
+    fun enable() {
+        disabled = false
+    }
+
     fun disable() {
         disabled = true
     }

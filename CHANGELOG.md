@@ -4,6 +4,7 @@
   - /trainers removedefeatrequirement \<trainer\> \<defeatRequirement\>
 - Added /trainers resetwintracker \<player\> \<trainer\>
 - Fixed /trainers reload being unavailable after file loading fails.
+- Fixed /trainers reload not re-enabling commands when file loading succeeds.
 
 # 0.9.9
 - Fixed invalid trainer files being cleared of all data.
