@@ -9,14 +9,18 @@ import net.minecraft.text.Text;
 public class ReloadCommand implements Command<ServerCommandSource> {
 
     public int run(CommandContext<ServerCommandSource> context) {
-        CobblemonTrainers.INSTANCE.enable();
-        CobblemonTrainers.INSTANCE.loadFiles();
-        if (CobblemonTrainers.INSTANCE.isDisabled()) {
-            context.getSource().sendError(Text.literal(
-                "An error occurred while reloading, check the server log."
-            ));
-        } else {
-            context.getSource().sendMessage(Text.literal("Reloaded CobblemonTrainers files successfully"));
+        try {
+            CobblemonTrainers.INSTANCE.enable();
+            CobblemonTrainers.INSTANCE.loadFiles();
+            if (CobblemonTrainers.INSTANCE.isDisabled()) {
+                context.getSource().sendError(Text.literal(
+                    "An error occurred while reloading, check the server log."
+                ));
+            } else {
+                context.getSource().sendMessage(Text.literal("Reloaded CobblemonTrainers files successfully"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return SINGLE_SUCCESS;
     }

@@ -30,16 +30,8 @@ public abstract class ReadOnlyJsonFile {
     public void load() {
         setDefaults();
         try {
-            JsonElement jsonElement = JsonParser.parseReader(new FileReader(filename()));
-            try {
-                loadFromJson(jsonElement);
-                mod.getLogger().info(filename() + " loaded");
-
-            } catch (Exception e) {
-                mod.disable();
-                mod.getLogger().error("An exception occurred when loading " + filename() + ":");
-                mod.getLogger().error(e.getMessage());
-            }
+            loadFromJson(JsonParser.parseReader(new FileReader(filename())));
+            mod.getLogger().info(filename() + " loaded");
 
         } catch (FileNotFoundException e) {
             mod.getLogger().warn(filename() + " not found, attempting to generate");
@@ -53,6 +45,11 @@ public abstract class ReadOnlyJsonFile {
                 mod.disable();
                 mod.getLogger().error("Unable to generate " + filename());
             }
+
+        } catch (Exception e) {
+            mod.disable();
+            mod.getLogger().error("An exception occurred when loading " + filename() + ":");
+            mod.getLogger().error(e.getMessage());
         }
     }
 

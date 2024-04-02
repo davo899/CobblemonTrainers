@@ -16,12 +16,15 @@ import org.slf4j.Logger
 
 object CobblemonTrainers {
     const val MODID = "cobblemontrainers"
+    private var disabled = false
+    private val LOGGER = LogUtils.getLogger()
+    private lateinit var server: MinecraftServer
+
     val CONFIG = Config(this)
     val TRAINER_REGISTRY = TrainerRegistry(this)
     val TRAINER_WIN_TRACKER = TrainerWinTracker(this)
     val TRAINER_COOLDOWN_TRACKER = TrainerCooldownTracker(this)
-    private var disabled = false
-    private val LOGGER = LogUtils.getLogger()
+
     fun initialize() {
         LifecycleEvent.SERVER_STARTING.register(CobblemonTrainers::onServerStart)
         LifecycleEvent.SERVER_STOPPING.register(CobblemonTrainers::onServerStop)
@@ -37,12 +40,18 @@ object CobblemonTrainers {
         return LOGGER
     }
 
+    private fun updateCommandPerms() {
+        server.playerManager.playerList.forEach { server.playerManager.sendCommandTree(it) }
+    }
+
     fun enable() {
         disabled = false
+        updateCommandPerms()
     }
 
     fun disable() {
         disabled = true
+        updateCommandPerms()
     }
 
     private fun registerCommands(
@@ -61,6 +70,7 @@ object CobblemonTrainers {
     }
 
     private fun onServerStart(server: MinecraftServer) {
+        this.server = server
         SpeciesSelectScreen.loadSpecies()
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
