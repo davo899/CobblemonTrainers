@@ -43,7 +43,12 @@ public class TrainerCommandTree {
             literal("trainers")
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("reload")
-                .requires(sourceWithPermission(DataKeys.RELOAD_COMMAND_PERMISSION, mod))
+                .requires(source ->
+                    CommandUtils.hasPermission(source, "selfdot.op.trainers") ||
+                    CommandUtils.hasPermission(
+                        source, "selfdot.trainers." + DataKeys.RELOAD_COMMAND_PERMISSION
+                    )
+                )
                 .executes(new ReloadCommand())
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
