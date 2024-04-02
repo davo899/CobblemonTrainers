@@ -53,16 +53,21 @@ object CobblemonTrainers {
         TrainerCommandTree().register(dispatcher, this)
     }
 
-    private fun onServerStart(server: MinecraftServer) {
-        SpeciesSelectScreen.loadSpecies()
-        CobblemonTrainersLog.LOGGER.info("Loading trainer data")
+    fun loadFiles() {
         CONFIG.load()
         TRAINER_REGISTRY.load()
         TRAINER_WIN_TRACKER.load()
         TRAINER_COOLDOWN_TRACKER.load()
+    }
+
+    private fun onServerStart(server: MinecraftServer) {
+        SpeciesSelectScreen.loadSpecies()
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
         TrainerPokemon.registerPokemonSendOutListener()
+
+        CobblemonTrainersLog.LOGGER.info("Loading trainer data")
+        loadFiles()
     }
 
     private fun onServerStop(server: MinecraftServer) {
