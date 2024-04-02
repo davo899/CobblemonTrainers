@@ -9,7 +9,6 @@ architectury {
 
 loom {
     forge {
-        mixinConfig("mixins.cobblemontrainers-forge.json")
         mixinConfig("mixins.cobblemontrainers-common.json")
     }
 }
