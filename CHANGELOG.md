@@ -1,3 +1,6 @@
+# 0.9.12
+- Fixed commands being unusable on singleplayer.
+
 # 0.9.11
 - Fixed error on player respawn in some cases when using LuckPerms Forge.
 
