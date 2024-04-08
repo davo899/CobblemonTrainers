@@ -208,7 +208,8 @@ public class Generation5AI implements BattleAI {
         IntStream.range(0, inBattleMoves.size())
             .forEach(i -> moveMap.put(
                 inBattleMoves.get(i),
-                activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getMoveSet().getMoves().get(i)
+                Moves.INSTANCE.all().stream().filter(move -> move.getName().equals(inBattleMoves.get(i).getId()))
+                    .findFirst().get().create()
             ));
 
         Map<InBattleMove, Double> moveDamages = new HashMap<>();
