@@ -26,7 +26,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PokemonUtility {
 
@@ -124,7 +123,7 @@ public class PokemonUtility {
         }
 
         List<String> notDefeatedTrainers = trainer.getDefeatRequiredTrainers().stream()
-            .filter(mustDefeat -> !CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, mustDefeat))
+            .filter(mustDefeat -> !CobblemonTrainers.INSTANCE.getTrainerWinTracker().hasBeaten(player, mustDefeat))
             .toList();
         if (!notDefeatedTrainers.isEmpty()) playerErrors.add(new TrainersNotDefeatedError(notDefeatedTrainers));
 
@@ -156,13 +155,13 @@ public class PokemonUtility {
     public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer, LivingEntity trainerEntity) {
         if (IN_TRAINER_BATTLE.contains(player.getUuid())) return;
         if (trainer.canOnlyBeatOnce() &&
-            CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().hasBeaten(player, trainer)
+            CobblemonTrainers.INSTANCE.getTrainerWinTracker().hasBeaten(player, trainer)
         ) {
             player.sendMessage(Text.literal(Formatting.RED + "You have already beaten this trainer!"));
             return;
         }
 
-        long cooldownMillis = CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER()
+        long cooldownMillis = CobblemonTrainers.INSTANCE.getTrainerCooldownTracker()
             .remainingCooldownMillis(player, trainer);
         if (cooldownMillis > 0) {
             player.sendMessage(Text.literal(
@@ -178,7 +177,7 @@ public class PokemonUtility {
                 return Unit.INSTANCE;
             })
             .ifSuccessful(battle -> {
-                CobblemonTrainers.INSTANCE.getTRAINER_COOLDOWN_TRACKER().onBattleStart(player, trainer);
+                CobblemonTrainers.INSTANCE.getTrainerCooldownTracker().onBattleStart(player, trainer);
                 TrainerBattleListener.getInstance().addOnBattleVictory(battle, trainer);
                 TrainerBattleListener.getInstance().addOnBattleLoss(battle, trainer.getLossCommand());
                 IN_TRAINER_BATTLE.add(player.getUuid());

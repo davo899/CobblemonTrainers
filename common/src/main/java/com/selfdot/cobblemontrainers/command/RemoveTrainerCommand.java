@@ -9,7 +9,7 @@ public class RemoveTrainerCommand extends TrainerCommand {
 
     @Override
     protected int runSubCommand(CommandContext<ServerCommandSource> context) {
-        if (!CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().removeTrainer(trainer.getName())) {
+        if (!CobblemonTrainers.INSTANCE.getTrainerRegistry().removeTrainer(trainer.getName())) {
             context.getSource().sendError(Text.literal("Trainer " + trainer.getName() + " does not exist"));
             return -1;
         }

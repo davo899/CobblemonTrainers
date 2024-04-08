@@ -15,6 +15,7 @@ loom {
 
 repositories {
     maven(url = "https://thedarkcolour.github.io/KotlinForForge/")
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
     mavenLocal()
     maven {
         url = uri("https://cursemaven.com")
@@ -45,6 +46,10 @@ dependencies {
 
     modImplementation ("curse.maven:cobblemon-687131:4977476") {
         exclude(group = "net.minecraftforge")
+    }
+
+    modImplementation("com.selfdot:modlibs:${rootProject.property("selfdot_modlibs_version")}")?.let {
+        include(it)
     }
 }
 

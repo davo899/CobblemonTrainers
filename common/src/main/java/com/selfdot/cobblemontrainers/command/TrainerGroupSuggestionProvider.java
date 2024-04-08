@@ -14,7 +14,7 @@ public class TrainerGroupSuggestionProvider implements SuggestionProvider<Server
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
-        CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getAllTrainers().stream()
+        CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainers().stream()
             .map(Trainer::getGroup)
             .distinct()
             .forEach(builder::suggest);

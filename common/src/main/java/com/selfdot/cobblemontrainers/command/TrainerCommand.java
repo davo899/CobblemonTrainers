@@ -14,7 +14,7 @@ public abstract class TrainerCommand extends TwoLayerCommand {
     @Override
     protected int runSuperCommand(CommandContext<ServerCommandSource> context) {
         String trainerName = StringArgumentType.getString(context, "trainer");
-        trainer = CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getTrainer(trainerName);
+        trainer = CobblemonTrainers.INSTANCE.getTrainerRegistry().getTrainer(trainerName);
         if (trainer == null) {
             context.getSource().sendError(Text.literal("Trainer " + trainerName + " does not exist"));
             return -1;

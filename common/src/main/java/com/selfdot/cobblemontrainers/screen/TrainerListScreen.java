@@ -15,7 +15,7 @@ public class TrainerListScreen extends PagedScreen<Trainer> {
     public TrainerListScreen(String trainerGroup) {
         super(
             new TrainerGroupScreen(),
-            CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getAllTrainers().stream()
+            CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainers().stream()
                 .filter(trainer -> trainer.getGroup().equals(trainerGroup))
                 .collect(Collectors.toList()),
             0

@@ -3,13 +3,14 @@ package com.selfdot.cobblemontrainers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 
 public class Config extends JsonFile {
 
     private boolean xpEnabled;
 
-    public Config(CobblemonTrainers mod) {
+    public Config(DisableableMod mod) {
         super(mod);
     }
 

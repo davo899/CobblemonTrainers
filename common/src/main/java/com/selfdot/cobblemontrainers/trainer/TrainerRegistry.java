@@ -1,8 +1,8 @@
 package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.*;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -12,7 +12,7 @@ public class TrainerRegistry extends JsonFile {
 
     private final Map<String, Trainer> trainerMap = new HashMap<>();
 
-    public TrainerRegistry(CobblemonTrainers mod) {
+    public TrainerRegistry(DisableableMod mod) {
         super(mod);
     }
 

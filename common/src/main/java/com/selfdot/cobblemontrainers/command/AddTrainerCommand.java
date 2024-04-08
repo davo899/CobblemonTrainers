@@ -13,7 +13,7 @@ public class AddTrainerCommand implements Command<ServerCommandSource> {
 
     public int run(CommandContext<ServerCommandSource> context) {
         String name = StringArgumentType.getString(context, "name");
-        if (!CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY()
+        if (!CobblemonTrainers.INSTANCE.getTrainerRegistry()
             .addTrainer(new Trainer(CobblemonTrainers.INSTANCE, name, DataKeys.UNGROUPED))
         ) {
             context.getSource().sendError(Text.literal("Trainer " + name + " already exists"));

@@ -14,6 +14,7 @@ repositories {
         }
     }
     mavenLocal()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
 }
 
 dependencies {
@@ -22,10 +23,13 @@ dependencies {
     modApi("curse.maven:cobblemon-687131:4977486")
     modApi(libs.architectury)
 
-    //shadowCommon group: 'commons-io', name: 'commons-io', version: '2.6'
-
-
     compileOnly("net.luckperms:api:${rootProject.property("luckperms_version")}")
+    modImplementation("com.selfdot:modlibs:${rootProject.property("selfdot_modlibs_version")}")?.let {
+        include(it)
+    }
+
+    compileOnly("org.projectlombok:lombok:1.18.32")
+    annotationProcessor("org.projectlombok:lombok:1.18.32")
 }
 
 tasks.withType<Test> {

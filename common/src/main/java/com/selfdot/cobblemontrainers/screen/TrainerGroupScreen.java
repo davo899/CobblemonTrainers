@@ -14,7 +14,7 @@ public class TrainerGroupScreen extends PagedScreen<String> {
 
     public TrainerGroupScreen() {
         super(
-            CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getAllTrainers().stream()
+            CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainers().stream()
                 .map(Trainer::getGroup)
                 .distinct()
                 .collect(Collectors.toList()),
