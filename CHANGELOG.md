@@ -1,6 +1,7 @@
 # 0.9.12
 - Fixed commands being unusable on singleplayer.
 - Fixed trainer using a ditto causing a battle error.
+- Fixed trainer attempting to switch to a Pokémon it has previously switched to causing a battle error.
 
 # 0.9.11
 - Fixed error on player respawn in some cases when using LuckPerms Forge.
