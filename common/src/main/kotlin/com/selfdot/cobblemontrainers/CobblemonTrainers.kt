@@ -1,12 +1,9 @@
 package com.selfdot.cobblemontrainers
 
-import com.cobblemon.mod.common.util.player
-import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
-import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.command.permission.PermissionValidator
-import com.selfdot.cobblemontrainers.screen.SetupMenu
+import com.selfdot.cobblemontrainers.command.permission.VanillaPermissionValidator
 import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.DataKeys
@@ -21,7 +18,7 @@ import net.minecraft.server.command.ServerCommandSource
 object CobblemonTrainers : DisableableMod(DataKeys.MOD_NAMESPACE, false) {
     const val MODID = DataKeys.MOD_NAMESPACE
     private lateinit var server: MinecraftServer
-    lateinit var permissionValidator: PermissionValidator
+    var permissionValidator: PermissionValidator = VanillaPermissionValidator()
 
     val config = Config(this)
     val trainerRegistry = TrainerRegistry(this)

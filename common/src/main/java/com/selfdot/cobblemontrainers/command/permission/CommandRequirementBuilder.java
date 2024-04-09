@@ -30,7 +30,7 @@ public class CommandRequirementBuilder {
     }
 
     private boolean hasPermission(ServerCommandSource source, Permission permission) {
-        return CobblemonTrainers.permissionValidator.hasPermission(source, permission);
+        return CobblemonTrainers.INSTANCE.getPermissionValidator().hasPermission(source, permission);
     }
 
     public Predicate<ServerCommandSource> build() {

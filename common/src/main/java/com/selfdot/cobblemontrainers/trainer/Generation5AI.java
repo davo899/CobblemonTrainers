@@ -161,24 +161,20 @@ public class Generation5AI implements BattleAI {
             List<BattlePokemon> canSwitchTo = activeBattlePokemon.getActor().getPokemonList().stream()
                 .filter(BattlePokemon::canBeSentOut)
                 .toList();
-            if (canSwitchTo.isEmpty()) {
-                return new DefaultActionResponse();
-            }
+            if (canSwitchTo.isEmpty()) return new DefaultActionResponse();
             if (opponentActiveBattlePokemon.isEmpty() || opponentActiveBattlePokemon.get().getBattlePokemon() == null) {
                 return new SwitchActionResponse(canSwitchTo.get(RANDOM.nextInt(canSwitchTo.size())).getUuid());
             }
             BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
             BattlePokemon nextPokemon = canSwitchTo.stream()
-                .max(Comparator.comparingDouble(pokemon ->
-                    pokemon.getMoveSet().getMoves().stream().map(move ->
-                        powerAndTypeDamage(
-                            move.getPower(),
-                            move.getType(),
-                            opponent.getOriginalPokemon().getPrimaryType(),
-                            opponent.getOriginalPokemon().getSecondaryType()
-                        )
-                    ).max(Double::compare).orElse(0d)
-                )).get();
+                .max(Comparator.comparingDouble(pokemon -> pokemon.getMoveSet().getMoves().stream().map(move ->
+                    powerAndTypeDamage(
+                        move.getPower(),
+                        move.getType(),
+                        opponent.getOriginalPokemon().getPrimaryType(),
+                        opponent.getOriginalPokemon().getSecondaryType()
+                    )
+                ).max(Double::compare).orElse(0d))).get();
             nextPokemon.setWillBeSwitchedIn(true);
             return new SwitchActionResponse(nextPokemon.getUuid());
         }
@@ -208,7 +204,8 @@ public class Generation5AI implements BattleAI {
         IntStream.range(0, inBattleMoves.size())
             .forEach(i -> moveMap.put(
                 inBattleMoves.get(i),
-                activeBattlePokemon.getBattlePokemon().getEffectedPokemon().getMoveSet().getMoves().get(i)
+                Moves.INSTANCE.all().stream().filter(move -> move.getName().equals(inBattleMoves.get(i).getId()))
+                    .findFirst().get().create()
             ));
 
         Map<InBattleMove, Double> moveDamages = new HashMap<>();

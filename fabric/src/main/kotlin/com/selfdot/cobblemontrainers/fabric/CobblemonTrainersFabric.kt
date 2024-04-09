@@ -7,7 +7,6 @@ class CobblemonTrainersFabric : ModInitializer {
 
     override fun onInitialize() {
         CobblemonTrainers.initialize()
-        CobblemonTrainers.permissionValidator = FabricPermissionValidator()
         println("CobblemonTrainers Fabric initialized")
     }
 

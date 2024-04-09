@@ -2,6 +2,8 @@ package com.selfdot.cobblemontrainers.forge
 
 import dev.architectury.platform.forge.EventBuses
 import com.selfdot.cobblemontrainers.CobblemonTrainers
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.fml.DistExecutor
 import java.util.*
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
@@ -22,7 +24,7 @@ class CobblemonTrainersForge {
 
     private fun initialize(event: FMLCommonSetupEvent) {
         CobblemonTrainers.initialize()
-        CobblemonTrainers.permissionValidator = ForgePermissionValidator()
+        DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER) { SetPermissionValidatorRunnable() }
         println("CobblemonTrainers Forge initialized")
     }
 
