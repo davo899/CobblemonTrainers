@@ -1,12 +1,16 @@
 package com.selfdot.cobblemontrainers.trainer;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.selfdot.libs.io.JsonFile;
 import com.selfdot.libs.minecraft.DisableableMod;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class TrainerRegistry extends JsonFile {
 
