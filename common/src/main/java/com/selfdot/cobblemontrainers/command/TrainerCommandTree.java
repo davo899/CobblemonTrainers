@@ -10,7 +10,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.command.permission.CommandRequirementBuilder;
 import com.selfdot.cobblemontrainers.command.permission.TrainersPermissions;
-import com.selfdot.cobblemontrainers.screen.SetupMenu;
+import com.selfdot.cobblemontrainers.SetupMenu;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.command.EntitySelector;

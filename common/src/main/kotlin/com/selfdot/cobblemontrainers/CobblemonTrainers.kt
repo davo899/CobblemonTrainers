@@ -4,7 +4,6 @@ import com.mojang.brigadier.CommandDispatcher
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.command.permission.PermissionValidator
 import com.selfdot.cobblemontrainers.command.permission.VanillaPermissionValidator
-import com.selfdot.cobblemontrainers.screen.SpeciesSelectScreen
 import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.DataKeys
 import com.selfdot.libs.minecraft.DisableableMod
@@ -47,7 +46,6 @@ object CobblemonTrainers : DisableableMod(DataKeys.MOD_NAMESPACE, false) {
 
     private fun onServerStarting(server: MinecraftServer) {
         this.server = server
-        SpeciesSelectScreen.loadSpecies()
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
         TrainerPokemon.registerPokemonSendOutListener()
