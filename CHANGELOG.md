@@ -1,3 +1,6 @@
+# 0.9.13
+- Made setup menu item names not be in italics.
+
 # 0.9.12
 - Fixed commands being unusable on singleplayer.
 - Fixed trainer using a ditto causing a battle error.
