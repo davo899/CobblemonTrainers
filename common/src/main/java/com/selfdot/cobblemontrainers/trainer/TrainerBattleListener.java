@@ -4,14 +4,14 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.CommandUtils;
-import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.selfdot.libs.minecraft.CommandExecutionBuilder.execute;
 
 public class TrainerBattleListener {
 
@@ -27,30 +27,17 @@ public class TrainerBattleListener {
             if (onBattleVictory.containsKey(battle)) {
                 Trainer trainer = onBattleVictory.get(battle);
                 battleVictoryEvent.getWinners().forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
-                    CobblemonTrainers.INSTANCE.getTRAINER_WIN_TRACKER().add(trainer, uuid);
+                    CobblemonTrainers.INSTANCE.getTrainerWinTracker().add(trainer, uuid);
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
-                    if (player != null) {
-                        String winCommand = trainer.getWinCommand();
-                        if (winCommand != null && !winCommand.isEmpty()) {
-                            CommandUtils.executeCommandAsServer(
-                                winCommand.replace(DataKeys.PLAYER_TOKEN, player.getGameProfile().getName()),
-                                server
-                            );
-                        }
-                    }
+                    if (player == null) return;
+                    String winCommand = trainer.getWinCommand();
+                    if (winCommand != null && !winCommand.isEmpty()) execute(winCommand).withPlayer(player).as(server);
                 }));
             }
             if (onBattleLoss.containsKey(battle)) {
                 battleVictoryEvent.getLosers().forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
-                    if (player != null) {
-                        CommandUtils.executeCommandAsServer(
-                            onBattleLoss.get(battle).replace(
-                                DataKeys.PLAYER_TOKEN, player.getGameProfile().getName()
-                            ),
-                            server
-                        );
-                    }
+                    if (player != null) execute(onBattleLoss.get(battle)).withPlayer(player).as(server);
                 }));
                 onBattleLoss.remove(battle);
             }

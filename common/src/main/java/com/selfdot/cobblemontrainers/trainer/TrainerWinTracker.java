@@ -3,8 +3,8 @@ package com.selfdot.cobblemontrainers.trainer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.*;
@@ -13,7 +13,7 @@ public class TrainerWinTracker extends JsonFile {
 
     private final Map<String, Set<UUID>> trainerWinMap = new HashMap<>();
 
-    public TrainerWinTracker(CobblemonTrainers mod) {
+    public TrainerWinTracker(DisableableMod mod) {
         super(mod);
     }
 

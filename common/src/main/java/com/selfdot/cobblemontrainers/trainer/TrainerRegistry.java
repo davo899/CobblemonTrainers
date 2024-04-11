@@ -1,18 +1,22 @@
 package com.selfdot.cobblemontrainers.trainer;
 
-import com.google.gson.*;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class TrainerRegistry extends JsonFile {
 
     private final Map<String, Trainer> trainerMap = new HashMap<>();
 
-    public TrainerRegistry(CobblemonTrainers mod) {
+    public TrainerRegistry(DisableableMod mod) {
         super(mod);
     }
 

@@ -7,9 +7,9 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.util.DataKeys;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 import kotlin.Unit;
 
 import java.util.ArrayList;
@@ -30,14 +30,14 @@ public class Trainer extends JsonFile {
     private int partyMaximumLevel;
     private Set<String> defeatRequiredTrainers;
 
-    public Trainer(CobblemonTrainers mod, String name, String group) {
+    public Trainer(DisableableMod mod, String name, String group) {
         super(mod);
         setDefaults();
         this.name = name;
         this.group = group;
     }
 
-    public Trainer(CobblemonTrainers mod, JsonElement jsonElement) {
+    public Trainer(DisableableMod mod, JsonElement jsonElement) {
         super(mod);
         setDefaults();
         loadFromJson(jsonElement);

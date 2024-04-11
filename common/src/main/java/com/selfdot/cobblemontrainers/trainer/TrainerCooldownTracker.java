@@ -2,8 +2,8 @@ package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.cobblemontrainers.util.JsonFile;
+import com.selfdot.libs.io.JsonFile;
+import com.selfdot.libs.minecraft.DisableableMod;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class TrainerCooldownTracker extends JsonFile {
 
     private final Map<String, Map<UUID, Long>> lastBattledMap = new HashMap<>();
 
-    public TrainerCooldownTracker(CobblemonTrainers mod) {
+    public TrainerCooldownTracker(DisableableMod mod) {
         super(mod);
     }
 

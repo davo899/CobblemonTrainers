@@ -13,7 +13,7 @@ public class AddTrainerWithGroupCommand implements Command<ServerCommandSource> 
     public int run(CommandContext<ServerCommandSource> context) {
         String name = StringArgumentType.getString(context, "name");
         String group = StringArgumentType.getString(context, "group");
-        if (!CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY()
+        if (!CobblemonTrainers.INSTANCE.getTrainerRegistry()
             .addTrainer(new Trainer(CobblemonTrainers.INSTANCE, name, group))
         ) {
             context.getSource().sendError(Text.literal("Trainer " + name + " already exists"));

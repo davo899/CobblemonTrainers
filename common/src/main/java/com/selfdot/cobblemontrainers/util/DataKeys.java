@@ -25,15 +25,9 @@ public class DataKeys {
 
     public static final String UNGROUPED = "Ungrouped";
 
-    public static final String PLAYER_TOKEN = "%player%";
-
-    public static final String EDIT_COMMAND_PERMISSION = "edit";
-    public static final String BATTLE_COMMAND_PERMISSION = "battle";
-    public static final String MAKEBATTLE_COMMAND_PERMISSION = "makebattle";
-    public static final String RELOAD_COMMAND_PERMISSION = "reload";
-
     public static final String CONFIG_XP_ENABLED = "xpEnabled";
 
     public static final String PLAYER_PARTY_MAXIMUM_LEVEL = "partyMaximumLevel";
     public static final String PLAYER_DEFEAT_REQUIRED_TRAINERS = "defeatRequiredTrainers";
+
 }

@@ -13,7 +13,7 @@ public class TrainerNameSuggestionProvider implements SuggestionProvider<ServerC
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {
-        CobblemonTrainers.INSTANCE.getTRAINER_REGISTRY().getAllTrainerNames().forEach(builder::suggest);
+        CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainerNames().forEach(builder::suggest);
         return builder.buildFuture();
     }
 

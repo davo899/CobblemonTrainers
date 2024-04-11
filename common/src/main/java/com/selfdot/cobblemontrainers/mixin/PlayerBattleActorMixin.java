@@ -22,7 +22,7 @@ public abstract class PlayerBattleActorMixin extends BattleActor {
 
     @Inject(method = "awardExperience", at = @At("HEAD"), cancellable = true, remap = false)
     private void injectAwardExperience(BattlePokemon battlePokemon, int experience, CallbackInfo ci) {
-        if (CobblemonTrainers.INSTANCE.getCONFIG().isXpDisabled() && getBattle().isPvN()) ci.cancel();
+        if (CobblemonTrainers.INSTANCE.getConfig().isXpDisabled() && getBattle().isPvN()) ci.cancel();
     }
 
 }
