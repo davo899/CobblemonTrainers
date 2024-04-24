@@ -1,4 +1,4 @@
-# 0.9.13
+# 0.10.0
 - Made setup menu item names not be in italics.
 
 # 0.9.12
