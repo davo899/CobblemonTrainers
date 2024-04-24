@@ -1,5 +1,6 @@
 # 0.10.0
 - Made setup menu item names not be in italics.
+- Made running just "/trainers battle" open a trainer select menu.
 
 # 0.9.12
 - Fixed commands being unusable on singleplayer.

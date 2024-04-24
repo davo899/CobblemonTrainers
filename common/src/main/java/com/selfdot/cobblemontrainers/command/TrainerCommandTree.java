@@ -10,7 +10,7 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.command.permission.CommandRequirementBuilder;
 import com.selfdot.cobblemontrainers.command.permission.TrainersPermissions;
-import com.selfdot.cobblemontrainers.SetupMenu;
+import com.selfdot.cobblemontrainers.menu.SetupMenu;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.command.EntitySelector;
@@ -64,6 +64,7 @@ public class TrainerCommandTree {
                     .suggests(new TrainerNameSuggestionProvider())
                     .executes(new BattleTrainerCommand())
                 )
+                .executes(new OpenBattleTrainerMenuCommand())
             )
             .then(LiteralArgumentBuilder.<ServerCommandSource>
                 literal("makebattle")
