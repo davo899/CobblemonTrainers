@@ -24,9 +24,7 @@ dependencies {
     modApi(libs.architectury)
 
     compileOnly("net.luckperms:api:${rootProject.property("luckperms_version")}")
-    modImplementation("com.selfdot:modlibs:${rootProject.property("selfdot_modlibs_version")}")?.let {
-        include(it)
-    }
+    modImplementation("com.selfdot:SelfdotModLibs:${rootProject.property("selfdot_modlibs_version")}")
 
     compileOnly("org.projectlombok:lombok:1.18.32")
     annotationProcessor("org.projectlombok:lombok:1.18.32")

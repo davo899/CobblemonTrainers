@@ -48,7 +48,9 @@ dependencies {
         exclude(group = "net.minecraftforge")
     }
 
-    modImplementation("com.selfdot:modlibs:${rootProject.property("selfdot_modlibs_version")}")?.let {
+    modImplementation(
+        "com.selfdot:SelfdotModLibs-forge:${rootProject.property("selfdot_modlibs_version")}"
+    )?.let {
         include(it)
     }
 }
