@@ -76,6 +76,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 group -> itemStack(Items.BOOK).withName(group),
                 (menu, group) -> {
                     this.selectedGroup = group;
+                    menu.resetPage();
                     menu.navigate(GROUP);
                 }
             )
@@ -94,6 +95,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 trainer -> itemStack(POKE_BALL).withName(trainer.getName()),
                 (menu, trainer) -> {
                     this.selectedTrainer = trainer;
+                    menu.resetPage();
                     menu.navigate(TRAINER);
                 }
             )
@@ -145,7 +147,8 @@ public class SetupMenu extends Menu<SetupMenu> {
                     .sorted(Comparator.comparingInt(Species::getNationalPokedexNumber)).toList(),
                 CobblemonUtils::speciesItem,
                 (menu, species) -> {
-                    if (species.getForms().size() == 1) {
+                    menu.resetPage();
+                    if (species.getForms().size() <= 1) {
                         selectedTrainer.addSpecies(species, Set.of());
                         selectedTrainer.save();
                         menu.navigate(TRAINER);
@@ -165,6 +168,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 (menu, form) -> {
                     selectedTrainer.addSpecies(selectedSpecies, new HashSet<>(form.getAspects()));
                     selectedTrainer.save();
+                    menu.resetPage();
                     menu.navigate(TRAINER);
                 }
             )
@@ -303,6 +307,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 (menu, move) -> {
                     selectedPokemon.getMoveset().setMove(selectedMove, move);
                     selectedTrainer.save();
+                    menu.resetPage();
                     menu.navigate(MOVESET);
                 }
             )
@@ -465,6 +470,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 (menu, nature) -> {
                     selectedPokemon.setNature(nature);
                     selectedTrainer.save();
+                    menu.resetPage();
                     menu.navigate(POKEMON);
                 }
             )
@@ -491,6 +497,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 (menu, item) -> {
                     selectedPokemon.setHeldItem(item);
                     selectedTrainer.save();
+                    menu.resetPage();
                     menu.navigate(POKEMON);
                 }
             )
