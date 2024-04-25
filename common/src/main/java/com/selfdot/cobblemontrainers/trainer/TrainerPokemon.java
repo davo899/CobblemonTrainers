@@ -15,6 +15,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,6 +27,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Getter @Setter
 public class TrainerPokemon {
 
     public static final Set<UUID> IS_TRAINER_OWNED = new HashSet<>();
@@ -40,6 +43,7 @@ public class TrainerPokemon {
     private EVs evs;
     private boolean isShiny = false;
     private Item heldItem = Items.AIR;
+    private Set<String> aspects = new HashSet<>();
 
     private final UUID uuid = UUID.randomUUID();
 
@@ -75,6 +79,10 @@ public class TrainerPokemon {
                 Identifier.tryParse(jsonObject.get(DataKeys.POKEMON_HELD_ITEM).getAsString())
             );
         }
+        if (jsonObject.has(DataKeys.POKEMON_ASPECTS)) {
+            JsonArray aspectsArray = jsonObject.getAsJsonArray(DataKeys.POKEMON_ASPECTS);
+            aspectsArray.forEach(aspect -> aspects.add(aspect.getAsString()));
+        }
     }
 
     public JsonObject toJson() {
@@ -91,6 +99,9 @@ public class TrainerPokemon {
         jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
         jsonObject.addProperty(DataKeys.POKEMON_SHINY, isShiny);
         jsonObject.addProperty(DataKeys.POKEMON_HELD_ITEM, Registries.ITEM.getId(heldItem).toString());
+        JsonArray aspectsArray = new JsonArray();
+        aspects.forEach(aspectsArray::add);
+        jsonObject.add(DataKeys.POKEMON_ASPECTS, aspectsArray);
         return jsonObject;
     }
 
@@ -108,6 +119,7 @@ public class TrainerPokemon {
         pokemon.setShiny(isShiny);
         if (heldItem.equals(Items.AIR)) pokemon.removeHeldItem();
         else pokemon.swapHeldItem(new ItemStack(heldItem), false);
+        pokemon.setAspects(aspects);
         pokemon.setUuid(uuid);
         pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
         IS_TRAINER_OWNED.add(uuid);
@@ -126,6 +138,7 @@ public class TrainerPokemon {
         trainerPokemon.evs = pokemon.getEvs();
         trainerPokemon.isShiny = pokemon.getShiny();
         trainerPokemon.heldItem = pokemon.heldItem().getItem();
+        trainerPokemon.aspects = pokemon.getAspects();
         return trainerPokemon;
     }
 
@@ -133,44 +146,8 @@ public class TrainerPokemon {
         return species.getTranslatedName().getString();
     }
 
-    public MoveSet getMoveset() {
-        return moveset;
-    }
-
-    public IVs getIvs() {
-        return ivs;
-    }
-
-    public EVs getEvs() {
-        return evs;
-    }
-
-    public void setAbility(Ability ability) {
-        this.ability = ability;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public void setNature(Nature nature) {
-        this.nature = nature;
-    }
-
     public void toggleShiny() {
         isShiny = !isShiny;
-    }
-
-    public Item getHeldItem() {
-        return heldItem;
-    }
-
-    public void setHeldItem(Item heldItem) {
-        this.heldItem = heldItem;
     }
 
     public static void registerPokemonSendOutListener() {

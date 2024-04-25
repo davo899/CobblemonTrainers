@@ -14,6 +14,7 @@ public class DataKeys {
     public static final String POKEMON_MOVESET = "moveset";
     public static final String POKEMON_SHINY = "shiny";
     public static final String POKEMON_HELD_ITEM = "heldItem";
+    public static final String POKEMON_ASPECTS = "aspects";
 
     public static final String TRAINER_NAME = "name";
     public static final String TRAINER_TEAM = "team";

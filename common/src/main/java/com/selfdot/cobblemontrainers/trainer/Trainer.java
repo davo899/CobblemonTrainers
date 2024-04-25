@@ -43,12 +43,13 @@ public class Trainer extends JsonFile {
         loadFromJson(jsonElement);
     }
 
-    public void addSpecies(Species species) {
+    public void addSpecies(Species species, Set<String> aspects) {
         Pokemon pokemon = new Pokemon();
         pokemon.setSpecies(species);
         pokemon.initializeMoveset(true);
         pokemon.checkAbility();
         pokemon.setGender(Math.random() > 0.5 ? Gender.FEMALE : Gender.MALE);
+        pokemon.setAspects(aspects);
         team.add(TrainerPokemon.fromPokemon(pokemon));
     }
 

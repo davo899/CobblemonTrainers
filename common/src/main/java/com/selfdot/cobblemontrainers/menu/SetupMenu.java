@@ -40,6 +40,7 @@ public class SetupMenu extends Menu<SetupMenu> {
     private static final String TRAINER = "trainer";
     private static final String POKEMON = "pokemon";
     private static final String SPECIES = "species";
+    private static final String FORMS = "forms";
     private static final String MOVESET = "moveset";
     private static final String MOVES = "moves";
     private static final String ABILITIES = "abilities";
@@ -57,6 +58,7 @@ public class SetupMenu extends Menu<SetupMenu> {
     private TrainerPokemon selectedPokemon;
     private int selectedMove;
     private Stats selectedStat;
+    private Species selectedSpecies;
 
     public SetupMenu(PlayerEntity player) {
         super("Trainer Setup", player, MenuSize.SIZE_9x6, GROUPS);
@@ -143,7 +145,25 @@ public class SetupMenu extends Menu<SetupMenu> {
                     .sorted(Comparator.comparingInt(Species::getNationalPokedexNumber)).toList(),
                 CobblemonUtils::speciesItem,
                 (menu, species) -> {
-                    selectedTrainer.addSpecies(species);
+                    if (species.getForms().size() == 1) {
+                        selectedTrainer.addSpecies(species, Set.of());
+                        selectedTrainer.save();
+                        menu.navigate(TRAINER);
+                    } else {
+                        selectedSpecies = species;
+                        menu.navigate(FORMS);
+                    }
+                }
+            )
+        );
+
+        viewFactories.put(FORMS, new ViewFactoryBuilder<SetupMenu>()
+            .returnsTo(SPECIES)
+            .paged9x6(
+                () -> selectedSpecies.getForms().stream().toList(),
+                form -> speciesItem(selectedSpecies, new HashSet<>(form.getAspects())).withName(form.getName()),
+                (menu, form) -> {
+                    selectedTrainer.addSpecies(selectedSpecies, new HashSet<>(form.getAspects()));
                     selectedTrainer.save();
                     menu.navigate(TRAINER);
                 }
