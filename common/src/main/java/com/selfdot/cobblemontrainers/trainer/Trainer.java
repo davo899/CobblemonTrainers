@@ -61,6 +61,13 @@ public class Trainer extends JsonFile {
             .collect(Collectors.toList());
     }
 
+    public void swap(int i, int j) {
+        TrainerPokemon temp = team.get(i);
+        team.set(i, team.get(j));
+        team.set(j, temp);
+        save();
+    }
+
     public String getName() {
         return name;
     }

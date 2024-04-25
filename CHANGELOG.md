@@ -1,5 +1,6 @@
-# 1.0.1
+# 1.1.0
 - Fixed custom Pokémon types causing trainer AI to crash. AI will now assume neutral damage whenever custom types are involved.
+- Added "Edit team order" screen in setup menu.
 
 # 1.0.0
 - Made setup menu item names not be in italics.

@@ -38,6 +38,7 @@ public class SetupMenu extends Menu<SetupMenu> {
     private static final String GROUPS = "groups";
     private static final String GROUP = "group";
     private static final String TRAINER = "trainer";
+    private static final String TEAM_ORDER = "teamOrder";
     private static final String POKEMON = "pokemon";
     private static final String SPECIES = "species";
     private static final String FORMS = "forms";
@@ -59,6 +60,7 @@ public class SetupMenu extends Menu<SetupMenu> {
     private int selectedMove;
     private Stats selectedStat;
     private Species selectedSpecies;
+    private int selectedSwapIndex = -1;
 
     public SetupMenu(PlayerEntity player) {
         super("Trainer Setup", player, MenuSize.SIZE_9x6, GROUPS);
@@ -107,6 +109,11 @@ public class SetupMenu extends Menu<SetupMenu> {
                 .withName(selectedTrainer.getName())
                 .build()
             )
+            .withComponent(new ComponentBuilder<SetupMenu>(7, 4, TIMER_BALL)
+                .withName("Edit team order")
+                .navigatesTo(TEAM_ORDER)
+                .build()
+            )
             .withComponents(() -> {
                 List<Component<SetupMenu>> components = new ArrayList<>();
                 List<BattlePokemon> team = selectedTrainer.getBattleTeam();
@@ -134,6 +141,44 @@ public class SetupMenu extends Menu<SetupMenu> {
                         .navigatesTo(SPECIES)
                         .build()
                     );
+                }
+                return components;
+            })
+            .build()
+        );
+
+        viewFactories.put(TEAM_ORDER, new ViewFactoryBuilder<SetupMenu>()
+            .returnsTo(TRAINER)
+            .withComponent(() -> new ComponentBuilder<SetupMenu>(4, 0, POKE_BALL)
+                .withName("Edit Team Order")
+                .build()
+            )
+            .withComponents(() -> {
+                List<Component<SetupMenu>> components = new ArrayList<>();
+                List<BattlePokemon> team = selectedTrainer.getBattleTeam();
+                for (int i = 0; i < 6; i++) {
+                    int x = 3 + (i % 3);
+                    int y = 2 + (i / 3);
+                    if (i < team.size()) {
+                        int teamSlot = i;
+                        components.add(
+                            new ComponentBuilder<SetupMenu>(
+                                x, y, selectedSwapIndex == teamSlot ?
+                                    itemStack(Items.LIME_STAINED_GLASS_PANE) :
+                                    pokemonInfoItem(team.get(i).getOriginalPokemon())
+                            )
+                                .withAction(menu -> {
+                                    if (selectedSwapIndex == -1) {
+                                        selectedSwapIndex = teamSlot;
+                                    } else {
+                                        selectedTrainer.swap(teamSlot, selectedSwapIndex);
+                                        selectedSwapIndex = -1;
+                                    }
+                                    menu.refresh();
+                                })
+                                .build()
+                        );
+                    }
                 }
                 return components;
             })
