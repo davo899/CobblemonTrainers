@@ -28,6 +28,7 @@ public class Generation5AI implements BattleAI {
     private static final Map<ElementalType, Map<ElementalType, Double>> typeChart = new HashMap<>();
 
     private static double typeEffectiveness(ElementalType attacker, ElementalType defender) {
+        if (!typeChart.containsKey(defender)) return 1;
         if (typeChart.get(defender).containsKey(attacker)) return typeChart.get(defender).get(attacker);
         return 1;
     }

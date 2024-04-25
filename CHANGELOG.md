@@ -1,3 +1,6 @@
+# 1.0.1
+- Fixed custom Pokémon types causing trainer AI to crash. AI will now assume neutral damage whenever custom types are involved.
+
 # 1.0.0
 - Made setup menu item names not be in italics.
 - Made running just "/trainers battle" open a trainer battle select menu.
