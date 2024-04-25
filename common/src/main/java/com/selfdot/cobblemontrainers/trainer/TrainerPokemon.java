@@ -150,6 +150,11 @@ public class TrainerPokemon {
         isShiny = !isShiny;
     }
 
+    public void changeGender() {
+        if (gender.equals(Gender.MALE)) gender = Gender.FEMALE;
+        else gender = Gender.MALE;
+    }
+
     public static void registerPokemonSendOutListener() {
         CobblemonEvents.POKEMON_SENT_POST.subscribe(Priority.NORMAL, event -> {
             if (IS_TRAINER_OWNED.contains(event.getPokemon().getUuid())) {

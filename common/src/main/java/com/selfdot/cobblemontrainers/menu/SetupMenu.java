@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.moves.Learnset;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
+import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
@@ -268,7 +269,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                     selectedPokemon.toggleShiny();
                     selectedTrainer.save();
                 })
-                .navigatesTo(POKEMON)
+                .refreshes()
                 .build()
             )
             .withComponent(new ComponentBuilder<SetupMenu>(4, 3, WISE_GLASSES)
@@ -281,6 +282,19 @@ public class SetupMenu extends Menu<SetupMenu> {
                 .navigatesTo(NATURE)
                 .build()
             )
+            .withComponents(() -> {
+                if (selectedPokemon.getGender().equals(Gender.GENDERLESS)) return List.of();
+                else return List.of(
+                    new ComponentBuilder<SetupMenu>(6, 3, Items.POPPY)
+                        .withName("Change Gender")
+                        .withAction(menu -> {
+                            selectedPokemon.changeGender();
+                            selectedTrainer.save();
+                        })
+                        .refreshes()
+                        .build()
+                );
+            })
             .build()
         );
 
