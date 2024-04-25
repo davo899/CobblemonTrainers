@@ -80,6 +80,10 @@ public class PokemonUtility {
             playerErrors.add(BattleStartError.Companion.alreadyInBattle(player));
         }
 
+        if (trainer.getTeamSize() == 0) {
+            playerErrors.add(entity -> Text.literal("Trainer " + trainer.getName() + " has no Pokémon."));
+        }
+
         if (errors.isEmpty()) {
             return Cobblemon.INSTANCE.getBattleRegistry().startBattle(
                 BattleFormat.Companion.getGEN_9_SINGLES(),

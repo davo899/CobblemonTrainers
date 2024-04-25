@@ -1,7 +1,8 @@
 # 1.0.0
 - Made setup menu item names not be in italics.
-- Made running just "/trainers battle" open a trainer select menu.
+- Made running just "/trainers battle" open a trainer battle select menu.
 - Added form selection when adding new Pokémon, and forms will be preserved when using addpokemon and addfromparty.
+- Prevented starting a battle with a trainer that has no Pokémon.
 
 # 0.9.12
 - Fixed commands being unusable on singleplayer.
