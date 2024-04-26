@@ -1,3 +1,6 @@
+# 1.1.1
+- Fixed battle error when trainer uses a recharge move.
+
 # 1.1.0
 - Fixed custom Pokémon types causing trainer AI to crash. AI will now assume neutral damage whenever custom types are involved.
 - Added "Edit team order" screen in setup menu.

@@ -179,6 +179,9 @@ public class Generation5AI implements BattleAI {
         }
 
         if (showdownMoveset == null) return PassActionResponse.INSTANCE;
+        if (showdownMoveset.moves.size() == 1 && showdownMoveset.moves.get(0).getId().equals("recharge")) {
+            return new MoveActionResponse("recharge", null, null);
+        }
         List<InBattleMove> inBattleMoves = showdownMoveset.moves.stream()
             .filter(InBattleMove::canBeUsed)
             .filter(inBattleMove -> {
