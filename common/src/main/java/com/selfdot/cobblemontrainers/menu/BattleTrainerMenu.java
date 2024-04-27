@@ -50,7 +50,7 @@ public class BattleTrainerMenu extends Menu<BattleTrainerMenu> {
                 () -> CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainers().stream()
                     .filter(trainer -> trainer.getGroup().equals(selectedGroup))
                     .toList(),
-                trainer -> itemStack(POKE_BALL).withName(trainer.getName()),
+                trainer -> itemStack(POKE_BALL.get()).withName(trainer.getName()),
                 (menu, trainer) -> {
                     player.closeHandledScreen();
                     PokemonUtility.startTrainerBattle((ServerPlayerEntity)player, trainer, null);

@@ -1,6 +1,5 @@
 package com.selfdot.cobblemontrainers.menu;
 
-import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.abilities.AbilityTemplate;
 import com.cobblemon.mod.common.api.moves.Move;
 import com.cobblemon.mod.common.api.moves.MoveTemplate;
@@ -95,7 +94,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 () -> CobblemonTrainers.INSTANCE.getTrainerRegistry().getAllTrainers().stream()
                     .filter(trainer -> trainer.getGroup().equals(selectedGroup))
                     .toList(),
-                trainer -> itemStack(POKE_BALL).withName(trainer.getName()),
+                trainer -> itemStack(POKE_BALL.get()).withName(trainer.getName()),
                 (menu, trainer) -> {
                     this.selectedTrainer = trainer;
                     menu.resetPage();
@@ -106,11 +105,11 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(TRAINER, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(GROUP)
-            .withComponent(() -> new ComponentBuilder<SetupMenu>(4, 0, POKE_BALL)
+            .withComponent(() -> new ComponentBuilder<SetupMenu>(4, 0, POKE_BALL.get())
                 .withName(selectedTrainer.getName())
                 .build()
             )
-            .withComponent(new ComponentBuilder<SetupMenu>(7, 4, TIMER_BALL)
+            .withComponent(new ComponentBuilder<SetupMenu>(7, 4, TIMER_BALL.get())
                 .withName("Edit team order")
                 .navigatesTo(TEAM_ORDER)
                 .build()
@@ -137,7 +136,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                     }
                 }
                 if (team.size() < 6) {
-                    components.add(new ComponentBuilder<SetupMenu>(2, 2, POKE_BALL)
+                    components.add(new ComponentBuilder<SetupMenu>(2, 2, POKE_BALL.get())
                         .withName("New Pokémon")
                         .navigatesTo(SPECIES)
                         .build()
@@ -150,7 +149,7 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(TEAM_ORDER, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(TRAINER)
-            .withComponent(() -> new ComponentBuilder<SetupMenu>(4, 0, POKE_BALL)
+            .withComponent(() -> new ComponentBuilder<SetupMenu>(4, 0, POKE_BALL.get())
                 .withName("Edit Team Order")
                 .build()
             )
@@ -230,17 +229,17 @@ public class SetupMenu extends Menu<SetupMenu> {
                 .navigatesTo(MOVESET)
                 .build()
             )
-            .withComponent(new ComponentBuilder<SetupMenu>(3, 2, CLOVER_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(3, 2, CLOVER_SWEET.get())
                 .withName("Abilities")
                 .navigatesTo(ABILITIES)
                 .build()
             )
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 2, FLOWER_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 2, FLOWER_SWEET.get())
                 .withName("EVs")
                 .navigatesTo(EVS)
                 .build()
             )
-            .withComponent(new ComponentBuilder<SetupMenu>(5, 2, STAR_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(5, 2, STAR_SWEET.get())
                 .withName("IVs")
                 .navigatesTo(IVS)
                 .build()
@@ -272,7 +271,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                 .refreshes()
                 .build()
             )
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 3, WISE_GLASSES)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 3, WISE_GLASSES.get())
                 .withName("Level")
                 .navigatesTo(LEVEL)
                 .build()
@@ -346,7 +345,6 @@ public class SetupMenu extends Menu<SetupMenu> {
                             learnset.getLevelUpMovesUpTo(selectedPokemon.getLevel()),
                             learnset.getTmMoves(),
                             learnset.getEggMoves(),
-                            learnset.getEvolutionMoves(),
                             learnset.getFormChangeMoves(),
                             learnset.getTutorMoves()
                         )
@@ -374,7 +372,7 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(ABILITIES, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(POKEMON)
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, CLOVER_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, CLOVER_SWEET.get())
                 .withName("Abilities")
                 .build()
             )
@@ -390,7 +388,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                     components.add(
                         new ComponentBuilder<SetupMenu>(
                             3 + i, 2,
-                            i == selectedIndex ? CLOVER_SWEET : CHARCOAL
+                            i == selectedIndex ? CLOVER_SWEET.get() : CHARCOAL.get()
                         ).withName(Text.translatable(abilities.get(i).getDisplayName()).getString())
                             .withAction(menu -> {
                                 selectedPokemon.setAbility(abilities.get(finalI).create(false));
@@ -407,7 +405,7 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(EVS, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(POKEMON)
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, FLOWER_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, FLOWER_SWEET.get())
                 .withName("EVs")
                 .build()
             )
@@ -450,7 +448,7 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(IVS, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(POKEMON)
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, STAR_SWEET)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, STAR_SWEET.get())
                 .withName("IVs")
                 .build()
             )
@@ -512,7 +510,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                     selectedTrainer.save();
                 },
                 1, 100, 1, 10,
-                () -> WISE_GLASSES,
+                () -> WISE_GLASSES.get(),
                 () -> "Level"
             ).build()
         );
@@ -537,7 +535,7 @@ public class SetupMenu extends Menu<SetupMenu> {
 
         viewFactories.put(HELD_ITEM, new ViewFactoryBuilder<SetupMenu>()
             .returnsTo(POKEMON)
-            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, CobblemonItems.CHOICE_SCARF)
+            .withComponent(new ComponentBuilder<SetupMenu>(4, 0, CHOICE_SCARF.get())
                 .withName("Held Item")
                 .build()
             )
@@ -564,109 +562,42 @@ public class SetupMenu extends Menu<SetupMenu> {
     }
 
     private static final List<Item> BATTLE_ITEMS = new ArrayList<>() {{
-        add(ASSAULT_VEST);
-        add(BIG_ROOT);
-        add(BLACK_BELT);
-        add(BLACK_GLASSES);
-        add(BLACK_SLUDGE);
-        add(BRIGHT_POWDER);
-        add(CHARCOAL);
-        add(CHOICE_BAND);
-        add(CHOICE_SCARF);
-        add(CHOICE_SPECS);
-        add(DEEP_SEA_SCALE);
-        add(DEEP_SEA_TOOTH);
-        add(DESTINY_KNOT);
-        add(DRAGON_FANG);
-        add(FAIRY_FEATHER);
-        add(FLAME_ORB);
-        add(FOCUS_BAND);
-        add(HARD_STONE);
-        add(HEAVY_DUTY_BOOTS);
-        add(KINGS_ROCK);
-        add(LEFTOVERS);
-        add(LIFE_ORB);
-        add(LIGHT_CLAY);
-        add(MAGNET);
-        add(MENTAL_HERB);
-        add(METAL_POWDER);
-        add(MIRACLE_SEED);
-        add(MIRROR_HERB);
-        add(MUSCLE_BAND);
-        add(MYSTIC_WATER);
-        add(NEVER_MELT_ICE);
-        add(POISON_BARB);
-        add(POWER_ANKLET);
-        add(POWER_BAND);
-        add(POWER_BELT);
-        add(POWER_BRACER);
-        add(POWER_HERB);
-        add(POWER_LENS);
-        add(POWER_WEIGHT);
-        add(QUICK_CLAW);
-        add(QUICK_POWDER);
-        add(RAZOR_CLAW);
-        add(RAZOR_FANG);
-        add(ROCKY_HELMET);
-        add(SAFETY_GOGGLES);
-        add(SHARP_BEAK);
-        add(SILK_SCARF);
-        add(SILVER_POWDER);
-        add(SOFT_SAND);
-        add(SPELL_TAG);
-        add(TOXIC_ORB);
-        add(TWISTED_SPOON);
-        add(WHITE_HERB);
-        add(WISE_GLASSES);
-
-        add(ORAN_BERRY);
-        add(CHERI_BERRY);
-        add(CHESTO_BERRY);
-        add(PECHA_BERRY);
-        add(RAWST_BERRY);
-        add(ASPEAR_BERRY);
-        add(PERSIM_BERRY);
-        add(OCCA_BERRY);
-        add(PASSHO_BERRY);
-        add(WACAN_BERRY);
-        add(RINDO_BERRY);
-        add(YACHE_BERRY);
-        add(CHOPLE_BERRY);
-        add(KEBIA_BERRY);
-        add(SHUCA_BERRY);
-        add(COBA_BERRY);
-        add(PAYAPA_BERRY);
-        add(TANGA_BERRY);
-        add(CHARTI_BERRY);
-        add(KASIB_BERRY);
-        add(HABAN_BERRY);
-        add(COLBUR_BERRY);
-        add(BABIRI_BERRY);
-        add(CHILAN_BERRY);
-        add(ROSELI_BERRY);
-        add(LEPPA_BERRY);
-        add(LUM_BERRY);
-        add(FIGY_BERRY);
-        add(WIKI_BERRY);
-        add(MAGO_BERRY);
-        add(AGUAV_BERRY);
-        add(IAPAPA_BERRY);
-        add(SITRUS_BERRY);
-        add(TOUGA_BERRY);
-        add(ENIGMA_BERRY);
-        add(KEE_BERRY);
-        add(MARANGA_BERRY);
-        add(LIECHI_BERRY);
-        add(GANLON_BERRY);
-        add(SALAC_BERRY);
-        add(PETAYA_BERRY);
-        add(APICOT_BERRY);
-        add(LANSAT_BERRY);
-        add(STARF_BERRY);
-        add(MICLE_BERRY);
-        add(CUSTAP_BERRY);
-        add(JABOCA_BERRY);
-        add(ROWAP_BERRY);
+        add(ASSAULT_VEST.get());
+        add(BIG_ROOT.get());
+        add(BLACK_BELT.get());
+        add(BLACK_GLASSES.get());
+        add(BLACK_SLUDGE.get());
+        add(CHARCOAL.get());
+        add(CHOICE_BAND.get());
+        add(CHOICE_SCARF.get());
+        add(CHOICE_SPECS.get());
+        add(DEEP_SEA_SCALE.get());
+        add(DEEP_SEA_TOOTH.get());
+        add(DRAGON_FANG.get());
+        add(FOCUS_BAND.get());
+        add(HARD_STONE.get());
+        add(HEAVY_DUTY_BOOTS.get());
+        add(KINGS_ROCK.get());
+        add(LEFTOVERS.get());
+        add(LIGHT_CLAY.get());
+        add(MAGNET.get());
+        add(MIRACLE_SEED.get());
+        add(MUSCLE_BAND.get());
+        add(MYSTIC_WATER.get());
+        add(NEVER_MELT_ICE.get());
+        add(POISON_BARB.get());
+        add(QUICK_CLAW.get());
+        add(RAZOR_CLAW.get());
+        add(RAZOR_FANG.get());
+        add(ROCKY_HELMET.get());
+        add(SAFETY_GOGGLES.get());
+        add(SHARP_BEAK.get());
+        add(SILK_SCARF.get());
+        add(SILVER_POWDER.get());
+        add(SOFT_SAND.get());
+        add(SPELL_TAG.get());
+        add(TWISTED_SPOON.get());
+        add(WISE_GLASSES.get());
 
         sort(Comparator.comparing(item -> item.getName().getString()));
     }};

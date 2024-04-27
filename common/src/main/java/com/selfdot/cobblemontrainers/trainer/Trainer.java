@@ -10,7 +10,6 @@ import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import com.selfdot.libs.io.JsonFile;
 import com.selfdot.libs.minecraft.DisableableMod;
-import kotlin.Unit;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -57,7 +56,7 @@ public class Trainer extends JsonFile {
         return team.stream()
             .map(TrainerPokemon::toPokemon)
             .peek(Pokemon::heal)
-            .map(pokemon -> new BattlePokemon(pokemon, pokemon, (pokemonEntity -> Unit.INSTANCE)))
+            .map(pokemon -> new BattlePokemon(pokemon, pokemon))
             .collect(Collectors.toList());
     }
 

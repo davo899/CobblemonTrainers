@@ -1,11 +1,9 @@
 package com.selfdot.cobblemontrainers.mixin;
 
-import com.cobblemon.mod.common.api.battles.interpreter.BattleMessage;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.battles.ShowdownInterpreter;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
-import kotlin.Pair;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,17 +14,11 @@ public class ShowdownInterpreterMixin {
 
     @Inject(method = "handleSwitchInstruction", at = @At("TAIL"), remap = false)
     private void injectHandleSwitchInstruction(
-        PokemonBattle battle,
-        BattleActor battleActor,
-        BattleMessage publicMessage,
-        BattleMessage privateMessage,
-        CallbackInfo ci
+        PokemonBattle battle, BattleActor battleActor, String publicMessage, String privateMessage, CallbackInfo ci
     ) {
-        Pair<String, String> pnxAndPokemonID = publicMessage.pnxAndUuid(0);
-        if (pnxAndPokemonID == null) return;
-        BattlePokemon battlePokemon = battle.getBattlePokemon(
-            pnxAndPokemonID.component1(), pnxAndPokemonID.component2()
-        );
+        String pnx = publicMessage.split("\\|")[2].split(":")[0];
+        BattlePokemon battlePokemon = battle.getActorAndActiveSlotFromPNX(pnx).getSecond().getBattlePokemon();
+        if (battlePokemon == null) return;
         battlePokemon.setWillBeSwitchedIn(false);
     }
 

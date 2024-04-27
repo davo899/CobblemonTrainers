@@ -7,6 +7,7 @@
     "PlayerBattleActorMixin",
     "PokemonBattleMixin",
     "PokemonEntityMixin",
+    "PokemonMixin",
     "ShowdownInterpreterMixin"
   ],
   "injectors": {

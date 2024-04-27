@@ -85,12 +85,11 @@ public class PokemonUtility {
         }
 
         if (errors.isEmpty()) {
-            return Cobblemon.INSTANCE.getBattleRegistry().startBattle(
-                BattleFormat.Companion.getGEN_9_SINGLES(),
+            return new SuccessfulBattleStart(Cobblemon.INSTANCE.getBattleRegistry().startBattle(
+                BattleFormat.Companion.getGEN_8_SINGLES(),
                 new BattleSide(playerActor),
-                new BattleSide(trainerActor),
-                false
-            );
+                new BattleSide(trainerActor)
+            ));
         }
         return errors;
     }
@@ -116,7 +115,7 @@ public class PokemonUtility {
             return;
         }
 
-        PokemonUtility.createTrainerBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
+        PokemonUtility.createTrainerBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_8_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
                 return Unit.INSTANCE;

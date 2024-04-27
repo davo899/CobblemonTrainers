@@ -180,7 +180,7 @@ public class Generation5AI implements BattleAI {
 
         if (showdownMoveset == null) return PassActionResponse.INSTANCE;
         if (showdownMoveset.moves.size() == 1 && showdownMoveset.moves.get(0).getId().equals("recharge")) {
-            return new MoveActionResponse("recharge", null, null);
+            return new MoveActionResponse("recharge", null);
         }
         List<InBattleMove> inBattleMoves = showdownMoveset.moves.stream()
             .filter(InBattleMove::canBeUsed)
@@ -189,16 +189,16 @@ public class Generation5AI implements BattleAI {
                 return inBattleMove.mustBeUsed() || targetList == null || !targetList.isEmpty();
             }).toList();
 
-        if (inBattleMoves.isEmpty()) return new MoveActionResponse("struggle", null, null);
+        if (inBattleMoves.isEmpty()) return new MoveActionResponse("struggle", null);
         if (opponentActiveBattlePokemon.isEmpty()) {
             return new MoveActionResponse(
-                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
+                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null
             );
         }
         BattlePokemon opponent = opponentActiveBattlePokemon.get().getBattlePokemon();
         if (opponent == null) {
             return new MoveActionResponse(
-                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null, null
+                inBattleMoves.get(RANDOM.nextInt(showdownMoveset.moves.size())).id, null
             );
         }
 
@@ -228,8 +228,7 @@ public class Generation5AI implements BattleAI {
         List<Targetable> targets = move.mustBeUsed() ? null : move.getTarget().getTargetList().invoke(activeBattlePokemon);
         return new MoveActionResponse(
             move.id,
-            targets == null ? null : opponentActiveBattlePokemon.get().getPNX(),
-            null
+            targets == null ? null : opponentActiveBattlePokemon.get().getPNX()
         );
     }
 

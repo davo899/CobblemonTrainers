@@ -2,6 +2,7 @@ package com.selfdot.cobblemontrainers.trainer;
 
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
+import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.libs.minecraft.permissions.PermissionLevel;
@@ -9,7 +10,9 @@ import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.selfdot.libs.minecraft.CommandExecutionBuilder.execute;
@@ -41,7 +44,10 @@ public class TrainerBattleListener {
                 }));
             }
             if (onBattleLoss.containsKey(battle)) {
-                battleVictoryEvent.getLosers().forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
+                List<BattleActor> losers = new ArrayList<>();
+                battle.getActors().forEach(losers::add);
+                battleVictoryEvent.getWinners().forEach(losers::remove);
+                losers.forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
                     if (player != null) runCommand(onBattleLoss.get(battle), player);
                 }));

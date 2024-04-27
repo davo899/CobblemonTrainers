@@ -48,7 +48,6 @@ object CobblemonTrainers : DisableableMod(DataKeys.MOD_NAMESPACE, false) {
         this.server = server
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
-        TrainerPokemon.registerPokemonSendOutListener()
     }
 
 }
