@@ -24,10 +24,10 @@
     "mixins.cobblemontrainers-common.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.23",
-    "fabric": ">=0.90.0",
-    "architectury": ">=9.1.12",
-    "minecraft": ">=1.20.1",
+    "fabricloader": ">=0.15.10",
+    "fabric": ">=0.77.0",
+    "architectury": ">=6.6.92",
+    "minecraft": ">=1.19.2",
     "java": ">=17"
   }
 }

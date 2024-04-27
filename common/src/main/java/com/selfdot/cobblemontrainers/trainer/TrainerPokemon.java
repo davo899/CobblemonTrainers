@@ -20,8 +20,8 @@ import lombok.Setter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -75,7 +75,7 @@ public class TrainerPokemon {
         }
         if (jsonObject.has(DataKeys.POKEMON_SHINY)) isShiny = jsonObject.get(DataKeys.POKEMON_SHINY).getAsBoolean();
         if (jsonObject.has(DataKeys.POKEMON_HELD_ITEM)) {
-            heldItem = Registries.ITEM.get(
+            heldItem = Registry.ITEM.get(
                 Identifier.tryParse(jsonObject.get(DataKeys.POKEMON_HELD_ITEM).getAsString())
             );
         }
@@ -98,7 +98,7 @@ public class TrainerPokemon {
         jsonObject.add(DataKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
         jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
         jsonObject.addProperty(DataKeys.POKEMON_SHINY, isShiny);
-        jsonObject.addProperty(DataKeys.POKEMON_HELD_ITEM, Registries.ITEM.getId(heldItem).toString());
+        jsonObject.addProperty(DataKeys.POKEMON_HELD_ITEM, Registry.ITEM.getId(heldItem).toString());
         JsonArray aspectsArray = new JsonArray();
         aspects.forEach(aspectsArray::add);
         jsonObject.add(DataKeys.POKEMON_ASPECTS, aspectsArray);
