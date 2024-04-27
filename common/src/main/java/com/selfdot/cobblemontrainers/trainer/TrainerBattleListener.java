@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.libs.minecraft.permissions.PermissionLevel;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -21,6 +22,11 @@ public class TrainerBattleListener {
     private final Map<PokemonBattle, Trainer> onBattleVictory = new HashMap<>();
     private final Map<PokemonBattle, String> onBattleLoss = new HashMap<>();
 
+    private static void runCommand(String command, ServerPlayerEntity player) {
+        // Run as player because running as server causes error on Mohist.
+        execute(command).withPlayer(player).withLevel(PermissionLevel.ALL_COMMANDS).as(player);
+    }
+
     private TrainerBattleListener() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL, battleVictoryEvent -> {
             PokemonBattle battle = battleVictoryEvent.getBattle();
@@ -31,13 +37,13 @@ public class TrainerBattleListener {
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
                     if (player == null) return;
                     String winCommand = trainer.getWinCommand();
-                    if (winCommand != null && !winCommand.isEmpty()) execute(winCommand).withPlayer(player).as(server);
+                    if (winCommand != null && !winCommand.isEmpty()) runCommand(winCommand, player);
                 }));
             }
             if (onBattleLoss.containsKey(battle)) {
                 battleVictoryEvent.getLosers().forEach(battleActor -> battleActor.getPlayerUUIDs().forEach(uuid -> {
                     ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
-                    if (player != null) execute(onBattleLoss.get(battle)).withPlayer(player).as(server);
+                    if (player != null) runCommand(onBattleLoss.get(battle), player);
                 }));
                 onBattleLoss.remove(battle);
             }

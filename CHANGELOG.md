@@ -1,3 +1,7 @@
+# 1.1.2
+- Fixed win/loss commands causing an error on Mohist.
+- @p and @s will now target the player in win/loss commands (%player% also still works).
+
 # 1.1.1
 - Fixed battle error when trainer uses a recharge move.
 
