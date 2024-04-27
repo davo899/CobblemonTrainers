@@ -10,7 +10,6 @@ import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.battle.TrainerMaximumLevelError;
 import com.selfdot.cobblemontrainers.battle.TrainersNotDefeatedError;
-import com.selfdot.cobblemontrainers.trainer.EntityBackerTrainerBattleActor;
 import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
@@ -45,13 +44,9 @@ public class PokemonUtility {
         BattleActor playerActor = new PlayerBattleActor(
             player.getUuid(), party.toBattleTeam(false, true, leadingPokemon)
         );
-        BattleActor trainerActor = trainerEntity == null ?
-            new TrainerBattleActor(
-                trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
-            ) :
-            new EntityBackerTrainerBattleActor(
-                trainer.getName(), trainerEntity, UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
-            );
+        BattleActor trainerActor = new TrainerBattleActor(
+            trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
+        );
 
         ErroredBattleStart errors = new ErroredBattleStart();
         Set<BattleStartError> playerErrors = errors.getParticipantErrors().get(playerActor);

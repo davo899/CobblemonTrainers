@@ -27,9 +27,6 @@ import java.util.UUID;
 @Getter @Setter
 public class TrainerPokemon {
 
-    public static final Set<UUID> IS_TRAINER_OWNED = new HashSet<>();
-    public static final Set<UUID> MUST_REENABLE_LOOT_GAMERULE = new HashSet<>();
-
     private Species species;
     private Gender gender;
     private int level;
@@ -119,7 +116,6 @@ public class TrainerPokemon {
         pokemon.setAspects(aspects);
         pokemon.setUuid(uuid);
         pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
-        IS_TRAINER_OWNED.add(uuid);
         return pokemon;
     }
 
