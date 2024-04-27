@@ -86,7 +86,7 @@ public class PokemonUtility {
 
         if (errors.isEmpty()) {
             return new SuccessfulBattleStart(Cobblemon.INSTANCE.getBattleRegistry().startBattle(
-                BattleFormat.Companion.getGEN_8_SINGLES(),
+                BattleFormat.Companion.getGEN_9_SINGLES(),
                 new BattleSide(playerActor),
                 new BattleSide(trainerActor)
             ));
@@ -115,7 +115,7 @@ public class PokemonUtility {
             return;
         }
 
-        PokemonUtility.createTrainerBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_8_SINGLES())
+        PokemonUtility.createTrainerBattle(player, trainer, trainerEntity, BattleFormat.Companion.getGEN_9_SINGLES())
             .ifErrored(error -> {
                 error.sendTo(player, t -> t);
                 return Unit.INSTANCE;

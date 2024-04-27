@@ -28,9 +28,6 @@ repositories {
 dependencies {
     forge(libs.forge)
     modApi(libs.architecturyForge)
-//    modApi(libs.kotlinForForge)
-
-    //shadowCommon group: 'commons-io', name: 'commons-io', version: '2.6'
 
     implementation(project(":common", configuration = "namedElements")) {
         isTransitive = false
@@ -44,7 +41,7 @@ dependencies {
     }
     testImplementation(project(":common", configuration = "namedElements"))
 
-    modCompileOnly("com.cobblemon:forge:${rootProject.property("cobblemon_version")}")
+    modImplementation("curse.maven:cobblemon-687131:4468321")
 
     modImplementation(
         "com.selfdot:SelfdotModLibs-forge:${rootProject.property("selfdot_modlibs_version")}"

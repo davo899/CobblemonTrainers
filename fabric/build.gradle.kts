@@ -21,6 +21,12 @@ repositories {
     mavenLocal()
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://maven.impactdev.net/repository/development/")
+    maven {
+        url = uri("https://cursemaven.com")
+        content {
+            includeGroup("curse.maven")
+        }
+    }
 }
 
 dependencies {
@@ -34,8 +40,7 @@ dependencies {
         isTransitive = false
     }
 
-    // Cobblemon
-    modImplementation("com.cobblemon:fabric:${rootProject.property("cobblemon_version")}")
+    modImplementation("curse.maven:cobblemon-687131:4468330")
 
     modImplementation(
         "com.selfdot:SelfdotModLibs-fabric:${rootProject.property("selfdot_modlibs_version")}"

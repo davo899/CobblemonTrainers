@@ -20,7 +20,7 @@ repositories {
 dependencies {
     modImplementation(libs.fabricLoader)
     modImplementation("com.google.code.findbugs:jsr305:3.0.2")
-    modCompileOnly("com.cobblemon:fabric:${rootProject.property("cobblemon_version")}")
+    modCompileOnly("curse.maven:cobblemon-687131:4468330")
     modApi(libs.architectury)
 
     compileOnly("net.luckperms:api:${rootProject.property("luckperms_version")}")
