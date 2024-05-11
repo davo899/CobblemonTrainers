@@ -9,6 +9,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://maven.impactdev.net/repository/development/")
 }
 
 java {

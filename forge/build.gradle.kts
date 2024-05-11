@@ -44,9 +44,7 @@ dependencies {
     }
     testImplementation(project(":common", configuration = "namedElements"))
 
-    modImplementation ("curse.maven:cobblemon-687131:4977476") {
-        exclude(group = "net.minecraftforge")
-    }
+    modCompileOnly("com.cobblemon:forge:${rootProject.property("cobblemon_version")}")
 
     modImplementation(
         "com.selfdot:SelfdotModLibs-forge:${rootProject.property("selfdot_modlibs_version")}"

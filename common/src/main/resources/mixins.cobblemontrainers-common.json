@@ -7,7 +7,7 @@
     "PlayerBattleActorMixin",
     "PokemonBattleMixin",
     "PokemonEntityMixin",
-    "ShowdownInterpreterMixin"
+    "SwitchInstructionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
