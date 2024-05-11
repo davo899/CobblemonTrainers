@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.moves.MoveSet;
 import com.cobblemon.mod.common.api.moves.Moves;
 import com.cobblemon.mod.common.api.pokemon.Natures;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.*;
 import com.cobblemon.mod.common.pokemon.properties.UncatchableProperty;
 import com.google.gson.JsonArray;
@@ -112,7 +113,7 @@ public class TrainerPokemon {
         pokemon.setGender(gender);
         pokemon.setLevel(level);
         pokemon.setNature(nature);
-        pokemon.setAbility(ability);
+        pokemon.updateAbility(ability);
         pokemon.getMoveSet().copyFrom(moveset);
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
@@ -158,7 +159,7 @@ public class TrainerPokemon {
     public static void registerPokemonSendOutListener() {
         CobblemonEvents.POKEMON_SENT_POST.subscribe(Priority.NORMAL, event -> {
             if (IS_TRAINER_OWNED.contains(event.getPokemon().getUuid())) {
-                event.getPokemonEntity().getUnbattleable().set(true);
+                event.getPokemonEntity().getDataTracker().set(PokemonEntity.getUNBATTLEABLE(), true);
             }
             return Unit.INSTANCE;
         });

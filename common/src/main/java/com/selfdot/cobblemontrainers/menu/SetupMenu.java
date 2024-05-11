@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.api.pokemon.Natures;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.api.pokemon.moves.Learnset;
 import com.cobblemon.mod.common.api.pokemon.stats.Stats;
+import com.cobblemon.mod.common.api.tags.CobblemonItemTags;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
@@ -21,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 
 import java.util.*;
@@ -563,112 +566,20 @@ public class SetupMenu extends Menu<SetupMenu> {
         );
     }
 
-    private static final List<Item> BATTLE_ITEMS = new ArrayList<>() {{
-        add(ASSAULT_VEST);
-        add(BIG_ROOT);
-        add(BLACK_BELT);
-        add(BLACK_GLASSES);
-        add(BLACK_SLUDGE);
-        add(BRIGHT_POWDER);
-        add(CHARCOAL);
-        add(CHOICE_BAND);
-        add(CHOICE_SCARF);
-        add(CHOICE_SPECS);
-        add(DEEP_SEA_SCALE);
-        add(DEEP_SEA_TOOTH);
-        add(DESTINY_KNOT);
-        add(DRAGON_FANG);
-        add(FAIRY_FEATHER);
-        add(FLAME_ORB);
-        add(FOCUS_BAND);
-        add(HARD_STONE);
-        add(HEAVY_DUTY_BOOTS);
-        add(KINGS_ROCK);
-        add(LEFTOVERS);
-        add(LIFE_ORB);
-        add(LIGHT_CLAY);
-        add(MAGNET);
-        add(MENTAL_HERB);
-        add(METAL_POWDER);
-        add(MIRACLE_SEED);
-        add(MIRROR_HERB);
-        add(MUSCLE_BAND);
-        add(MYSTIC_WATER);
-        add(NEVER_MELT_ICE);
-        add(POISON_BARB);
-        add(POWER_ANKLET);
-        add(POWER_BAND);
-        add(POWER_BELT);
-        add(POWER_BRACER);
-        add(POWER_HERB);
-        add(POWER_LENS);
-        add(POWER_WEIGHT);
-        add(QUICK_CLAW);
-        add(QUICK_POWDER);
-        add(RAZOR_CLAW);
-        add(RAZOR_FANG);
-        add(ROCKY_HELMET);
-        add(SAFETY_GOGGLES);
-        add(SHARP_BEAK);
-        add(SILK_SCARF);
-        add(SILVER_POWDER);
-        add(SOFT_SAND);
-        add(SPELL_TAG);
-        add(TOXIC_ORB);
-        add(TWISTED_SPOON);
-        add(WHITE_HERB);
-        add(WISE_GLASSES);
+    private static void addBattleItem(RegistryEntry<Item> registryEntry) {
+        final Item[] item = {null};
+        registryEntry.getKeyOrValue()
+            .ifRight(i -> item[0] = i)
+            .ifLeft(id -> item[0] = INSTANCE.getRegistry().get(id.getValue()));
+        if (item[0] == null) return;
+        BATTLE_ITEMS.add(item[0]);
+    }
 
-        add(ORAN_BERRY);
-        add(CHERI_BERRY);
-        add(CHESTO_BERRY);
-        add(PECHA_BERRY);
-        add(RAWST_BERRY);
-        add(ASPEAR_BERRY);
-        add(PERSIM_BERRY);
-        add(OCCA_BERRY);
-        add(PASSHO_BERRY);
-        add(WACAN_BERRY);
-        add(RINDO_BERRY);
-        add(YACHE_BERRY);
-        add(CHOPLE_BERRY);
-        add(KEBIA_BERRY);
-        add(SHUCA_BERRY);
-        add(COBA_BERRY);
-        add(PAYAPA_BERRY);
-        add(TANGA_BERRY);
-        add(CHARTI_BERRY);
-        add(KASIB_BERRY);
-        add(HABAN_BERRY);
-        add(COLBUR_BERRY);
-        add(BABIRI_BERRY);
-        add(CHILAN_BERRY);
-        add(ROSELI_BERRY);
-        add(LEPPA_BERRY);
-        add(LUM_BERRY);
-        add(FIGY_BERRY);
-        add(WIKI_BERRY);
-        add(MAGO_BERRY);
-        add(AGUAV_BERRY);
-        add(IAPAPA_BERRY);
-        add(SITRUS_BERRY);
-        add(TOUGA_BERRY);
-        add(ENIGMA_BERRY);
-        add(KEE_BERRY);
-        add(MARANGA_BERRY);
-        add(LIECHI_BERRY);
-        add(GANLON_BERRY);
-        add(SALAC_BERRY);
-        add(PETAYA_BERRY);
-        add(APICOT_BERRY);
-        add(LANSAT_BERRY);
-        add(STARF_BERRY);
-        add(MICLE_BERRY);
-        add(CUSTAP_BERRY);
-        add(JABOCA_BERRY);
-        add(ROWAP_BERRY);
-
-        sort(Comparator.comparing(item -> item.getName().getString()));
-    }};
+    private static final List<Item> BATTLE_ITEMS = new ArrayList<>();
+    public static void initialiseBattleItems() {
+        Registries.ITEM.iterateEntries(CobblemonItemTags.ANY_HELD_ITEM).forEach(SetupMenu::addBattleItem);
+        Registries.ITEM.iterateEntries(CobblemonItemTags.BERRIES).forEach(SetupMenu::addBattleItem);
+        BATTLE_ITEMS.sort(Comparator.comparing(item -> item.getName().getString()));
+    }
 
 }

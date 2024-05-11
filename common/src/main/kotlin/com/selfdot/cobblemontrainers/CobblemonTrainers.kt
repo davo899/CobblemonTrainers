@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree
 import com.selfdot.cobblemontrainers.command.permission.PermissionValidator
 import com.selfdot.cobblemontrainers.command.permission.VanillaPermissionValidator
+import com.selfdot.cobblemontrainers.menu.SetupMenu
 import com.selfdot.cobblemontrainers.trainer.*
 import com.selfdot.cobblemontrainers.util.DataKeys
 import com.selfdot.libs.minecraft.DisableableMod
@@ -48,6 +49,7 @@ object CobblemonTrainers : DisableableMod(DataKeys.MOD_NAMESPACE, false) {
         this.server = server
         TrainerBattleListener.getInstance().setServer(server)
         Generation5AI.initialiseTypeChart()
+        SetupMenu.initialiseBattleItems()
         TrainerPokemon.registerPokemonSendOutListener()
     }
 
