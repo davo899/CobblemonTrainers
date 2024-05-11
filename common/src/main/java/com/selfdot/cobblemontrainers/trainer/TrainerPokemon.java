@@ -32,7 +32,6 @@ import java.util.UUID;
 public class TrainerPokemon {
 
     public static final Set<UUID> IS_TRAINER_OWNED = new HashSet<>();
-    public static final Set<UUID> MUST_REENABLE_LOOT_GAMERULE = new HashSet<>();
 
     private Species species;
     private Gender gender;
