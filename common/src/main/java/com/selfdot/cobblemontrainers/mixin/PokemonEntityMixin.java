@@ -2,6 +2,7 @@ package com.selfdot.cobblemontrainers.mixin;
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,13 +22,13 @@ public abstract class PokemonEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
+    @Shadow
+    public abstract Pokemon getPokemon();
+
     @Unique
     private boolean cobblemonTrainers$isTrainerOwned() {
         return TrainerPokemon.IS_TRAINER_OWNED.contains(getPokemon().getUuid());
     }
-
-    @Shadow
-    public abstract Pokemon getPokemon();
 
     @Inject(method = "shouldSave", at = @At("HEAD"), cancellable = true)
     private void injectShouldSave(CallbackInfoReturnable<Boolean> cir) {
@@ -37,6 +38,26 @@ public abstract class PokemonEntityMixin extends LivingEntity {
     @Inject(method = "remove", at = @At("HEAD"))
     private void injectRemove(RemovalReason reason, CallbackInfo ci) {
         TrainerPokemon.IS_TRAINER_OWNED.remove(getPokemon().getUuid());
+    }
+
+    @Inject(method = "getBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
+    private void injectGetBeamMode(CallbackInfoReturnable<Integer> cir) {
+        if (
+            CobblemonTrainers.INSTANCE.getDisableTrainerPokemonSendOutAnimation() &&
+            cobblemonTrainers$isTrainerOwned()
+        ) {
+            cir.setReturnValue(0);
+        }
+    }
+
+    @Inject(method = "setBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
+    private void injectSetBeamMode(int value, CallbackInfo ci) {
+        if (
+            CobblemonTrainers.INSTANCE.getDisableTrainerPokemonSendOutAnimation() &&
+            cobblemonTrainers$isTrainerOwned()
+        ) {
+            ci.cancel();
+        }
     }
 
 }

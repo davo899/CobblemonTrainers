@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.selfdot.cobblemontrainers"
-version = "${project.property("mod_version")}+${project.property("mc_version")}"
+version = "${project.property("mod_version")}"
 
 val isSnapshot = project.property("snapshot")?.equals("true") ?: false
 if (isSnapshot) {

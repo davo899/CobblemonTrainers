@@ -19,6 +19,7 @@ object CobblemonTrainers : DisableableMod(DataKeys.MOD_NAMESPACE, false) {
     const val MODID = DataKeys.MOD_NAMESPACE
     private lateinit var server: MinecraftServer
     var permissionValidator: PermissionValidator = VanillaPermissionValidator()
+    var disableTrainerPokemonSendOutAnimation = false
 
     val config = Config(this)
     val trainerRegistry = TrainerRegistry(this)
