@@ -1,3 +1,7 @@
+# 1.1.3
+- Fixed crash on Forge when trainer tries to send out Pokémon.
+- On Forge, the Poké Ball animation no longer plays when a trainer sends out a Pokémon (source of the above crash).
+
 # 1.1.2
 - Fixed win/loss commands causing an error on Mohist.
 - @p and @s will now target the player in win/loss commands (%player% also still works).
