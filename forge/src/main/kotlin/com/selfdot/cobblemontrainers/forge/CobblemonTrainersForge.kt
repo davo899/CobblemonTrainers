@@ -24,7 +24,6 @@ class CobblemonTrainersForge {
 
     private fun initialize(event: FMLCommonSetupEvent) {
         CobblemonTrainers.initialize()
-        CobblemonTrainers.disableTrainerPokemonSendOutAnimation = true
         DistExecutor.safeRunWhenOn(Dist.DEDICATED_SERVER) { SetPermissionValidatorRunnable() }
         println("CobblemonTrainers Forge initialized")
     }
