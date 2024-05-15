@@ -1,3 +1,8 @@
+# 1.1.4
+- Added config option "commandExecutor"
+  - Set to "CONSOLE" by default.
+  - Must be set to "PLAYER" on Mohist otherwise the server will crash.
+
 # 1.1.3
 - Fixed crash on Forge when trainer tries to send out Pokémon.
 - On Forge, the Poké Ball animation no longer plays when a trainer sends out a Pokémon (source of the above crash).

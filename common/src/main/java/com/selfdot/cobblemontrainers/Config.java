@@ -2,13 +2,20 @@ package com.selfdot.cobblemontrainers;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.util.DataKeys;
+import com.selfdot.cobblemontrainers.util.CommandExecutor;
 import com.selfdot.libs.io.JsonFile;
 import com.selfdot.libs.minecraft.DisableableMod;
+import lombok.Getter;
+
+import static com.selfdot.cobblemontrainers.util.CommandExecutor.CONSOLE;
+import static com.selfdot.cobblemontrainers.util.DataKeys.CONFIG_COMMAND_EXECUTOR;
+import static com.selfdot.cobblemontrainers.util.DataKeys.CONFIG_XP_ENABLED;
 
 public class Config extends JsonFile {
 
     private boolean xpEnabled;
+    @Getter
+    private CommandExecutor commandExecutor;
 
     public Config(DisableableMod mod) {
         super(mod);
@@ -22,6 +29,7 @@ public class Config extends JsonFile {
     @Override
     protected void setDefaults() {
         xpEnabled = true;
+        commandExecutor = CONSOLE;
     }
 
     @Override
@@ -33,15 +41,21 @@ public class Config extends JsonFile {
     @Override
     protected void loadFromJson(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        if (jsonObject.has(DataKeys.CONFIG_XP_ENABLED)) {
-            xpEnabled = jsonObject.get(DataKeys.CONFIG_XP_ENABLED).getAsBoolean();
+        if (jsonObject.has(CONFIG_XP_ENABLED)) {
+            xpEnabled = jsonObject.get(CONFIG_XP_ENABLED).getAsBoolean();
+        }
+        if (jsonObject.has(CONFIG_COMMAND_EXECUTOR)) {
+            commandExecutor = CommandExecutor.fromString(
+                jsonObject.get(CONFIG_COMMAND_EXECUTOR).getAsString()
+            );
         }
     }
 
     @Override
     protected JsonElement toJson() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(DataKeys.CONFIG_XP_ENABLED, xpEnabled);
+        jsonObject.addProperty(CONFIG_XP_ENABLED, xpEnabled);
+        jsonObject.addProperty(CONFIG_COMMAND_EXECUTOR, commandExecutor.name());
         return jsonObject;
     }
 
