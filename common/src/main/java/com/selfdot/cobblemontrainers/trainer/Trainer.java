@@ -7,7 +7,6 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.util.DataKeys;
 import com.selfdot.libs.io.JsonFile;
 import com.selfdot.libs.minecraft.DisableableMod;
 import kotlin.Unit;
@@ -17,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.selfdot.cobblemontrainers.util.DataKeys.*;
 
 public class Trainer extends JsonFile {
 
@@ -184,33 +185,33 @@ public class Trainer extends JsonFile {
     @Override
     protected void loadFromJson(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        if (jsonObject.has(DataKeys.TRAINER_NAME)) {
-            name = jsonObject.get(DataKeys.TRAINER_NAME).getAsString();
+        if (jsonObject.has(TRAINER_NAME)) {
+            name = jsonObject.get(TRAINER_NAME).getAsString();
             if (name.isEmpty()) throw new IllegalStateException("Trainer name cannot be empty");
         }
         team = new ArrayList<>();
-        jsonObject.getAsJsonArray(DataKeys.TRAINER_TEAM)
+        jsonObject.getAsJsonArray(TRAINER_TEAM)
             .forEach(pokemonJson -> team.add(new TrainerPokemon(pokemonJson)));
-        winCommand = jsonObject.has(DataKeys.TRAINER_WIN_COMMAND) ?
-            jsonObject.get(DataKeys.TRAINER_WIN_COMMAND).getAsString() : "";
+        winCommand = jsonObject.has(TRAINER_WIN_COMMAND) ?
+            jsonObject.get(TRAINER_WIN_COMMAND).getAsString() : "";
 
-        if (jsonObject.has(DataKeys.TRAINER_GROUP)) {
-            group = jsonObject.get(DataKeys.TRAINER_GROUP).getAsString();
+        if (jsonObject.has(TRAINER_GROUP)) {
+            group = jsonObject.get(TRAINER_GROUP).getAsString();
         }
-        if (jsonObject.has(DataKeys.TRAINER_LOSS_COMMAND)) {
-            lossCommand = jsonObject.get(DataKeys.TRAINER_LOSS_COMMAND).getAsString();
+        if (jsonObject.has(TRAINER_LOSS_COMMAND)) {
+            lossCommand = jsonObject.get(TRAINER_LOSS_COMMAND).getAsString();
         }
-        if (jsonObject.has(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE)) {
-            canOnlyBeatOnce = jsonObject.get(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
+        if (jsonObject.has(TRAINER_CAN_ONLY_BEAT_ONCE)) {
+            canOnlyBeatOnce = jsonObject.get(TRAINER_CAN_ONLY_BEAT_ONCE).getAsBoolean();
         }
-        if (jsonObject.has(DataKeys.TRAINER_COOLDOWN_SECONDS)) {
-            cooldownSeconds = jsonObject.get(DataKeys.TRAINER_COOLDOWN_SECONDS).getAsLong();
+        if (jsonObject.has(TRAINER_COOLDOWN_SECONDS)) {
+            cooldownSeconds = jsonObject.get(TRAINER_COOLDOWN_SECONDS).getAsLong();
         }
-        if (jsonObject.has(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL)) {
-            partyMaximumLevel = jsonObject.get(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL).getAsInt();
+        if (jsonObject.has(PLAYER_PARTY_MAXIMUM_LEVEL)) {
+            partyMaximumLevel = jsonObject.get(PLAYER_PARTY_MAXIMUM_LEVEL).getAsInt();
         }
-        if (jsonObject.has(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS)) {
-            jsonObject.get(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS).getAsJsonArray().forEach(
+        if (jsonObject.has(PLAYER_DEFEAT_REQUIRED_TRAINERS)) {
+            jsonObject.get(PLAYER_DEFEAT_REQUIRED_TRAINERS).getAsJsonArray().forEach(
                 elem -> defeatRequiredTrainers.add(elem.getAsString())
             );
         }
@@ -221,15 +222,15 @@ public class Trainer extends JsonFile {
         JsonArray teamArray = new JsonArray(team.size());
         team.forEach(pokemon -> teamArray.add(pokemon.toJson()));
         JsonObject jsonObject = new JsonObject();
-        jsonObject.add(DataKeys.TRAINER_TEAM, teamArray);
-        jsonObject.addProperty(DataKeys.TRAINER_WIN_COMMAND, winCommand);
-        jsonObject.addProperty(DataKeys.TRAINER_LOSS_COMMAND, lossCommand);
-        jsonObject.addProperty(DataKeys.TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
-        jsonObject.addProperty(DataKeys.TRAINER_COOLDOWN_SECONDS, cooldownSeconds);
-        jsonObject.addProperty(DataKeys.PLAYER_PARTY_MAXIMUM_LEVEL, partyMaximumLevel);
+        jsonObject.add(TRAINER_TEAM, teamArray);
+        jsonObject.addProperty(TRAINER_WIN_COMMAND, winCommand);
+        jsonObject.addProperty(TRAINER_LOSS_COMMAND, lossCommand);
+        jsonObject.addProperty(TRAINER_CAN_ONLY_BEAT_ONCE, canOnlyBeatOnce);
+        jsonObject.addProperty(TRAINER_COOLDOWN_SECONDS, cooldownSeconds);
+        jsonObject.addProperty(PLAYER_PARTY_MAXIMUM_LEVEL, partyMaximumLevel);
         JsonArray defeatRequiredArray = new JsonArray();
         defeatRequiredTrainers.forEach(defeatRequiredArray::add);
-        jsonObject.add(DataKeys.PLAYER_DEFEAT_REQUIRED_TRAINERS, defeatRequiredArray);
+        jsonObject.add(PLAYER_DEFEAT_REQUIRED_TRAINERS, defeatRequiredArray);
         return jsonObject;
     }
 
