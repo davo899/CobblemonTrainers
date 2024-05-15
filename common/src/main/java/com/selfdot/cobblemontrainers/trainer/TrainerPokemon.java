@@ -14,7 +14,6 @@ import com.cobblemon.mod.common.pokemon.properties.UncatchableProperty;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.cobblemontrainers.util.DataKeys;
 import kotlin.Unit;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +26,8 @@ import net.minecraft.util.Identifier;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+import static com.selfdot.cobblemontrainers.util.DataKeys.*;
 
 @Getter @Setter
 public class TrainerPokemon {
@@ -52,56 +53,56 @@ public class TrainerPokemon {
     public TrainerPokemon(JsonElement jsonElement) {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        String speciesString = jsonObject.get(DataKeys.POKEMON_SPECIES).getAsString();
+        String speciesString = jsonObject.get(POKEMON_SPECIES).getAsString();
         species = PokemonSpecies.INSTANCE.getByIdentifier(new Identifier(speciesString));
         if (species == null) throw new IllegalStateException("Invalid species: " + speciesString);
 
-        gender = Gender.valueOf(jsonObject.get(DataKeys.POKEMON_GENDER).getAsString());
-        level = jsonObject.get(DataKeys.POKEMON_LEVEL).getAsInt();
+        gender = Gender.valueOf(jsonObject.get(POKEMON_GENDER).getAsString());
+        level = jsonObject.get(POKEMON_LEVEL).getAsInt();
 
-        String natureString = jsonObject.get(DataKeys.POKEMON_NATURE).getAsString();
+        String natureString = jsonObject.get(POKEMON_NATURE).getAsString();
         nature = Natures.INSTANCE.getNature(new Identifier(natureString));
         if (nature == null) throw new IllegalStateException("Invalid nature: " + natureString);
 
         ability = new Ability(Abilities.INSTANCE.getOrException(
-            jsonObject.get(DataKeys.POKEMON_ABILITY).getAsString()
+            jsonObject.get(POKEMON_ABILITY).getAsString()
         ), false);
-        ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_IVS).getAsJsonObject());
-        evs = (EVs) new EVs().loadFromJSON(jsonObject.get(DataKeys.POKEMON_EVS).getAsJsonObject());
+        ivs = (IVs) new IVs().loadFromJSON(jsonObject.get(POKEMON_IVS).getAsJsonObject());
+        evs = (EVs) new EVs().loadFromJSON(jsonObject.get(POKEMON_EVS).getAsJsonObject());
         moveset = new MoveSet();
-        JsonArray movesetJson = jsonObject.get(DataKeys.POKEMON_MOVESET).getAsJsonArray();
+        JsonArray movesetJson = jsonObject.get(POKEMON_MOVESET).getAsJsonArray();
         for (int i = 0; i < Math.min(4, movesetJson.size()); i++) {
             moveset.setMove(i, Moves.INSTANCE.getByName(movesetJson.get(i).getAsString()).create());
         }
-        if (jsonObject.has(DataKeys.POKEMON_SHINY)) isShiny = jsonObject.get(DataKeys.POKEMON_SHINY).getAsBoolean();
-        if (jsonObject.has(DataKeys.POKEMON_HELD_ITEM)) {
+        if (jsonObject.has(POKEMON_SHINY)) isShiny = jsonObject.get(POKEMON_SHINY).getAsBoolean();
+        if (jsonObject.has(POKEMON_HELD_ITEM)) {
             heldItem = Registries.ITEM.get(
-                Identifier.tryParse(jsonObject.get(DataKeys.POKEMON_HELD_ITEM).getAsString())
+                Identifier.tryParse(jsonObject.get(POKEMON_HELD_ITEM).getAsString())
             );
         }
-        if (jsonObject.has(DataKeys.POKEMON_ASPECTS)) {
-            JsonArray aspectsArray = jsonObject.getAsJsonArray(DataKeys.POKEMON_ASPECTS);
+        if (jsonObject.has(POKEMON_ASPECTS)) {
+            JsonArray aspectsArray = jsonObject.getAsJsonArray(POKEMON_ASPECTS);
             aspectsArray.forEach(aspect -> aspects.add(aspect.getAsString()));
         }
     }
 
     public JsonObject toJson() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty(DataKeys.POKEMON_SPECIES, species.getResourceIdentifier().toString());
-        jsonObject.addProperty(DataKeys.POKEMON_GENDER, gender.name());
-        jsonObject.addProperty(DataKeys.POKEMON_LEVEL, level);
-        jsonObject.addProperty(DataKeys.POKEMON_NATURE, nature.getName().toString());
-        jsonObject.addProperty(DataKeys.POKEMON_ABILITY, ability.getName());
+        jsonObject.addProperty(POKEMON_SPECIES, species.getResourceIdentifier().toString());
+        jsonObject.addProperty(POKEMON_GENDER, gender.name());
+        jsonObject.addProperty(POKEMON_LEVEL, level);
+        jsonObject.addProperty(POKEMON_NATURE, nature.getName().toString());
+        jsonObject.addProperty(POKEMON_ABILITY, ability.getName());
         JsonArray movesetJson = new JsonArray();
         moveset.forEach(move -> movesetJson.add(move.getName()));
-        jsonObject.add(DataKeys.POKEMON_MOVESET, movesetJson);
-        jsonObject.add(DataKeys.POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
-        jsonObject.add(DataKeys.POKEMON_EVS, evs.saveToJSON(new JsonObject()));
-        jsonObject.addProperty(DataKeys.POKEMON_SHINY, isShiny);
-        jsonObject.addProperty(DataKeys.POKEMON_HELD_ITEM, Registries.ITEM.getId(heldItem).toString());
+        jsonObject.add(POKEMON_MOVESET, movesetJson);
+        jsonObject.add(POKEMON_IVS, ivs.saveToJSON(new JsonObject()));
+        jsonObject.add(POKEMON_EVS, evs.saveToJSON(new JsonObject()));
+        jsonObject.addProperty(POKEMON_SHINY, isShiny);
+        jsonObject.addProperty(POKEMON_HELD_ITEM, Registries.ITEM.getId(heldItem).toString());
         JsonArray aspectsArray = new JsonArray();
         aspects.forEach(aspectsArray::add);
-        jsonObject.add(DataKeys.POKEMON_ASPECTS, aspectsArray);
+        jsonObject.add(POKEMON_ASPECTS, aspectsArray);
         return jsonObject;
     }
 
