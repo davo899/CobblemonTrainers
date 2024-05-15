@@ -35,7 +35,7 @@ dependencies {
     }
 
     // Cobblemon
-    modImplementation("com.cobblemon:fabric:${rootProject.property("cobblemon_version")}")
+    modImplementation("com.cobblemon:fabric:${rootProject.property("cobblemon_version")}+1.20.1-SNAPSHOT")
 
     modImplementation(
         "com.selfdot:SelfdotModLibs-fabric:${rootProject.property("selfdot_modlibs_version")}"

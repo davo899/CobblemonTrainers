@@ -44,7 +44,7 @@ dependencies {
     }
     testImplementation(project(":common", configuration = "namedElements"))
 
-    modCompileOnly("com.cobblemon:forge:${rootProject.property("cobblemon_version")}")
+    modCompileOnly("com.cobblemon:forge:${rootProject.property("cobblemon_version")}+1.20.1-SNAPSHOT")
 
     modImplementation(
         "com.selfdot:SelfdotModLibs-forge:${rootProject.property("selfdot_modlibs_version")}"
