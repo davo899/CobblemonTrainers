@@ -1,3 +1,6 @@
+# 1.1.5
+- Removed debug command /selfdot.
+
 # 1.1.4
 - Added config option "commandExecutor".
   - Set to "CONSOLE" by default (@p and @s will no longer target the player on this setting).
