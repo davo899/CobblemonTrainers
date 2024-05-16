@@ -47,7 +47,7 @@ public class Trainer extends JsonFile {
         Pokemon pokemon = new Pokemon();
         pokemon.setSpecies(species);
         pokemon.initializeMoveset(true);
-        pokemon.rollAbility();
+        pokemon.checkAbility();
         pokemon.setGender(Math.random() > 0.5 ? Gender.FEMALE : Gender.MALE);
         pokemon.setAspects(aspects);
         team.add(TrainerPokemon.fromPokemon(pokemon));
