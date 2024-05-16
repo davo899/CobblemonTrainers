@@ -510,7 +510,7 @@ public class SetupMenu extends Menu<SetupMenu> {
                     selectedTrainer.save();
                 },
                 1, 100, 1, 10,
-                () -> WISE_GLASSES.get(),
+                WISE_GLASSES::get,
                 () -> "Level"
             ).build()
         );
@@ -561,45 +561,45 @@ public class SetupMenu extends Menu<SetupMenu> {
         );
     }
 
-    private static final List<Item> BATTLE_ITEMS = new ArrayList<>() {{
-        add(ASSAULT_VEST.get());
-        add(BIG_ROOT.get());
-        add(BLACK_BELT.get());
-        add(BLACK_GLASSES.get());
-        add(BLACK_SLUDGE.get());
-        add(CHARCOAL.get());
-        add(CHOICE_BAND.get());
-        add(CHOICE_SCARF.get());
-        add(CHOICE_SPECS.get());
-        add(DEEP_SEA_SCALE.get());
-        add(DEEP_SEA_TOOTH.get());
-        add(DRAGON_FANG.get());
-        add(FOCUS_BAND.get());
-        add(HARD_STONE.get());
-        add(HEAVY_DUTY_BOOTS.get());
-        add(KINGS_ROCK.get());
-        add(LEFTOVERS.get());
-        add(LIGHT_CLAY.get());
-        add(MAGNET.get());
-        add(MIRACLE_SEED.get());
-        add(MUSCLE_BAND.get());
-        add(MYSTIC_WATER.get());
-        add(NEVER_MELT_ICE.get());
-        add(POISON_BARB.get());
-        add(QUICK_CLAW.get());
-        add(RAZOR_CLAW.get());
-        add(RAZOR_FANG.get());
-        add(ROCKY_HELMET.get());
-        add(SAFETY_GOGGLES.get());
-        add(SHARP_BEAK.get());
-        add(SILK_SCARF.get());
-        add(SILVER_POWDER.get());
-        add(SOFT_SAND.get());
-        add(SPELL_TAG.get());
-        add(TWISTED_SPOON.get());
-        add(WISE_GLASSES.get());
-
-        sort(Comparator.comparing(item -> item.getName().getString()));
-    }};
+    private static final List<Item> BATTLE_ITEMS = new ArrayList<>() {
+        {
+            add(ASSAULT_VEST.get());
+            add(BIG_ROOT.get());
+            add(BLACK_BELT.get());
+            add(BLACK_GLASSES.get());
+            add(BLACK_SLUDGE.get());
+            add(CHARCOAL.get());
+            add(CHOICE_BAND.get());
+            add(CHOICE_SCARF.get());
+            add(CHOICE_SPECS.get());
+            add(DEEP_SEA_SCALE.get());
+            add(DEEP_SEA_TOOTH.get());
+            add(DRAGON_FANG.get());
+            add(FOCUS_BAND.get());
+            add(HARD_STONE.get());
+            add(HEAVY_DUTY_BOOTS.get());
+            add(KINGS_ROCK.get());
+            add(LEFTOVERS.get());
+            add(LIGHT_CLAY.get());
+            add(MAGNET.get());
+            add(MIRACLE_SEED.get());
+            add(MUSCLE_BAND.get());
+            add(MYSTIC_WATER.get());
+            add(NEVER_MELT_ICE.get());
+            add(POISON_BARB.get());
+            add(QUICK_CLAW.get());
+            add(RAZOR_CLAW.get());
+            add(RAZOR_FANG.get());
+            add(ROCKY_HELMET.get());
+            add(SAFETY_GOGGLES.get());
+            add(SHARP_BEAK.get());
+            add(SILK_SCARF.get());
+            add(SILVER_POWDER.get());
+            add(SOFT_SAND.get());
+            add(SPELL_TAG.get());
+            add(TWISTED_SPOON.get());
+            add(WISE_GLASSES.get());
+        }
+    };
 
 }

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ShowdownInterpreter.class)
-public class ShowdownInterpreterMixin {
+public abstract class ShowdownInterpreterMixin {
 
     @Inject(method = "handleSwitchInstruction", at = @At("TAIL"), remap = false)
     private void injectHandleSwitchInstruction(

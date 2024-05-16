@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.libs.minecraft.CommandExecutionBuilder;
 import com.selfdot.libs.minecraft.permissions.PermissionLevel;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
@@ -26,8 +27,12 @@ public class TrainerBattleListener {
     private final Map<PokemonBattle, String> onBattleLoss = new HashMap<>();
 
     private static void runCommand(String command, ServerPlayerEntity player) {
-        // Run as player because running as server causes error on Mohist.
-        execute(command).withPlayer(player).withLevel(PermissionLevel.ALL_COMMANDS).as(player);
+        // Because Mohist doesn't allow executing commands as console, this option is needed.
+        CommandExecutionBuilder executeCommand = execute(command).withPlayer(player);
+        switch (CobblemonTrainers.INSTANCE.getConfig().getCommandExecutor()) {
+            case PLAYER -> executeCommand.withLevel(PermissionLevel.ALL_COMMANDS).as(player);
+            case CONSOLE -> executeCommand.as(player.getServer());
+        }
     }
 
     private TrainerBattleListener() {

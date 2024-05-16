@@ -14,6 +14,7 @@ import com.selfdot.cobblemontrainers.trainer.Generation5AI;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerBattleListener;
 import kotlin.Unit;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+@Slf4j
 public class PokemonUtility {
 
     private static BattleStartResult createTrainerBattle(
@@ -90,7 +92,6 @@ public class PokemonUtility {
     }
 
     public static final Set<UUID> IN_TRAINER_BATTLE = new HashSet<>();
-
     public static void startTrainerBattle(ServerPlayerEntity player, Trainer trainer, LivingEntity trainerEntity) {
         if (IN_TRAINER_BATTLE.contains(player.getUuid())) return;
         if (trainer.canOnlyBeatOnce() &&
