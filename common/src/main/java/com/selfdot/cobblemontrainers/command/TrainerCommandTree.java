@@ -10,14 +10,12 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.command.permission.CommandRequirementBuilder;
 import com.selfdot.cobblemontrainers.command.permission.TrainersPermissions;
-import com.selfdot.cobblemontrainers.menu.SetupMenu;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.command.EntitySelector;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import static com.mojang.brigadier.arguments.BoolArgumentType.bool;
@@ -256,19 +254,6 @@ public class TrainerCommandTree {
                     )
                 )
             )
-        );
-        dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>
-            literal("selfdot")
-            .requires(ServerCommandSource::isExecutedByPlayer)
-            .executes(context -> {
-                try {
-                    new SetupMenu(context.getSource().getPlayer());
-                } catch (Throwable t) {
-                    log.info(t.getMessage());
-                    log.info(Arrays.toString(t.getStackTrace()));
-                }
-                return 1;
-            })
         );
     }
 
