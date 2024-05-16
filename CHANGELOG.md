@@ -1,7 +1,8 @@
 # 1.1.4
-- Added config option "commandExecutor"
+- Added config option "commandExecutor".
   - Set to "CONSOLE" by default.
   - Must be set to "PLAYER" on Mohist otherwise the server will crash.
+- Added held item to Pokémon item lore in setup menu.
 
 # 1.1.3
 - Fixed crash on Forge when trainer tries to send out Pokémon.
