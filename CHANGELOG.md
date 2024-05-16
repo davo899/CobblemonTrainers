@@ -1,6 +1,6 @@
 # 1.1.4
 - Added config option "commandExecutor".
-  - Set to "CONSOLE" by default.
+  - Set to "CONSOLE" by default (@p and @s will no longer target the player on this setting).
   - Must be set to "PLAYER" on Mohist otherwise the server will crash.
 - Added held item to Pokémon item lore in setup menu.
 
