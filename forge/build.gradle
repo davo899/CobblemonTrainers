@@ -2,6 +2,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
     id "org.jetbrains.kotlin.jvm" version "1.9.0"
 }
+
 architectury {
     platformSetupLoomIde()
     forge()
@@ -20,13 +21,12 @@ repositories {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    forge "net.minecraftforge:forge:$forge_version"
     implementation "thedarkcolour:kotlinforforge:$kff_version"
-    // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
+    modApi "dev.architectury:architectury-forge:$architectury_version"
 
-    modImplementation "com.cobblemon:forge:${rootProject.cobblemon_version}+1.20.1"
-    include(modImplementation("com.selfdot:SelfdotModLibs-forge:${rootProject.selfdot_modlibs_version}"))
+    modImplementation "com.cobblemon:forge:$cobblemon_version+1.20.1"
+    include(modImplementation("com.selfdot:SelfdotModLibs-forge:$selfdot_modlibs_version"))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

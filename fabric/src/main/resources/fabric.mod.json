@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "cobblemontrainers",
   "version": "${version}",
-
   "name": "CobblemonTrainers",
   "description": "Adds a trainer battle system to Cobblemon",
   "authors": [
@@ -11,9 +10,7 @@
   "contact": {
     "repo": "https://github.com/davo899/CobblemonTrainers"
   },
-
-  "license": "All Rights Reserved",
-
+  "license": "Apache 2.0 with Commons Clause",
   "environment": "*",
   "entrypoints": {
     "main": [

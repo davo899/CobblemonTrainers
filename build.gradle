@@ -28,9 +28,9 @@ allprojects {
     apply plugin: "architectury-plugin"
     apply plugin: "maven-publish"
 
-    archivesBaseName = rootProject.archives_base_name
-    version = "${rootProject.mod_version}+${rootProject.cobblemon_version}"
-    group = rootProject.maven_group
+    archivesBaseName = archives_base_name
+    version = "$mod_version+$cobblemon_version"
+    group = maven_group
 
     repositories {
         // Add repositories to retrieve artifacts from in here.
