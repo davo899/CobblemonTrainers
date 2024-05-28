@@ -1,7 +1,7 @@
 # 1.1.6
 - Fixed crash when trainer's Pokémon have a status condition.
 - Re-enabled trainer Pokémon send out animation.
-- Made Fabric Permissions API be included in the Fabric version
+- Made Fabric Permissions API be included in the Fabric version.
 
 # 1.1.5
 - Removed debug command /selfdot.
