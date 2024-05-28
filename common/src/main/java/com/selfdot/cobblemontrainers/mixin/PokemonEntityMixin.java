@@ -40,14 +40,4 @@ public abstract class PokemonEntityMixin extends LivingEntity {
         TrainerPokemon.IS_TRAINER_OWNED.remove(getPokemon().getUuid());
     }
 
-    @Inject(method = "getBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
-    private void injectGetBeamMode(CallbackInfoReturnable<Integer> cir) {
-        if (cobblemonTrainers$isTrainerOwned()) cir.setReturnValue(0);
-    }
-
-    @Inject(method = "setBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
-    private void injectSetBeamMode(int value, CallbackInfo ci) {
-        if (cobblemonTrainers$isTrainerOwned()) ci.cancel();
-    }
-
 }

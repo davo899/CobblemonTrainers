@@ -1,3 +1,9 @@
+# 1.1.7
+- Re-re-enabled trainer Pokémon send out animation on Fabric.
+- Fixed trainer Pokémon not being recalled at the end of a fight on Forge.
+- Fixed trainer Pokémon dropping items on Forge.
+- Fixed battles not starting after your first battle on Forge.
+
 # 1.1.6
 - Fixed crash when trainer's Pokémon have a status condition.
 - Re-enabled trainer Pokémon send out animation.
