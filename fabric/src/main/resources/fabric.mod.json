@@ -13,10 +13,16 @@
   },
 
   "license": "All Rights Reserved",
-  "icon": "icon.png",
 
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "com.selfdot.cobblemontrainers.fabric.CobblemonTrainersFabric"
+    ],
+    "server": [
+      "com.selfdot.cobblemontrainers.fabric.server.CobblemonTrainersFabricServer"
+    ]
+  },
   "mixins": [
     "cobblemontrainers.mixins.json",
     "cobblemontrainers-common.mixins.json"

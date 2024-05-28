@@ -1,5 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "org.jetbrains.kotlin.jvm" version "1.9.0"
 }
 architectury {
     platformSetupLoomIde()
@@ -14,8 +15,13 @@ configurations {
     developmentForge.extendsFrom common
 }
 
+repositories {
+    maven { url = 'https://thedarkcolour.github.io/KotlinForForge/' }
+}
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    implementation "thedarkcolour:kotlinforforge:$kff_version"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
