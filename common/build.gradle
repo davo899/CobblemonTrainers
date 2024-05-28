@@ -1,0 +1,27 @@
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "com.cobblemon:mod:${rootProject.cobblemon_version}+1.20.1"
+    modApi "dev.architectury:architectury:${rootProject.architectury_version}"
+    compileOnly "net.luckperms:api:${rootProject.luckperms_version}"
+    modImplementation "com.selfdot:SelfdotModLibs:${rootProject.selfdot_modlibs_version}"
+    compileOnly "org.projectlombok:lombok:${rootProject.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${rootProject.lombok_version}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlin_stdlib_version}"
+}
+
+architectury {
+    common("fabric", "forge")
+}
+
+publishing {
+    publications {
+        mavenCommon(MavenPublication) {
+            artifactId = rootProject.archives_base_name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+    }
+}

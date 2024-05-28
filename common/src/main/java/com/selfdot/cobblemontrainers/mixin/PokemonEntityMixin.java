@@ -42,22 +42,12 @@ public abstract class PokemonEntityMixin extends LivingEntity {
 
     @Inject(method = "getBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
     private void injectGetBeamMode(CallbackInfoReturnable<Integer> cir) {
-        if (
-            CobblemonTrainers.INSTANCE.getDisableTrainerPokemonSendOutAnimation() &&
-            cobblemonTrainers$isTrainerOwned()
-        ) {
-            cir.setReturnValue(0);
-        }
+        if (cobblemonTrainers$isTrainerOwned()) cir.setReturnValue(0);
     }
 
     @Inject(method = "setBeamMode", at = @At("HEAD"), remap = false, cancellable = true)
     private void injectSetBeamMode(int value, CallbackInfo ci) {
-        if (
-            CobblemonTrainers.INSTANCE.getDisableTrainerPokemonSendOutAnimation() &&
-            cobblemonTrainers$isTrainerOwned()
-        ) {
-            ci.cancel();
-        }
+        if (cobblemonTrainers$isTrainerOwned()) ci.cancel();
     }
 
 }

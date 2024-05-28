@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "id": "cobblemontrainers",
   "version": "${version}",
+
   "name": "CobblemonTrainers",
   "description": "Adds a trainer battle system to Cobblemon",
   "authors": [
@@ -10,24 +11,18 @@
   "contact": {
     "repo": "https://github.com/davo899/CobblemonTrainers"
   },
+
+  "license": "All Rights Reserved",
+  "icon": "icon.png",
+
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.selfdot.cobblemontrainers.fabric.CobblemonTrainersFabric"
-    ],
-    "server": [
-      "com.selfdot.cobblemontrainers.fabric.server.CobblemonTrainersFabricServer"
-    ],
-    "client": []
-  },
+  "entrypoints": {},
   "mixins": [
-    "mixins.cobblemontrainers-common.json"
+    "cobblemontrainers.mixins.json",
+    "cobblemontrainers-common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.23",
-    "fabric": ">=0.90.0",
-    "architectury": ">=9.1.12",
-    "minecraft": ">=1.20.1",
-    "java": ">=17"
+    "fabricloader": ">=0.15.11",
+    "minecraft": ">=1.20.1"
   }
 }

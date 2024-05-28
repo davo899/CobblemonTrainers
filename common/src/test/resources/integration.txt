@@ -1,0 +1,23 @@
+trainers add test
+
+trainers setup
+create new pokemon and set everything
+
+trainers setlosscommand test 'say loss'
+trainers battle test (and lose)
+
+rename test test1
+set win command
+makebattle test1 and win
+rename test1 test
+
+set can only beat once
+battle test (should fail)
+
+restart
+
+remove test
+
+test forge
+
+check backwards compatibility
