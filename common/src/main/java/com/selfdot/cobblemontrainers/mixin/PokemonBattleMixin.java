@@ -18,7 +18,7 @@ import java.util.List;
 @Mixin(PokemonBattle.class)
 public abstract class PokemonBattleMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract Iterable<BattleActor> getActors();
 
     @Inject(method = "end", at = @At("HEAD"), remap = false)

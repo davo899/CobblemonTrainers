@@ -22,7 +22,7 @@ public abstract class PokemonEntityMixin extends LivingEntity {
         super(entityType, world);
     }
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract Pokemon getPokemon();
 
     @Unique

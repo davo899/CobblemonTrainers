@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SwitchInstruction.class)
 public abstract class SwitchInstructionMixin {
 
-    @Shadow
+    @Shadow(remap = false)
     public abstract BattleMessage getPublicMessage();
 
     @Inject(method = "invoke", at = @At("TAIL"), remap = false)
