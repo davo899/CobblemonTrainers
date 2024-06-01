@@ -1,3 +1,6 @@
+# 1.1.8
+- Fixed incorrect Pokémon data loading order causing some abilities not to be selectable.
+
 # 1.1.7
 - Re-re-enabled trainer Pokémon send out animation on Fabric.
 - Fixed trainer Pokémon not being recalled at the end of a fight on Forge.

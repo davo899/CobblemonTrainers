@@ -108,19 +108,19 @@ public class TrainerPokemon {
 
     public Pokemon toPokemon() {
         Pokemon pokemon = new Pokemon();
-        pokemon.initializeMoveset(true);
         pokemon.setSpecies(species);
         pokemon.setGender(gender);
+        pokemon.setShiny(isShiny);
+        pokemon.setAspects(aspects);
         pokemon.setLevel(level);
+        pokemon.initializeMoveset(true);
         pokemon.setNature(nature);
         pokemon.updateAbility(ability);
         pokemon.getMoveSet().copyFrom(moveset);
         ivs.spliterator().forEachRemaining(entry -> pokemon.setIV(entry.getKey(), entry.getValue()));
         evs.spliterator().forEachRemaining(entry -> pokemon.setEV(entry.getKey(), entry.getValue()));
-        pokemon.setShiny(isShiny);
         if (heldItem.equals(Items.AIR)) pokemon.removeHeldItem();
         else pokemon.swapHeldItem(new ItemStack(heldItem), false);
-        pokemon.setAspects(aspects);
         pokemon.setUuid(uuid);
         pokemon.getCustomProperties().add(UncatchableProperty.INSTANCE.uncatchable());
         IS_TRAINER_OWNED.add(uuid);
