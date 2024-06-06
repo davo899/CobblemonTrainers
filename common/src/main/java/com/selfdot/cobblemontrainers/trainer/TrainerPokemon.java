@@ -111,7 +111,9 @@ public class TrainerPokemon {
         pokemon.setSpecies(species);
         pokemon.setGender(gender);
         pokemon.setShiny(isShiny);
-        pokemon.setAspects(aspects);
+        Set<String> setAspects = new HashSet<>(aspects);
+        if (isShiny) setAspects.add("shiny");
+        pokemon.setAspects(setAspects);
         pokemon.setLevel(level);
         pokemon.initializeMoveset(true);
         pokemon.setNature(nature);

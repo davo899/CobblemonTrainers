@@ -1,3 +1,6 @@
+# 1.1.9
+- Fixed shiny trainer Pokémon not appearing shiny.
+
 # 1.1.8
 - Fixed incorrect Pokémon data loading order causing some abilities not to be selectable.
 
