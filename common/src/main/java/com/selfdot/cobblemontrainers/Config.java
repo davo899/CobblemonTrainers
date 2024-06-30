@@ -2,9 +2,9 @@ package com.selfdot.cobblemontrainers;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.selfdot.cobblemontrainers.libs.io.JsonFile;
+import com.selfdot.cobblemontrainers.libs.minecraft.DisableableMod;
 import com.selfdot.cobblemontrainers.util.CommandExecutor;
-import com.selfdot.libs.io.JsonFile;
-import com.selfdot.libs.minecraft.DisableableMod;
 import lombok.Getter;
 
 import static com.selfdot.cobblemontrainers.util.CommandExecutor.CONSOLE;

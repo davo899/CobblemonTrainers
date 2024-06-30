@@ -4,8 +4,8 @@ import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
-import com.selfdot.libs.minecraft.CommandExecutionBuilder;
-import com.selfdot.libs.minecraft.permissions.PermissionLevel;
+import com.selfdot.cobblemontrainers.libs.minecraft.CommandExecutionBuilder;
+import com.selfdot.cobblemontrainers.libs.minecraft.permissions.PermissionLevel;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -13,7 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.selfdot.libs.minecraft.CommandExecutionBuilder.execute;
+import static com.selfdot.cobblemontrainers.libs.minecraft.CommandExecutionBuilder.execute;
 
 public class TrainerBattleListener {
 

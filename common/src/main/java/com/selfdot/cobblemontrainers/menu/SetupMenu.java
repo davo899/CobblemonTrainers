@@ -14,10 +14,10 @@ import com.cobblemon.mod.common.pokemon.Gender;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.libs.cobblemon.CobblemonUtils;
+import com.selfdot.cobblemontrainers.libs.minecraft.screen.*;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
-import com.selfdot.libs.cobblemon.CobblemonUtils;
-import com.selfdot.libs.minecraft.screen.*;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -31,8 +31,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.cobblemon.mod.common.CobblemonItems.*;
-import static com.selfdot.libs.cobblemon.CobblemonUtils.*;
-import static com.selfdot.libs.minecraft.screen.ItemStackBuilder.itemStack;
+import static com.selfdot.cobblemontrainers.libs.cobblemon.CobblemonUtils.*;
+import static com.selfdot.cobblemontrainers.libs.minecraft.screen.ItemStackBuilder.itemStack;
 import static net.minecraft.util.Formatting.GREEN;
 import static net.minecraft.util.Formatting.RED;
 

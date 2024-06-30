@@ -3,14 +3,14 @@ plugins {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "com.cobblemon:mod:${rootProject.cobblemon_version}+1.20.1"
-    modApi "dev.architectury:architectury:${rootProject.architectury_version}"
-    compileOnly "net.luckperms:api:${rootProject.luckperms_version}"
-    modImplementation "com.selfdot:SelfdotModLibs:${rootProject.selfdot_modlibs_version}"
-    compileOnly "org.projectlombok:lombok:${rootProject.lombok_version}"
-    annotationProcessor "org.projectlombok:lombok:${rootProject.lombok_version}"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${rootProject.kotlin_stdlib_version}"
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+    modApi "com.cobblemon:mod:$cobblemon_version+$minecraft_version"
+    modApi "dev.architectury:architectury:$architectury_version"
+    compileOnly "net.luckperms:api:$luckperms_version"
+    //modImplementation "com.selfdot:SelfdotModLibs:$selfdot_modlibs_version+$minecraft_version"
+    compileOnly "org.projectlombok:lombok:$lombok_version"
+    annotationProcessor "org.projectlombok:lombok:$lombok_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_stdlib_version"
 }
 
 architectury {

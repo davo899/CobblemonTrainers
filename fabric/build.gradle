@@ -21,13 +21,13 @@ repositories {
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
-    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
-    include(modApi("me.lucko:fabric-permissions-api:${rootProject.fabric_permissions_api_version}"))
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+    modApi "net.fabricmc.fabric-api:fabric-api:$fabric_api_version"
+    modApi "dev.architectury:architectury-fabric:$architectury_version"
+    include(modApi("me.lucko:fabric-permissions-api:$fabric_permissions_api_version"))
 
-    modImplementation "com.cobblemon:fabric:${rootProject.cobblemon_version}+1.20.1"
-    include(modImplementation("com.selfdot:SelfdotModLibs-fabric:${rootProject.selfdot_modlibs_version}"))
+    modImplementation "com.cobblemon:fabric:$cobblemon_version+$minecraft_version"
+    //include(modImplementation("com.selfdot:SelfdotModLibs-fabric:$selfdot_modlibs_version+$minecraft_version"))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

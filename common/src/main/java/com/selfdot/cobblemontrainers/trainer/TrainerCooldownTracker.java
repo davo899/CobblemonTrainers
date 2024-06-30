@@ -2,8 +2,8 @@ package com.selfdot.cobblemontrainers.trainer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.selfdot.libs.io.JsonFile;
-import com.selfdot.libs.minecraft.DisableableMod;
+import com.selfdot.cobblemontrainers.libs.io.JsonFile;
+import com.selfdot.cobblemontrainers.libs.minecraft.DisableableMod;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.HashMap;

@@ -32,8 +32,8 @@ dependencies {
     implementation "thedarkcolour:kotlinforforge:$kff_version"
     modApi "dev.architectury:architectury-forge:$architectury_version"
 
-    modImplementation "com.cobblemon:forge:$cobblemon_version+1.20.1"
-    include(modImplementation("com.selfdot:SelfdotModLibs-forge:$selfdot_modlibs_version"))
+    modImplementation "com.cobblemon:forge:$cobblemon_version+$minecraft_version"
+    //include(modImplementation("com.selfdot:SelfdotModLibs-forge:$selfdot_modlibs_version+$minecraft_version"))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

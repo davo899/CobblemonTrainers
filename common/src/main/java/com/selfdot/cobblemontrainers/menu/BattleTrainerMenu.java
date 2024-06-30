@@ -1,9 +1,9 @@
 package com.selfdot.cobblemontrainers.menu;
 
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
+import com.selfdot.cobblemontrainers.libs.minecraft.screen.*;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.util.PokemonUtility;
-import com.selfdot.libs.minecraft.screen.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -11,7 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import java.util.Map;
 
 import static com.cobblemon.mod.common.CobblemonItems.POKE_BALL;
-import static com.selfdot.libs.minecraft.screen.ItemStackBuilder.itemStack;
+import static com.selfdot.cobblemontrainers.libs.minecraft.screen.ItemStackBuilder.itemStack;
 
 public class BattleTrainerMenu extends Menu<BattleTrainerMenu> {
 
