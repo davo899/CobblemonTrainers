@@ -1,0 +1,82 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:bulbasaur",
+      "gender": "MALE",
+      "level": 8,
+      "nature": "cobblemon:careful",
+      "ability": "chlorophyll",
+      "moveset": [
+        "vine whip",
+        "growth",
+        "sleep powder"
+      ],
+      "ivs": {
+        "hp": 14,
+        "attack": 22,
+        "defence": 9,
+        "special_attack": 4,
+        "special_defence": 18,
+        "speed": 25
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gastly",
+      "gender": "female",
+      "level": 11,
+      "nature": "cobblemon:lax",
+      "ability": "levitate",
+      "moveset": [
+        "hypnosis",
+        "curse",
+        "lick"
+      ],
+      "ivs": {
+        "hp": 18,
+        "attack": 16,
+        "defence": 18,
+        "special_attack": 17,
+        "special_defence": 10,
+        "speed": 30
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:cubone",
+      "gender": "MALE",
+      "level": 10,
+      "nature": "cobblemon:careful",
+      "ability": "battle armor",
+      "moveset": [
+        "headbutt",
+        "bone rush",
+        "retaliate"
+      ],
+      "ivs": {
+        "hp": 19,
+        "attack": 4,
+        "defence": 17,
+        "special_attack": 2,
+        "special_defence": 16,
+        "speed": 16
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "minecraft:air",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

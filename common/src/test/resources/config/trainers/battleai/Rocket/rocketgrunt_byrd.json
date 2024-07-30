@@ -1,0 +1,34 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:farfetchd",
+      "gender": "MALE",
+      "level": 11,
+      "nature": "cobblemon:jolly",
+      "ability": "Inner Focus",
+      "moveset": [
+        "pluck",
+        "slash",
+        "leaf blade"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leek",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

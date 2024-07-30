@@ -1,0 +1,104 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:krabby",
+      "gender": "FEMALE",
+      "level": 9,
+      "nature": "cobblemon:adamant",
+      "ability": "Sheer Force",
+      "moveset": [
+        "liquidation",
+        "brick break",
+        "knock off",
+        "body slam"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:oran_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:magikarp",
+      "gender": "MALE",
+      "level": 12,
+      "nature": "cobblemon:adamant",
+      "ability": "Rattled",
+      "moveset": [
+        "bounce"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:muscle_band",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:vaporeon",
+      "gender": "MALE",
+      "level": 9,
+      "nature": "cobblemon:calm",
+      "ability": "Water Absorb",
+      "moveset": [
+        "water gun",
+        "mud-slap",
+        "acid armor"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 5,
+        "defence": 31,
+        "special_attack": 15,
+        "special_defence": 5,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:water_stone",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:wailmer",
+      "gender": "FEMALE",
+      "level": 12,
+      "nature": "cobblemon:timid",
+      "ability": "Pressure",
+      "moveset": [
+        "water spout",
+        "flail"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 5,
+        "special_attack": 15,
+        "special_defence": 5,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:sitrus_berry",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

@@ -1,0 +1,160 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:ludicolo",
+      "gender": "MALE",
+      "level": 44,
+      "nature": "cobblemon:jolly",
+      "ability": "Swift Swim",
+      "moveset": [
+        "giga drain",
+        "scald",
+        "fake out",
+        "rain dance"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:mystic_water",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:greninja",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:timid",
+      "ability": "Protean",
+      "moveset": [
+        "water shuriken",
+        "gunk shot",
+        "dark pulse",
+        "dig"
+      ],
+      "ivs": {
+        "hp": 25,
+        "attack": 25,
+        "defence": 25,
+        "special_attack": 25,
+        "special_defence": 25,
+        "speed": 25
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:red_card",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:bruxish",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:jolly",
+      "ability": "Dazzling",
+      "moveset": [
+        "swords dance",
+        "psychic fangs",
+        "crunch",
+        "body slam"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:lum_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gothitelle",
+      "gender": "MALE",
+      "level": 44,
+      "nature": "cobblemon:calm",
+      "ability": "Shadow Tag",
+      "moveset": [
+        "charge beam",
+        "energy ball",
+        "fake out",
+        "psyshock"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leftovers",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:tauros",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:naive",
+      "ability": "Sheer Force",
+      "moveset": [
+        "body slam",
+        "fire blast",
+        "zen headbutt",
+        "earthquake"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 22,
+        "defence": 22,
+        "special_attack": 22,
+        "special_defence": 22,
+        "speed": 22
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:muscle_band",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gyarados",
+      "gender": "MALE",
+      "level": 44,
+      "nature": "cobblemon:jolly",
+      "ability": "Intimidate",
+      "moveset": [
+        "dragon dance",
+        "crunch",
+        "substitute",
+        "earthquake"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:clear_amulet",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

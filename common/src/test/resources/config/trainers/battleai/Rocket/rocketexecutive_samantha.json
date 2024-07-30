@@ -1,0 +1,108 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:weezing",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:bold",
+      "ability": "Levitate",
+      "moveset": [
+        "sludge bomb",
+        "will-o-wisp",
+        "flamethrower",
+        "protect"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 31,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:black_sludge",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:slaking",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:jolly",
+      "ability": "Truant",
+      "moveset": [
+        "earthquake",
+        "return"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:lum_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:archeops",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:jolly",
+      "ability": "Defeatist",
+      "moveset": [
+        "head smash",
+        "rock slide",
+        "dual wingbeat",
+        "earthquake"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:rock_gem",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:weezing-galar",
+      "gender": "MALE",
+      "level": 45,
+      "nature": "cobblemon:sassy",
+      "ability": "Neutralizing Gas",
+      "moveset": [
+        "gunk shot",
+        "strange steam",
+        "assurance",
+        "protect"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 31,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:air_balloon",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

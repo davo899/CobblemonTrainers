@@ -1,0 +1,160 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:hawlucha",
+      "gender": "MALE",
+      "level": 81,
+      "nature": "cobblemon:adamant",
+      "ability": "Unburden",
+      "moveset": [
+        "acrobatics",
+        "swords dance",
+        "high jump kick",
+        "roost"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:flying_gem",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gliscor",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "cobblemon:impish",
+      "ability": "Poison Heal",
+      "moveset": [
+        "stealth rock",
+        "toxic",
+        "earthquake",
+        "roost"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:toxic_orb",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:garchomp",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "cobblemon:jolly",
+      "ability": "Rough Skin",
+      "moveset": [
+        "swords dance",
+        "earthquake",
+        "scale shot",
+        "aqua tail"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:yache_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:hatterene",
+      "gender": "MALE",
+      "level": 80,
+      "nature": "cobblemon:bold",
+      "ability": "Magic Bounce",
+      "moveset": [
+        "draining kiss",
+        "psyshock",
+        "mystical fire",
+        "nuzzle"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leftovers",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:electivire",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "cobblemon:rash",
+      "ability": "Motor Drive",
+      "moveset": [
+        "discharge",
+        "charge beam",
+        "psychic",
+        "flamethrower"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:wise_glasses",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:lucario",
+      "gender": "MALE",
+      "level": 80,
+      "nature": "cobblemon:jolly",
+      "ability": "Inner focus",
+      "moveset": [
+        "swords dance",
+        "close combat",
+        "meteor mash",
+        "extremespeed"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:life_orb",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

@@ -1,0 +1,104 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:joltik",
+      "gender": "MALE",
+      "level": 12,
+      "nature": "cobblemon:hardy",
+      "ability": "Unnerve",
+      "moveset": [
+        "thunder wave",
+        "electroweb",
+        "struggle bug"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:magnet",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:ferroseed",
+      "gender": "FEMALE",
+      "level": 11,
+      "nature": "cobblemon:lax",
+      "ability": "Iron Barbs",
+      "moveset": [
+        "rollout",
+        "curse",
+        "bullet seed"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:rocky_helmet",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:yanma",
+      "gender": "MALE",
+      "level": 11,
+      "nature": "cobblemon:jolly",
+      "ability": "Speed Boost",
+      "moveset": [
+        "acrobatics"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:berry_juice",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:deino",
+      "gender": "MALE",
+      "level": 10,
+      "nature": "cobblemon:rash",
+      "ability": "Hustle",
+      "moveset": [
+        "shock wave",
+        "dragon tail",
+        "bite"
+      ],
+      "ivs": {
+        "hp": 9,
+        "attack": 9,
+        "defence": 15,
+        "special_attack": 9,
+        "special_defence": 9,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:lum_berry",
+      "aspects": []
+    }	
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

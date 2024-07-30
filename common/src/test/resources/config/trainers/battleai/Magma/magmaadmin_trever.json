@@ -1,0 +1,133 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:arcanine",
+      "gender": "MALE",
+      "level": 39,
+      "nature": "cobblemon:adamant",
+      "ability": "Intimidate",
+      "moveset": [
+        "flare blitz",
+        "play rough",
+        "wild charge",
+        "morning sun"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:expert_belt",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:slowking-galar",
+      "gender": "MALE",
+      "level": 38,
+      "nature": "cobblemon:sassy",
+      "ability": "Regenerator",
+      "moveset": [
+        "future sight",
+        "sludge bomb",
+        "slack off",
+        "hydro pump"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:black_sludge",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:clefable",
+      "gender": "MALE",
+      "level": 39,
+      "nature": "cobblemon:bold",
+      "ability": "Magic Guard",
+      "moveset": [
+        "moonblast",
+        "flamethrower",
+        "soft-boiled",
+        "calm mind"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leftovers",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:emboar",
+      "gender": "MALE",
+      "level": 40,
+      "nature": "cobblemon:jolly",
+      "ability": "Reckless",
+      "moveset": [
+        "flare blitz"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:choice_band",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:blaziken",
+      "gender": "MALE",
+      "level": 40,
+      "nature": "cobblemon:jolly",
+      "ability": "Speed Boost",
+      "moveset": [
+        "swords dance",
+        "flare blitz",
+        "close combat",
+        "thunder punch"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:red_card",
+      "aspects": []
+    }	
+	
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

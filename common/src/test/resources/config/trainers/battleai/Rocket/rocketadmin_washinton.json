@@ -1,0 +1,160 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:froslass",
+      "gender": "MALE",
+      "level": 81,
+      "nature": "cobblemon:timid",
+      "ability": "Cursed Body",
+      "moveset": [
+        "blizzard",
+        "shadow ball",
+        "freeze-dry",
+        "spikes"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 2,
+        "defence": 15,
+        "special_attack": 31,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:ice_gem",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:kangaskhan",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "cobblemon:jolly",
+      "ability": "Scrappy",
+      "moveset": [
+        "double-edge",
+        "earthquake",
+        "sucker punch",
+        "sing"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leftovers",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:florges",
+      "gender": "MALE",
+      "level": 80,
+      "nature": "cobblemon:bold",
+      "ability": "Flower Veil",
+      "moveset": [
+        "moonblast",
+        "psychic",
+        "protect",
+        "double team"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:fairy_gem",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:jynx",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "cobblemon:timid",
+      "ability": "Dry Skin",
+      "moveset": [
+        "ice beam",
+        "psychic",
+        "grass knot",
+        "lovely kiss"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:expert_belt",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:nidoking",
+      "gender": "MALE",
+      "level": 81,
+      "nature": "cobblemon:modest",
+      "ability": "Sheer Force",
+      "moveset": [
+        "sludge wave",
+        "earth power",
+        "fire blast",
+        "thunderbolt"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:assault_vest",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:snorlax",
+      "gender": "MALE",
+      "level": 81,
+      "nature": "cobblemon:careful",
+      "ability": "Thick Fat",
+      "moveset": [
+        "curse",
+        "body slam",
+        "earthquake",
+        "rest"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:lum_berry",
+      "aspects": []
+    }		
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

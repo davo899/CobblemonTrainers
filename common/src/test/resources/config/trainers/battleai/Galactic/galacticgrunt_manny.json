@@ -1,0 +1,85 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:bronzor",
+      "gender": "MALE",
+      "level": 11,
+      "nature": "cobblemon:bold",
+      "ability": "Heatproof",
+      "moveset": [
+        "confusion",
+        "confuse ray",
+        "swagger",
+        "iron defense"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:oran_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:chingling",
+      "gender": "MALE",
+      "level": 11,
+      "nature": "cobblemon:calm",
+      "ability": "Levitate",
+      "moveset": [
+        "confusion",
+        "astonish",
+        "recover",
+        "icy wind"
+      ],
+      "ivs": {
+        "hp": 15,
+        "attack": 15,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 15
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:oran_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:buneary",
+      "gender": "MALE",
+      "level": 11,
+      "nature": "cobblemon:hasty",
+      "ability": "Limber",
+      "moveset": [
+        "dig",
+        "rock smash",
+        "fake out",
+        "flail"
+      ],
+      "ivs": {
+        "hp": 6,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 15,
+        "special_defence": 15,
+        "speed": 6
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:oran_berry",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

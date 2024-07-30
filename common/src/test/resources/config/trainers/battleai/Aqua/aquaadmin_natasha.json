@@ -1,0 +1,159 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:pelipper",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "cobblemon:jolly",
+      "ability": "Drizzle",
+      "moveset": [
+        "scald",
+        "u-turn",
+        "hurricane"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:damp_rock",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gyarados",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "cobblemon:jolly",
+      "ability": "Intimidate",
+      "moveset": [
+        "waterfall",
+        "crunch",
+        "ice fang",
+        "dragon dance"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:bright_powder",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:floatzel",
+      "gender": "MALE",
+      "level": 81,
+      "nature": "cobblemon:hasty",
+      "ability": "Swift Swim",
+      "moveset": [
+        "hydro pump",
+        "ice beam",
+        "flip turn",
+        "aqua jet"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:life_orb",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:dragonite",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "cobblemon:naive",
+      "ability": "Multiscale",
+      "moveset": [
+        "dragon dance",
+        "dual wingbeat",
+        "earthquake",
+        "extreme speed"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:lum_berry",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gengar",
+      "gender": "MALE",
+      "level": 83,
+      "nature": "cobblemon:timid",
+      "ability": "Cursed Body",
+      "moveset": [
+        "sludge wave",
+        "shadow ball",
+        "explosion",
+        "thunder"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 15,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:assault_vest",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:relicanth",
+      "gender": "MALE",
+      "level": 84,
+      "nature": "cobblemon:adamant",
+      "ability": "Swift Swim",
+      "moveset": [
+        "head smash",
+        "waterfall",
+        "earthquake",
+        "zen headbutt"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:choice_band",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}

@@ -1,0 +1,160 @@
+{
+  "team": [
+    {
+      "species": "cobblemon:groudon",
+      "gender": "MALE",
+      "level": 80,
+      "nature": "cobblemon:impish",
+      "ability": "Drought",
+      "moveset": [
+        "precipice blades",
+        "bulk up",
+        "will-o-wisp",
+        "stealth rock"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 15,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:leftovers",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:articuno-galar",
+      "gender": "MALE",
+      "level": 79,
+      "nature": "cobblemon:timid",
+      "ability": "Competitive",
+      "moveset": [
+        "stored power",
+        "freezing glare",
+        "calm mind",
+        "shadow ball"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:weakness_policy",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:charizard",
+      "gender": "MALE",
+      "level": 79,
+      "nature": "cobblemon:timid",
+      "ability": "Blaze",
+      "moveset": [
+        "hurricane",
+        "flamethrower",
+        "scorching sands",
+        "will-o-wisp"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:charcoal",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:ho-oh",
+      "gender": "MALE",
+      "level": 79,
+      "nature": "cobblemon:impish",
+      "ability": "Regenerator",
+      "moveset": [
+        "sacred fire",
+        "brave bird",
+        "solar beam",
+        "roost"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:fire_gem",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:flareon",
+      "gender": "MALE",
+      "level": 79,
+      "nature": "cobblemon:jolly",
+      "ability": "Guts",
+      "moveset": [
+        "flare blitz",
+        "flame charge",
+        "superpower",
+        "facade"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 15,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:toxic_orb",
+      "aspects": []
+    },
+    {
+      "species": "cobblemon:gengar",
+      "gender": "MALE",
+      "level": 82,
+      "nature": "cobblemon:timid",
+      "ability": "Levitate",
+      "moveset": [
+        "sludge wave",
+        "shadow ball",
+        "focus blast",
+        "thunderbolt"
+      ],
+      "ivs": {
+        "hp": 31,
+        "attack": 31,
+        "defence": 31,
+        "special_attack": 31,
+        "special_defence": 31,
+        "speed": 31
+      },
+      "evs": {},
+      "shiny": false,
+      "heldItem": "cobblemon:focus_sash",
+      "aspects": []
+    }
+  ],
+  "winCommand": "easy_npc dialog open f8123c51-4cc3-444c-9a62-92771b93807d @p dialog_670",
+  "lossCommand": "",
+  "canOnlyBeatOnce": false,
+  "cooldownSeconds": 0,
+  "partyMaximumLevel": 100,
+  "defeatRequiredTrainers": []
+}
