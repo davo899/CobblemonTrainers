@@ -1,3 +1,6 @@
+# TBD
+- Added initial set of themed trainers for Aqua/Galactic/Magma/Plasma/Rocket.
+
 # 1.1.9
 - Fixed shiny trainer Pokémon not appearing shiny.
 
