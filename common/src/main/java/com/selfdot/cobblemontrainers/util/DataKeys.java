@@ -28,6 +28,7 @@ public class DataKeys {
 
     public static final String CONFIG_XP_ENABLED = "xpEnabled";
     public static final String CONFIG_COMMAND_EXECUTOR = "commandExecutor";
+    public static final String CONFIG_STRONG_AI_LEVEL = "strongAILevel";
 
     public static final String PLAYER_PARTY_MAXIMUM_LEVEL = "partyMaximumLevel";
     public static final String PLAYER_DEFEAT_REQUIRED_TRAINERS = "defeatRequiredTrainers";

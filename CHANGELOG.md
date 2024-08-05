@@ -1,3 +1,9 @@
+# 1.1.10
+- Added Strong battle AI, currently under development for use in official trainers in a future Cobblemon update.
+- Added /trainers usestrongai <level> - Sets all trainers to use Strong AI. Level can be 0-5.
+  - As the Strong AI is under development, you may encounter bugs/strange behaviour. Reporting these problems will be greatly appreciated.
+- Added /trainers usegen5ai - Sets all trainers to use Gen 5 AI.
+
 # 1.1.9
 - Fixed shiny trainer Pokémon not appearing shiny.
 

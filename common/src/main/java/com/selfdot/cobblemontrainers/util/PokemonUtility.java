@@ -2,10 +2,12 @@ package com.selfdot.cobblemontrainers.util;
 
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor;
+import com.cobblemon.mod.common.api.battles.model.ai.BattleAI;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.battles.*;
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor;
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor;
+import com.cobblemon.mod.common.battles.ai.StrongBattleAI;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.battle.TrainerMaximumLevelError;
@@ -47,12 +49,13 @@ public class PokemonUtility {
         BattleActor playerActor = new PlayerBattleActor(
             player.getUuid(), party.toBattleTeam(false, true, leadingPokemon)
         );
+        BattleAI battleAI = CobblemonTrainers.INSTANCE.getConfig().getCurrentAI();
         BattleActor trainerActor = trainerEntity == null ?
             new TrainerBattleActor(
-                trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
+                trainer.getName(), UUID.randomUUID(), trainer.getBattleTeam(), battleAI
             ) :
             new EntityBackerTrainerBattleActor(
-                trainer.getName(), trainerEntity, UUID.randomUUID(), trainer.getBattleTeam(), new Generation5AI()
+                trainer.getName(), trainerEntity, UUID.randomUUID(), trainer.getBattleTeam(), battleAI
             );
 
         ErroredBattleStart errors = new ErroredBattleStart();

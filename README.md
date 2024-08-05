@@ -26,6 +26,8 @@ These trainers feature a custom AI inspired by Generation 5's trainer AI, ensuri
 - **/trainers adddefeatrequirement \<trainer\> \<defeatRequirement\>**: Makes it so the given trainer cannot be battled unless the player has defeated a certain trainer.
 - **/trainers removedefeatrequirement \<trainer\> \<defeatRequirement\>**: Removes a defeat requirement.
 - **/trainers resetwintracker \<player\> \<trainer\>**: Clears whether the given player has defeated the given trainer in the past.
+- **/trainers usegen5ai**: Set trainer battle AI to Generation 5 AI.
+- **/trainers usestrongai \<level\>**: Set trainer battle AI to Strong AI currently under development for official trainers in Cobblemon.
 - **/trainers battle [\<trainer\>]**: Initiate a battle with a trainer. Omitting the trainer argument will open a trainer select menu.
 - **/trainers makebattle \<player\> \<trainer\> [\<trainerEntity\>]**: Commence a battle between a player and a trainer.
 - **/trainers reload**: Refresh the trainer data file; caution advised for manual edits.

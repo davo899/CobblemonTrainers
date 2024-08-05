@@ -254,6 +254,23 @@ public class TrainerCommandTree {
                     )
                 )
             )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("usegen5ai")
+                .requires(editCommandRequirement)
+                .executes(new UseGen5AICommand())
+            )
+            .then(LiteralArgumentBuilder.<ServerCommandSource>
+                literal("usestrongai")
+                .requires(editCommandRequirement)
+                .then(RequiredArgumentBuilder.<ServerCommandSource, Integer>
+                    argument("level", integer())
+                    .suggests((context, builder) -> {
+                        for (int i = 0; i <= 5; i++) builder.suggest(i);
+                        return builder.buildFuture();
+                    })
+                    .executes(new UseStrongAICommand())
+                )
+            )
         );
     }
 
