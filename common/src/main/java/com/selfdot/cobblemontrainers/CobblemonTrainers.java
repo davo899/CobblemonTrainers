@@ -1,5 +1,8 @@
 package com.selfdot.cobblemontrainers;
 
+import com.cobblemon.mod.common.api.Priority;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.mojang.brigadier.CommandDispatcher;
 import com.selfdot.cobblemontrainers.command.TrainerCommandTree;
 import com.selfdot.cobblemontrainers.command.permission.PermissionValidator;
@@ -10,6 +13,7 @@ import com.selfdot.cobblemontrainers.trainer.*;
 import com.selfdot.cobblemontrainers.util.DataKeys;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
+import kotlin.Unit;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +52,11 @@ public class CobblemonTrainers extends DisableableMod {
 
         LifecycleEvent.SERVER_STARTING.register(this::onServerStarting);
         CommandRegistrationEvent.EVENT.register(this::registerCommands);
+        CobblemonEvents.LOOT_DROPPED.subscribe(Priority.HIGHEST, event -> {
+            if (!(event.getEntity() instanceof PokemonEntity pokemonEntity)) return Unit.INSTANCE;
+            if (TrainerPokemon.IS_TRAINER_OWNED.contains(pokemonEntity.getPokemon().getUuid())) event.cancel();
+            return Unit.INSTANCE;
+        });
     }
 
     private void registerCommands(

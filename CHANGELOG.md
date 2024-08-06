@@ -1,3 +1,6 @@
+# 1.1.12
+- Fix trainer Pokémon dropping loot in some cases.
+
 # 1.1.11
 - Fixed Forge crash when using Strong AI.
 
