@@ -1,4 +1,4 @@
-package com.selfdot.cobblemontrainers.libs.minecraft.screen;
+package com.selfdot.cobblemontrainers.screen;
 
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.entity.player.PlayerEntity;

@@ -27,7 +27,7 @@ dependencies {
     include(modApi("me.lucko:fabric-permissions-api:$fabric_permissions_api_version"))
 
     modImplementation "com.cobblemon:fabric:$cobblemon_version+$minecraft_version"
-    //include(modImplementation("com.selfdot:SelfdotModLibs-fabric:$selfdot_modlibs_version+$minecraft_version"))
+    include(modImplementation("com.selfdot:SelfdotModLibs-fabric:$selfdot_modlibs_version+$minecraft_version"))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }

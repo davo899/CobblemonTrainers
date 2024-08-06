@@ -16,6 +16,7 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.selfdot.cobblemontrainers.CobblemonTrainers;
 import com.selfdot.cobblemontrainers.libs.cobblemon.CobblemonUtils;
 import com.selfdot.cobblemontrainers.libs.minecraft.screen.*;
+import com.selfdot.cobblemontrainers.screen.*;
 import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.cobblemontrainers.trainer.TrainerPokemon;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ import java.util.stream.Stream;
 
 import static com.cobblemon.mod.common.CobblemonItems.*;
 import static com.selfdot.cobblemontrainers.libs.cobblemon.CobblemonUtils.*;
-import static com.selfdot.cobblemontrainers.libs.minecraft.screen.ItemStackBuilder.itemStack;
+import static com.selfdot.cobblemontrainers.screen.ItemStackBuilder.itemStack;
 import static net.minecraft.util.Formatting.GREEN;
 import static net.minecraft.util.Formatting.RED;
 

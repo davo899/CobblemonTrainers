@@ -1,4 +1,4 @@
-package com.selfdot.cobblemontrainers.libs.minecraft.screen;
+package com.selfdot.cobblemontrainers.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

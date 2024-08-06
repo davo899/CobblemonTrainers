@@ -8,6 +8,7 @@ import com.selfdot.cobblemontrainers.libs.minecraft.DisableableMod;
 import com.selfdot.cobblemontrainers.menu.SetupMenu;
 import com.selfdot.cobblemontrainers.trainer.*;
 import com.selfdot.cobblemontrainers.util.DataKeys;
+import com.selfdot.libs.minecraft.MinecraftMod;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import net.minecraft.server.command.ServerCommandSource;
 
 @Slf4j
 @Getter
-public class CobblemonTrainers extends DisableableMod {
+public class CobblemonTrainers extends MinecraftMod {
 
     public static final CobblemonTrainers INSTANCE = new CobblemonTrainers();
     public static final String MODID = DataKeys.MOD_NAMESPACE;

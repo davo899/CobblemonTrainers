@@ -1,4 +1,4 @@
-package com.selfdot.cobblemontrainers.libs.minecraft.screen;
+package com.selfdot.cobblemontrainers.screen;
 
 public interface ViewFactory<T extends Menu<T>> {
 

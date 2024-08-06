@@ -7,7 +7,7 @@ dependencies {
     modApi "com.cobblemon:mod:$cobblemon_version+$minecraft_version"
     modApi "dev.architectury:architectury:$architectury_version"
     compileOnly "net.luckperms:api:$luckperms_version"
-    //modImplementation "com.selfdot:SelfdotModLibs:$selfdot_modlibs_version+$minecraft_version"
+    modImplementation "com.selfdot:SelfdotModLibs:$selfdot_modlibs_version+$minecraft_version"
     compileOnly "org.projectlombok:lombok:$lombok_version"
     annotationProcessor "org.projectlombok:lombok:$lombok_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_stdlib_version"

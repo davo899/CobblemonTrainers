@@ -1,12 +1,11 @@
-package com.selfdot.cobblemontrainers.libs.minecraft.screen;
+package com.selfdot.cobblemontrainers.screen;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 
 import java.util.function.Consumer;
 
-import static com.selfdot.cobblemontrainers.libs.minecraft.screen.ItemStackBuilder.itemStack;
-import static com.selfdot.cobblemontrainers.libs.minecraft.screen.ItemStackBuilder.skullOf;
+import static com.selfdot.cobblemontrainers.screen.ItemStackBuilder.itemStack;
 
 public class ComponentBuilder<T extends Menu<T>> {
 
@@ -23,11 +22,11 @@ public class ComponentBuilder<T extends Menu<T>> {
     }
 
     public ComponentBuilder(int x, int y, Item item) {
-        this(x, y, itemStack(item));
+        this(x, y, ItemStackBuilder.itemStack(item));
     }
 
     public ComponentBuilder(int x, int y, PlayerEntity player) {
-        this(x, y, skullOf(player));
+        this(x, y, ItemStackBuilder.skullOf(player));
     }
 
     public ComponentBuilder<T> withName(String name) {
