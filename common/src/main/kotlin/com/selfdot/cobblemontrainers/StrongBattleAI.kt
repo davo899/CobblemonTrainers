@@ -6,6 +6,8 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
+package com.selfdot.cobblemontrainers
+
 import com.cobblemon.mod.common.CobblemonItems
 import com.cobblemon.mod.common.api.abilities.Abilities
 import com.cobblemon.mod.common.api.battles.interpreter.BattleContext
@@ -15,7 +17,6 @@ import com.cobblemon.mod.common.api.moves.Move
 import com.cobblemon.mod.common.api.moves.MoveTemplate
 import com.cobblemon.mod.common.api.moves.Moves
 import com.cobblemon.mod.common.api.moves.categories.DamageCategories
-import com.cobblemon.mod.common.api.pokemon.*
 import com.cobblemon.mod.common.api.pokemon.stats.Stat
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemon.mod.common.api.pokemon.status.Statuses
@@ -1356,6 +1357,7 @@ class StrongBattleAI(skill: Int) : BattleAI {
 
         //score += bestDamageMultiplier(npcPokemon, playerPokemon) * (1.0 + typeMatchup(npcPokemon, playerPokemon) * typeMatchupWeightConsideration) // npcPokemon attacking playerPokemon
         //score -= bestDamageMultiplier(playerPokemon, npcPokemon) * (1.0 + typeMatchup(playerPokemon, npcPokemon) * typeMatchupWeightConsideration) // playerPokemon attacking npcPokemon
+
 
         //score *= typeMatchup(nonActiveMon, playerPokemon)
 
