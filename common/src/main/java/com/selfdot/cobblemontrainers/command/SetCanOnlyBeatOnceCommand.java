@@ -10,8 +10,6 @@ import com.selfdot.cobblemontrainers.trainer.Trainer;
 import com.selfdot.libs.minecraft.MinecraftMod;
 import com.selfdot.libs.minecraft.permissions.Permission;
 import com.selfdot.libs.minecraft.permissions.PermissionLevel;
-import net.minecraft.command.EntitySelector;
-import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 

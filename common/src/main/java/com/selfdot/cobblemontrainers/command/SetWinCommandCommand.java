@@ -13,7 +13,6 @@ import com.selfdot.libs.minecraft.permissions.PermissionLevel;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
-import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
 import static com.mojang.brigadier.arguments.StringArgumentType.string;
 
 public class SetWinCommandCommand extends TrainerCommand {

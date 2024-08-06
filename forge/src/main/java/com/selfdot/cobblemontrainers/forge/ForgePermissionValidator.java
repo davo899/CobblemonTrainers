@@ -1,8 +1,6 @@
 package com.selfdot.cobblemontrainers.forge;
 
 import com.cobblemon.mod.common.api.permission.Permission;
-import com.selfdot.cobblemontrainers.command.permission.PermissionValidator;
-import com.selfdot.cobblemontrainers.command.permission.TrainersPermissions;
 import net.minecraft.command.CommandSource;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
