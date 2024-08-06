@@ -1,3 +1,6 @@
+# 1.1.11
+- Fixed Forge crash when using Strong AI.
+
 # 1.1.10
 - Added Strong battle AI, currently under development for use in official trainers in a future Cobblemon update.
 - Added /trainers usestrongai <level> - Sets all trainers to use Strong AI. Level can be 0-5.

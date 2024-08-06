@@ -1,7 +1,6 @@
 package com.selfdot.cobblemontrainers;
 
 import com.cobblemon.mod.common.api.battles.model.ai.BattleAI;
-import com.cobblemon.mod.common.battles.ai.StrongBattleAI;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.selfdot.cobblemontrainers.libs.io.JsonFile;
